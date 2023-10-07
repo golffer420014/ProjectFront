@@ -17,11 +17,14 @@ LogBox.ignoreAllLogs(true)
 const App = () => {
   return (
     <NavigationContainer>
-      <StatusBar
-        hidden
-      />
-      <Header />
-      <Main />
+      <Provider store={store}>
+        <StatusBar
+          hidden
+        />
+        <Header />
+        <Main />
+      </Provider>
+      
     </NavigationContainer>
 
 

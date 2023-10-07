@@ -1,12 +1,16 @@
 import { StyleSheet, Text, View, Dimensions, Image, Button } from 'react-native'
 import React from 'react'
 
-//Dimensions = เข้าถึงขนาดหน้าจอ
+import { connect } from 'react-redux'
+import * as actions from '../../Redux/Actions/cartActions';
 
-let windowWidth = Dimensions.get('window').width
+
+//Dimensions = เข้าถึงขนาดหน้าจอ
+let windowWidth = Dimensions.get('window').width 
 
 const ProductCard = (props) => {
-    const { name, price, image, countInstock } = props
+    const { name, price, image, countInStock } = props
+
 
     return (
         <View style={styles.container}>
@@ -18,7 +22,7 @@ const ProductCard = (props) => {
                     uri: image ?
                         image : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
                 }}
-            />
+            /> 
             <View style={styles.card} />
             <Text style={styles.title}>
                 {name.length > 15 ? name.substring(0, 15 - 3)
@@ -27,12 +31,30 @@ const ProductCard = (props) => {
             </Text>
             <Text style={styles.price}>${price}</Text>
 
+            {countInStock > 0 ?(
+                    <View style={{marginTop:10}}>
+                        <Button
+                            title={'Add'}
+                            onPress={() =>{
+                                props.addItemToCart(props)
+                                console.log(props.addItemToCart(props.name))
+                            }}
+                         />
+                    </View>
+                ) : <Text>หมด</Text>}
             
         </View>
     )
 }
 
-export default ProductCard
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addItemToCart: (product) =>
+            dispatch(actions.addToCart({ quantity: 1, product }))
+    }
+}
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -69,3 +91,5 @@ const styles = StyleSheet.create({
         marginTop: 10
     }
 })
+
+export default connect(null, mapDispatchToProps)(ProductCard)

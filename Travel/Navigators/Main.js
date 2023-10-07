@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 // Stacks
 import HomeNavigator from "./HomeNavigator";
+import Cart from "../screen/cart/Cart";
 
 // import CartIcon from "../Shared/CartIcon";
 
@@ -41,8 +42,8 @@ const Main = () => {
       />
       {/* search */}
       <Tab.Screen
-        name="Search"
-        component={HomeNavigator}
+        name="Cart"
+        component={Cart}
         options={{
           tabBarIcon: ({ color }) => (
             <Image
