@@ -4,7 +4,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const Cart = (props) => { 
-  console.log('this', props)
   return (
     <View style={{flex:1}}>
       {props.cartItems.map((x) =>{

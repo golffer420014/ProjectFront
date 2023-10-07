@@ -37,7 +37,6 @@ const ProductCard = (props) => {
                             title={'Add'}
                             onPress={() =>{
                                 props.addItemToCart(props)
-                                console.log(props.addItemToCart(props.name))
                             }}
                          />
                     </View>
