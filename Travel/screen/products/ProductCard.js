@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, Image, Button } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, Image, Button ,ScrollView } from 'react-native'
 import React from 'react'
 
 import { connect } from 'react-redux'
@@ -6,13 +6,14 @@ import * as actions from '../../Redux/Actions/cartActions';
 
 
 //Dimensions = เข้าถึงขนาดหน้าจอ
-let windowWidth = Dimensions.get('window').width 
+var { width } = Dimensions.get('window')
 
 const ProductCard = (props) => {
     const { name, price, image, countInStock } = props
 
 
     return (
+        <ScrollView>
         <View style={styles.container}>
         
             <Image
@@ -32,7 +33,7 @@ const ProductCard = (props) => {
             <Text style={styles.price}>${price}</Text>
 
             {countInStock > 0 ?(
-                    <View style={{marginTop:10}}>
+                    <View style={{marginBottom:10}}>
                         <Button
                             title={'Add'}
                             onPress={() =>{
@@ -43,6 +44,7 @@ const ProductCard = (props) => {
                 ) : <Text>หมด</Text>}
             
         </View>
+        </ScrollView>
     )
 }
 
@@ -53,12 +55,13 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
+export default connect(null, mapDispatchToProps)(ProductCard)
 
 
 const styles = StyleSheet.create({
     container: {
-        width: windowWidth / 2 - 20,
-        height: windowWidth / 1.7,
+        width: width / 2 - 20,
+        height: width /2,
         padding: 10,
         borderRadius: 10,
         margin: 10,
@@ -67,17 +70,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     image: {
-        width: windowWidth / 2 - 30 - 30,
-        height: windowWidth / 2 - 20 - 30,
+        width: width / 2 - 50 - 50,
+        height: width / 2 - 20 - 30,
         backgroundColor: 'transparent',
         position: 'absolute',
         top: -20
     },
     card: {
         marginBottom: 10,
-        height: windowWidth / 2 - 20 - 90,
+        height: width / 2 - 20 - 100,
         backgroundColor: 'transparent',
-        width: windowWidth / 2 - 20 - 10,
+        width: width / 2 - 20 - 10,
     },
     title: {
         fontWeight: 'bold',
@@ -91,4 +94,3 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connect(null, mapDispatchToProps)(ProductCard)

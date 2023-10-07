@@ -5,6 +5,9 @@ import { Left, Right, Container, H1 } from 'native-base';
 // import EasyButton from '../../Shared/StyledComponents/EasyButton'
 // import TrafficLight from '../../Shared/StyledComponents/TrafficLight'
 
+import { connect } from 'react-redux'
+import * as actions from '../../Redux/Actions/cartActions';
+
 const SingleProduct = (props) => {
 
     const [item, setItem] = useState(props.route.params.item);
@@ -40,6 +43,9 @@ const SingleProduct = (props) => {
                 <Right>
                     <Button
                         title='Add'
+                        onPress={() => {
+                            props.addItemToCart(item)
+                        }}
                     />
                 </Right>
             </View>
@@ -48,7 +54,14 @@ const SingleProduct = (props) => {
     )
 }
 
-export default SingleProduct
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addItemToCart: (product) =>
+            dispatch(actions.addToCart({ quantity: 1, product }))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(SingleProduct)
 
 const styles = StyleSheet.create({
     container: {
