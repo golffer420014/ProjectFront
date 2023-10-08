@@ -16,13 +16,13 @@ function MyStack() {
                     headerShown: false
                 }}
             />
-            {/* <Stack.Screen
+            <Stack.Screen
                 name="Checkout"
                 component={CheckoutNavigator}
                 options={{
                     title: 'Checkout'
                 }}
-            /> */}
+            />
         </Stack.Navigator>
     )
 }

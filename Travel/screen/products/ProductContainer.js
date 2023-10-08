@@ -81,7 +81,6 @@ const ProductContainer = (props) => {
 
     }
 
-    console.log(products)
 
     return (
 
@@ -121,6 +120,7 @@ const ProductContainer = (props) => {
                             />
                         </View>
                         {productsCtg.length > 0 ? (
+                            <ScrollView>
                             <View style={styles.listContainer}>
 
                                 {productsCtg.map((item)=>{
@@ -133,6 +133,7 @@ const ProductContainer = (props) => {
                                     )
                                 })}
                             </View>
+                                </ScrollView>
                         ) : (
                                     <View style={[styles.center, { height: height / 2 }]}>
                                         <Text style={{fontSize:25}}>No products found!!</Text>
@@ -164,19 +165,20 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     container: {
-        // flexWrap: "wrap",
+        flexWrap: "wrap",
         backgroundColor: "gainsboro",
     },
-    listContainer:{
-        height: height,
+    listContainer: {
+        // height: height,
         flex: 1,
         flexDirection: "row",
         alignItems: "flex-start",
         flexWrap: "wrap",
         backgroundColor: "gainsboro",
+        marginBottom:20
     },
     center: {
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     }
 })
