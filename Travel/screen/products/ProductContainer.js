@@ -1,6 +1,13 @@
-import { StyleSheet, View, Image, FlatList, TextInput, Text, ScrollView, Dimensions } from 'react-native'
+
+
 import React, { useState, useEffect } from 'react'
-import { Container, Item, Header, ShareIcon, Icon, Input } from 'native-base'
+import { Container, Item, Header, Icon, Input } from 'native-base'
+import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native'
+
+
+// base
+import baseURL from '../../assests/common/baseUrl';
+import axios from 'axios';
 
 //screen
 import ProductList from './ProductList';
@@ -10,9 +17,6 @@ import CategoryFilter from './CategoryFilter';
 
 var { height } = Dimensions.get('window')
 
-// data test
-const data = require('../../data/product.json')
-const ProductCategories = require('../../data/categories.json')
 
 const ProductContainer = (props) => {
 
@@ -28,15 +32,36 @@ const ProductContainer = (props) => {
     const [initialState, setInitialState] = useState([]);
 
     useEffect(() => {
-        setProduct(data)
-        setProductsFiltered(data)
+
         setFocus(false)
 
         //category
-        setCategories(ProductCategories)
-        setProductsCtg(data)
         setActive(-1)
-        setInitialState(data)
+
+        //product
+        axios
+            .get(`${baseURL}products`)
+            .then(res => {
+                setProduct(res.data)
+                setProductsFiltered(res.data)
+
+                //category
+                setProductsCtg(res.data)
+                setInitialState(res.data)
+            })
+            .catch((err) => {
+                console.log('products call error')
+            })
+
+        //category
+        axios
+            .get(`${baseURL}category`)
+            .then(res => {
+                setCategories(res.data)
+            })
+            .catch((err)=>{
+                console.log('category call error')
+            })
 
         return () => {
             setProduct([])
@@ -73,7 +98,7 @@ const ProductContainer = (props) => {
                 ? [setProductsCtg(initialState), setActive(true)]
                 : [
                     setProductsCtg(
-                        products.filter((i) => i.category.$oid === ctg),
+                        products.filter((i) => i.category.id === ctg),
                         setActive(true)
                     ),
                 ]
@@ -121,23 +146,23 @@ const ProductContainer = (props) => {
                         </View>
                         {productsCtg.length > 0 ? (
                             <ScrollView>
-                            <View style={styles.listContainer}>
+                                <View style={styles.listContainer}>
 
-                                {productsCtg.map((item)=>{
-                                    return(
-                                        <ProductList
-                                            navigation={props.navigation}
-                                            key={item.id}
-                                            item={item}
-                                        />
-                                    )
-                                })}
-                            </View>
-                                </ScrollView>
+                                    {productsCtg.map((item) => {
+                                        return (
+                                            <ProductList
+                                                navigation={props.navigation}
+                                                key={item.id}
+                                                item={item}
+                                            />
+                                        )
+                                    })}
+                                </View>
+                            </ScrollView>
                         ) : (
-                                    <View style={[styles.center, { height: height / 2 }]}>
-                                        <Text style={{fontSize:25}}>No products found!!</Text>
-                                    </View>
+                            <View style={[styles.center, { height: height / 2 }]}>
+                                <Text style={{ fontSize: 25 }}>No products found!!</Text>
+                            </View>
                         )}
 
 
@@ -175,7 +200,7 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         flexWrap: "wrap",
         backgroundColor: "gainsboro",
-        marginBottom:20
+        marginBottom: 20
     },
     center: {
         justifyContent: 'center',

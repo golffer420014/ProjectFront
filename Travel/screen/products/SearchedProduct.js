@@ -10,7 +10,7 @@ const SearchedProduct = (props) => {
     return (
         <Content style={{ width: windowWidth }}>
             {productsFiltered.length > 0 ? (
-                productsFiltered.map((item) => (
+                productsFiltered.map((item) => ( 
                     <ListItem
                         onPress={() => {
                             props.navigation.navigate("Product Detail", { item: item })

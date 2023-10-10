@@ -11,6 +11,9 @@ var { width } = Dimensions.get('window')
 const ProductCard = (props) => {
     const { name, price, image, countInStock } = props
 
+    //  console.log('this is', JSON.stringify(props, null, 2))
+
+
 
     return (
         <ScrollView>
@@ -20,7 +23,7 @@ const ProductCard = (props) => {
                 style={styles.image}
                 resizeMode="contain"
                 source={{
-                    uri: image ?
+                    uri: `data:image/jpeg;base64,${(props.image).toString('base64')}` ?
                         image : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
                 }}
             /> 
