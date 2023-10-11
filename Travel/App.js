@@ -21,7 +21,7 @@ const App = () => {
         <StatusBar
           hidden
         />
-        <Header />
+        {/* <Header /> */}
         <Main />
       </Provider>
       

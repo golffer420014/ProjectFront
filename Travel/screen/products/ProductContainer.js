@@ -15,6 +15,10 @@ import SearchedProduct from './SearchedProduct';
 import Banner from '../../Shared/Banner';
 import CategoryFilter from './CategoryFilter';
 
+//icons
+import AntDesign from 'react-native-vector-icons/AntDesign'
+
+
 var { height } = Dimensions.get('window')
 
 
@@ -111,16 +115,21 @@ const ProductContainer = (props) => {
 
         <Container >
 
-            <Header searchBar rounded style={{ backgroundColor: '#f36d72' }}>
-                <Item>
-                    <Icon name="emoji-happy" />
+            <Header searchBar rounded style={{ backgroundColor: '#dcdcdc' }}>
+                <Item style={{borderRadius:20}}>
+                    <View style={{paddingLeft:10}}>
+                        <AntDesign name="search1" color={"red"} size={20}  />
+                    </View>
                     <Input
                         placeholder="Search"
                         onFocus={openList}
                         onChangeText={(text) => searchProduct(text)}
                     />
-                    {focus == true ? <Icon onPress={onBlur} name="ios-close" /> : null}
+                    {focus == true ? <View style={{ paddingRight: 10 }}>
+                        <AntDesign name="close" color={"red"} size={20} onPress={onBlur}/>
+                    </View> : null}
                 </Item>
+                
             </Header>
 
             {focus == true ? (

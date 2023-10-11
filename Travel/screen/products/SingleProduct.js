@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { Image, View, StyleSheet, Text, ScrollView, Button } from 'react-native';
+import { Image, View, StyleSheet, Text, ScrollView, Button, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Left, Right, Container, H1 } from 'native-base';
 // import Toast from 'react-native-toast-message';
 // import EasyButton from '../../Shared/StyledComponents/EasyButton'
 // import TrafficLight from '../../Shared/StyledComponents/TrafficLight'
 
+//redux
 import { connect } from 'react-redux'
 import * as actions from '../../Redux/Actions/cartActions';
+
+// libary
+import tailwind from 'twrnc';
+import { useNavigation } from '@react-navigation/native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import TabbedView from '../../Shared/TabbedView';
 
 const SingleProduct = (props) => {
 
@@ -14,43 +23,99 @@ const SingleProduct = (props) => {
     const [availability, setAvailability] = useState('');
     const [availabilityText, setAvailabilityText] = useState("")
 
+    const navigation = useNavigation()
+
+    console.log('this is', JSON.stringify(item, null, 2))
+
+
 
     return (
-        <Container style={styles.container}>
-            <ScrollView style={{ marginBottom: 80, padding: 5 }}>
+        <View style={[tailwind`flex-1`]}>
+            {/* header */}
+            <Image
+                source={require('../../assests/1223348.jpg')}
+                style={{ width: wp(100), height: hp(55) }}
+            />
+            <SafeAreaView style={
+                tailwind
+                    `flex-row 
+                    justify-between 
+                    items-center 
+                    w-full 
+                    absolute
+                    `}>
+                <TouchableOpacity
+                    onPress={() => navigation.goBack()}
+                    style={[
+                        tailwind`p-2 rounded-full m-4`,
+                        { backgroundColor: 'rgba(255,255,255,0.5)' }
+                    ]}
 
-                <View>
-                    <Image
-                        source={{
-                            uri: item.image ?
-                                item.image : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
-                        }}
-                        resizeMode='contain'
-                        style={styles.image}
-                    />
-                </View>
-                <View style={styles.contentContainer}>
-                        <H1 style={styles.contentHeader}>{item.name}</H1>
-                        <Text style={styles.contentText}>{item.brand}</Text>
-                </View>
+                >
+                    <AntDesign name="arrowleft" color={'white'} size={wp(5)} />
+                </TouchableOpacity>
+            </SafeAreaView>
 
-            </ScrollView>
-            
-            <View style={styles.bottomContainer}>
-                <Left>
-                    <Text style={styles.price}>$ {item.price}</Text>
-                </Left>
-                <Right>
-                    <Button
-                        title='Add'
-                        onPress={() => {
-                            props.addItemToCart(item)
-                        }}
-                    />
-                </Right>
+            {/* content */}
+            <View style={[
+                tailwind
+                    `px-5 flex 
+                    flex-1 
+                    justify-between 
+                    bg-white 
+                    pt-8
+                    -mt-14`,
+                {
+                    borderTopLeftRadius: 40,
+                    borderTopRightRadius: 40,
+                }
+            ]}>
+
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={tailwind`space-y-5`}
+                >
+                    <View
+                        style={tailwind`flex-row justify-between items-start align-center`}
+                    >
+                        <Text style={[
+                            `
+                         flex-1 
+                         text-neutral-700`,
+                        { fontSize: wp(7) , color:'black' , fontWeight:'bold' }]
+                        }>
+                            {item.name}
+                        </Text>
+                        <Text style={[tailwind`pt-2`,{ fontSize: wp(5) }]}>
+                            {item.rating}{' '}
+                            <AntDesign name="star" color={'#f36d72'} size={wp(5)} />
+                        </Text>
+
+                    </View>
+                    <Text style={[tailwind`pt-1`, { fontSize: wp(5) }]}>
+                        <FontAwesome name="map-marker" color={'#f36d72'} size={wp(5)} />
+                        {' '}
+                        {item.name}
+                    </Text>
+
+                    {/* <View
+                        style={tailwind`pt-5`}
+                    >
+                        <Text style={{ fontSize: wp(5), color: 'black', fontWeight: 'bold' }}>
+                            Description
+                        </Text>
+                        <Text style={{ color: 'gray', fontSize:15 }}>
+                            {item.description}
+                        </Text>
+
+                    </View> */}
+
+
+                </ScrollView>
+
             </View>
 
-        </Container>
+        </View>
     )
 }
 
