@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { Container, Item, Header, Icon, Input } from 'native-base'
-import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, Dimensions, ActivityIndicator } from 'react-native'
 
 
 // base
@@ -30,10 +30,13 @@ const ProductContainer = (props) => {
 
     //category
     const [productsCtg, setProductsCtg] = useState([])
-
+    // categort filter
     const [categories, setCategories] = useState([]);
     const [active, setActive] = useState();
     const [initialState, setInitialState] = useState([]);
+
+    //loading
+    const [loading,setLoading] = useState(true)
 
     useEffect(() => {
 
@@ -52,6 +55,9 @@ const ProductContainer = (props) => {
                 //category
                 setProductsCtg(res.data)
                 setInitialState(res.data)
+
+                //loading
+                setLoading(false)
             })
             .catch((err) => {
                 console.log('products call error')
@@ -112,13 +118,14 @@ const ProductContainer = (props) => {
 
 
     return (
-
+        <>
+        {loading == false ? (
         <Container >
 
             <Header searchBar rounded style={{ backgroundColor: '#dcdcdc' }}>
-                <Item style={{borderRadius:20}}>
-                    <View style={{paddingLeft:10}}>
-                        <AntDesign name="search1" color={"red"} size={20}  />
+                <Item style={{ borderRadius: 20 }}>
+                    <View style={{ paddingLeft: 10 }}>
+                        <AntDesign name="search1" color={"red"} size={20} />
                     </View>
                     <Input
                         placeholder="Search"
@@ -126,10 +133,10 @@ const ProductContainer = (props) => {
                         onChangeText={(text) => searchProduct(text)}
                     />
                     {focus == true ? <View style={{ paddingRight: 10 }}>
-                        <AntDesign name="close" color={"red"} size={20} onPress={onBlur}/>
+                        <AntDesign name="close" color={"red"} size={20} onPress={onBlur} />
                     </View> : null}
                 </Item>
-                
+
             </Header>
 
             {focus == true ? (
@@ -182,10 +189,16 @@ const ProductContainer = (props) => {
 
         </Container>
 
+        ) : (
+            //loading
+            <Container style={[styles.center,{backgroundColor:'#f2f2f2'}]}>
+                        <ActivityIndicator size="large" color='#f36d72'/>
+            </Container>
+        )}
 
-
-
-    )
+        </>
+       
+    );
 }
 
 export default ProductContainer

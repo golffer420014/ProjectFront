@@ -15,7 +15,8 @@ import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import TabbedView from '../../Shared/TabbedView';
+import TabbedView from '../../Shared/TabViewExample';
+import TabViewExample from '../../Shared/TabViewExample';
 
 const SingleProduct = (props) => {
 
@@ -71,12 +72,12 @@ const SingleProduct = (props) => {
                 }
             ]}>
 
-                <ScrollView
+                <View
                     showsVerticalScrollIndicator={false}
                     style={tailwind`space-y-5`}
                 >
                     <View
-                        style={tailwind`flex-row justify-between items-start align-center`}
+                        style={tailwind`flex-row justify-between items-start align-center `}
                     >
                         <Text style={[
                             `
@@ -92,7 +93,7 @@ const SingleProduct = (props) => {
                         </Text>
 
                     </View>
-                    <Text style={[tailwind`pt-1`, { fontSize: wp(5) }]}>
+                    <Text style={[tailwind`pt-1 mb-5`, { fontSize: wp(5) }]}>
                         <FontAwesome name="map-marker" color={'#f36d72'} size={wp(5)} />
                         {' '}
                         {item.name}
@@ -111,9 +112,13 @@ const SingleProduct = (props) => {
                     </View> */}
 
 
-                </ScrollView>
+
+                </View>
+                <TabViewExample {...item} />
+
 
             </View>
+            
 
         </View>
     )
