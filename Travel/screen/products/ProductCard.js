@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width:180,
         marginLeft:11,
-        borderRadius:30,
         borderTopRightRadius:30,
         marginTop:10,
         overflow: "hidden" ,
@@ -89,7 +88,8 @@ const styles = StyleSheet.create({
     },
     image: {
         aspectRatio:1.3,
-        resizeMode:'cover'
+        borderRadius:15,
+        resizeMode: 'cover'
     },
     details:{
         paddingHorizontal:20,
