@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { Container, Item, Header, Icon, Input } from 'native-base'
-import { StyleSheet, View, Text, ScrollView, Dimensions, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, Dimensions, ActivityIndicator, Keyboard } from 'react-native'
 
 
 // base
@@ -36,7 +36,7 @@ const ProductContainer = (props) => {
     const [initialState, setInitialState] = useState([]);
 
     //loading
-    const [loading,setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
 
@@ -69,7 +69,7 @@ const ProductContainer = (props) => {
             .then(res => {
                 setCategories(res.data)
             })
-            .catch((err)=>{
+            .catch((err) => {
                 console.log('category call error')
             })
 
@@ -99,7 +99,9 @@ const ProductContainer = (props) => {
 
     const onBlur = () => {
         setFocus(false);
+        Keyboard.dismiss();
     };
+
 
     // category
     const changeCtg = (ctg) => {
@@ -119,85 +121,88 @@ const ProductContainer = (props) => {
 
     return (
         <>
-        {loading == false ? (
-        <Container >
+            {loading == false ? (
+                <Container >
 
-            <Header searchBar rounded style={{ backgroundColor: '#dcdcdc' }}>
-                <Item style={{ borderRadius: 20 }}>
-                    <View style={{ paddingLeft: 10 }}>
-                        <AntDesign name="search1" color={"red"} size={20} />
-                    </View>
-                    <Input
-                        placeholder="Search"
-                        onFocus={openList}
-                        onChangeText={(text) => searchProduct(text)}
-                    />
-                    {focus == true ? <View style={{ paddingRight: 10 }}>
-                        <AntDesign name="close" color={"red"} size={20} onPress={onBlur} />
-                    </View> : null}
-                </Item>
-
-            </Header>
-
-            {focus == true ? (
-                <SearchedProduct
-                    navigation={props.navigation}
-                    productsFiltered={productsFiltered}
-                />
-            ) : (
-                <ScrollView>
-
-                    <View style={styles.container}>
-                        <View>
-                            <Banner />
-                        </View>
-                        <View>
-                            <CategoryFilter
-                                categories={categories}
-                                categoryFilter={changeCtg}
-                                productsCtg={productsCtg}
-                                active={active}
-                                setActive={setActive}
-                            />
-                        </View>
-                        {productsCtg.length > 0 ? (
-                            <ScrollView>
-                                <View style={styles.listContainer}>
-
-                                    {productsCtg.map((item) => {
-                                        return (
-                                            <ProductList
-                                                navigation={props.navigation}
-                                                key={item.id}
-                                                item={item}
-                                            />
-                                        )
-                                    })}
-                                </View>
-                            </ScrollView>
-                        ) : (
-                            <View style={[styles.center, { height: height / 2 }]}>
-                                <Text style={{ fontSize: 25 }}>No products found!!</Text>
+                    <Header searchBar rounded style={{ backgroundColor: '#dcdcdc' }}>
+                        <Item style={{ borderRadius: 20 }}>
+                            <View style={{ paddingLeft: 10 }}>
+                                <AntDesign name="search1" color={"red"} size={20} />
                             </View>
-                        )}
+                            <Input
+                                placeholder="Search"
+                                onFocus={openList}
+                                onChangeText={(text) => searchProduct(text)}
+                            />
+                            {focus == true ? <View style={{ paddingRight: 10 }}>
+                                <AntDesign name="close" color={"red"} size={20}
+                                    onPress={onBlur}
+
+                                />
+                            </View> : null}
+                        </Item>
+
+                    </Header>
+
+                    {focus == true ? (
+                        <SearchedProduct
+                            navigation={props.navigation}
+                            productsFiltered={productsFiltered}
+                        />
+                    ) : (
+                        <ScrollView>
+
+                            <View style={styles.container}>
+                                <View>
+                                    <Banner />
+                                </View>
+                                <View>
+                                    <CategoryFilter
+                                        categories={categories}
+                                        categoryFilter={changeCtg}
+                                        productsCtg={productsCtg}
+                                        active={active}
+                                        setActive={setActive}
+                                    />
+                                </View>
+                                {productsCtg.length > 0 ? (
+                                    <ScrollView>
+                                        <View style={styles.listContainer}>
+
+                                            {productsCtg.map((item) => {
+                                                return (
+                                                    <ProductList
+                                                        navigation={props.navigation}
+                                                        key={item.id}
+                                                        item={item}
+                                                    />
+                                                )
+                                            })}
+                                        </View>
+                                    </ScrollView>
+                                ) : (
+                                    <View style={[styles.center, { height: height / 2 }]}>
+                                        <Text style={{ fontSize: 25 }}>No products found!!</Text>
+                                    </View>
+                                )}
 
 
-                    </View>
+                            </View>
 
-                </ScrollView>
+                        </ScrollView>
+                    )}
+
+                </Container>
+
+            ) : (
+                //loading
+                <Container style={[styles.center, { backgroundColor: '#f2f2f2' }]}>
+                    <ActivityIndicator size="large" color='#f36d72' />
+                </Container>
             )}
 
-        </Container>
-
-        ) : (
-            //loading
-            <Container style={[styles.center,{backgroundColor:'#f2f2f2'}]}>
-                        <ActivityIndicator size="large" color='#f36d72'/>
-            </Container>
-        )}
-
         </>
-       
+
     );
 }
 

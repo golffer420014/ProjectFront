@@ -22,8 +22,9 @@ const ProductCard = (props) => {
             <Image
                 style={styles.image}
                 resizeMode="contain"
+                // source={require('../../assests/1223348.jpg')}
                 source={{
-                    uri: `data:image/jpeg;base64,${(props.image).toString('base64')}` ?
+                    uri: image ?
                         image : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
                 }}
             /> 
@@ -76,10 +77,10 @@ const styles = StyleSheet.create({
     },
     image: {
         width: width / 2 - 20 - 10,
-        height: width / 2 - 20 - 30,
+        height: width / 2 - 20 - 40,
         backgroundColor: 'transparent',
         position: 'absolute',
-        top: -45
+        top: -22,
     },
     card: {
         marginBottom: 10,

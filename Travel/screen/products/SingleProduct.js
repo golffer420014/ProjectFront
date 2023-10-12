@@ -15,7 +15,6 @@ import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import TabbedView from '../../Shared/TabViewExample';
 import TabViewExample from '../../Shared/TabViewExample';
 
 const SingleProduct = (props) => {
@@ -26,7 +25,7 @@ const SingleProduct = (props) => {
 
     const navigation = useNavigation()
 
-    console.log('this is', JSON.stringify(item, null, 2))
+    // console.log('this is', JSON.stringify(item, null, 2))
 
 
 

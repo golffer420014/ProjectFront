@@ -1,14 +1,17 @@
 import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Image } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 // Stacks
 import HomeNavigator from "./HomeNavigator";
-import Cart from "../screen/cart/Cart";
 import CartNavigator from "./CartNavigator";
 
-// import CartIcon from "../Shared/CartIcon";
+
+//icon 
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import Feather from 'react-native-vector-icons/Feather'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import UserNavigator from "./UserNavigator";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -18,6 +21,9 @@ const Main = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
+      screenOptions={{
+        tabBarStyle: { height: 60 },
+      }}
       tabBarOptions={{
         keyboardHidesTabBar: true,
         showLabel: true,
@@ -34,9 +40,7 @@ const Main = () => {
         component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Image
-              source={require('../assests/icon/homeIcon.png')}
-            />
+            <AntDesign name="home" color={'black'} size={wp(6)} />
           ),
           headerShown: false,
         }}
@@ -47,22 +51,18 @@ const Main = () => {
         component={CartNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Image
-              source={require('../assests/icon/searchIcon.png')}
-            />
+            <AntDesign name="search1" color={'black'} size={wp(6)} />
           ),
           headerShown: false,
         }}
       />
       {/* maps */}
       <Tab.Screen
-        name="Maps"
-        component={HomeNavigator}
+        name="User"
+        component={UserNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Image
-              source={require('../assests/icon/mapsIcon.png')}
-            />
+            <AntDesign name="login" color={'black'} size={wp(6)} />
           ),
           headerShown: false,
         }}

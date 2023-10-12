@@ -2,6 +2,9 @@ import { StyleSheet, Text, View, LogBox } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 
+//noti
+import Toast from 'react-native-toast-message'
+
 // redux
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
@@ -23,6 +26,7 @@ const App = () => {
         />
         {/* <Header /> */}
         <Main />
+        <Toast ref={(ref) => Toast.setRef(ref)} />
       </Provider>
       
     </NavigationContainer>
