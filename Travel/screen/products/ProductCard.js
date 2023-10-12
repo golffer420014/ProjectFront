@@ -79,20 +79,19 @@ const styles = StyleSheet.create({
     },
     imageContainer:{
         flex: 1,
-        width:180,
-        marginLeft:11,
-        borderTopRightRadius:30,
-        marginTop:10,
+        width:'auto',
+        padding:10,
+        alignItems:'center',
         overflow: "hidden" ,
 
     },
     image: {
-        aspectRatio:1.3,
-        borderRadius:15,
+        aspectRatio:1.5,
+        borderRadius:10,
         resizeMode: 'cover'
     },
     details:{
-        paddingHorizontal:20,
+        paddingHorizontal:10,
         paddingVertical:10
     },
     title:{
