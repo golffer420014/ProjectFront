@@ -1,16 +1,29 @@
 import { StyleSheet, Text, View , Button ,Keyboard } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState , useEffect , useContext } from 'react'
 
 //screen
 import FormContainer from '../../Shared/Form/FormContainer'
 import Input from '../../Shared/Form/Input'
 import Error from '../../Shared/Error'
 
+
+// Context
+import AuthGlobal from '../../context/store/AuthGlobal'
+import { loginUser } from '../../context/actions/Auth.actions'
+
 const Login = (props) => {
 
+    const context = useContext(AuthGlobal)
     const [email,setEmail] = useState('')
     const [password, setPassowrd] = useState('')
     const [error, setError] = useState('')
+
+    useEffect(() => {
+        if (context.stateUser.isAuthenticated === true) {
+            props.navigation.navigate("User Profile");
+        }
+    }, [context.stateUser.isAuthenticated, props.navigation])
+
 
     const handleSubmit = () => {
         const user = {
@@ -20,7 +33,7 @@ const Login = (props) => {
         if(email === "" || password === ""){
             setError('Please fill in form')
         }else{
-            console.log('success')
+            loginUser(user,context.dispatch)
         }
     }
 

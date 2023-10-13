@@ -8,8 +8,13 @@ import Toast from 'react-native-toast-message'
 // redux
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
+
+// Context API
+import Auth from './context/store/Auth';
+
 // Navigator
 import Main from './Navigators/Main';
+
 //screen
 import Header from './Shared/Header'
 import { StatusBar } from '@gluestack-ui/themed'
@@ -19,17 +24,23 @@ LogBox.ignoreAllLogs(true)
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <Auth>
       <Provider store={store}>
-        <StatusBar
-          hidden
-        />
-        {/* <Header /> */}
-        <Main />
-        <Toast ref={(ref) => Toast.setRef(ref)} />
+
+        <NavigationContainer>
+          <StatusBar
+            hidden
+          />
+          {/* <Header /> */}
+          <Main />
+          <Toast ref={(ref) => Toast.setRef(ref)} />
+
+        </NavigationContainer>
+
       </Provider>
-      
-    </NavigationContainer>
+    </Auth>
+
+
 
 
   )
