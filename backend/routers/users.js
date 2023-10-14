@@ -15,7 +15,7 @@ router.get(`/`, async (req, res) => {
         }
         res.send(userList)
     } catch (err) {
-        res.status(500).json({ success: false }) 
+        res.status(500).json({ success: false })
 
     }
 })
@@ -99,10 +99,13 @@ router.post('/login', async (req, res) => {
                 isAdmin: user.isAdmin
             },
             secret,
-            { expiresIn: '1d' } 
+            { expiresIn: '1d' }
         )
 
-        res.status(200).send({ user: user.email, token: token, id:user.id })
+        res.status(200).send({
+            user: user.email,
+            token: token,
+        })
     } else {
         res.status(400).send('password is wrong!');
     }
@@ -110,7 +113,7 @@ router.post('/login', async (req, res) => {
 
 //register
 router.post('/register', async (req, res) => {
-    try{
+    try {
         let user = new User({
             name: req.body.name,
             email: req.body.email,
@@ -127,7 +130,7 @@ router.post('/register', async (req, res) => {
 
 
         res.send(user);
-    }catch(err){
+    } catch (err) {
         return res.status(400).send('the user cannot be created!')
     }
 })

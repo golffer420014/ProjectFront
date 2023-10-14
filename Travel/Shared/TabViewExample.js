@@ -26,7 +26,8 @@ function TabViewExample(props) {
 
     function Location() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#ffff', padding: 20, color: 'gainsboro' }}>
+            <View 
+            style={{ flex: 1, backgroundColor: '#ffff', padding: 20, color: 'gainsboro' }}>
                 <Text style={{ fontSize: 18 }}>{props.numReviews}</Text>
             </View>
         );
