@@ -36,7 +36,7 @@ export const loginUser = (user, dispatch) => {
         })
 }
 
-export const getUserProfile = (id) => {
+export const getUserProfile = (id, user) => {
     fetch(`${baseURL}users/${id}`, {
         method: "GET",
         body: JSON.stringify(user),
@@ -50,7 +50,7 @@ export const getUserProfile = (id) => {
 }
 
 export const logoutUser = (dispatch) => {
-    AsyncStorage.removeItem("jwt")
+    AsyncStorage.removeItem("jwt");
     dispatch(setCurrentUser({}))
 }
 

@@ -41,6 +41,7 @@ const UserProfile = (props) => {
         setUserProfile();
       }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context.stateUser.isAuthenticated]))
 
   return (

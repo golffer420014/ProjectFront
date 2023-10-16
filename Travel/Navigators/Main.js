@@ -21,18 +21,23 @@ const Main = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={{
-        tabBarStyle: { height: 60 },
-      }}
       tabBarOptions={{
         keyboardHidesTabBar: true,
-        showLabel: true,
+        showLabel: false,
         activeTintColor: "#f47a7e",
-        inactiveTintColor: "black",
-        labelStyle: {
-          fontSize: 15, // Set the font size to 20
-        },
       }}
+      // screenOptions={{
+      //   tabBarStyle: { height: 60 },
+      // }}
+      // tabBarOptions={{
+      //   keyboardHidesTabBar: true,
+      //   showLabel: true,
+      //   activeTintColor: "#f47a7e",
+      //   inactiveTintColor: "black",
+      //   labelStyle: {
+      //     fontSize: 15, // Set the font size to 20
+      //   },
+      // }}
     >
     {/* home */}
       <Tab.Screen
@@ -40,7 +45,7 @@ const Main = () => {
         component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign name="home" color={'black'} size={wp(6)} />
+            <AntDesign name="home" color={color} size={30} />
           ),
           headerShown: false,
         }}
@@ -51,7 +56,7 @@ const Main = () => {
         component={CartNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign name="search1" color={'black'} size={wp(6)} />
+            <AntDesign name="search1" color={color} size={30} />
           ),
           headerShown: false,
         }}
@@ -62,7 +67,7 @@ const Main = () => {
         component={UserNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign name="login" color={'black'} size={wp(6)} />
+            <AntDesign name="login" color={color} size={30} />
           ),
           headerShown: false,
         }}
