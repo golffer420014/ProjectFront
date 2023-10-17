@@ -8,9 +8,9 @@ import CartNavigator from "./CartNavigator";
 
 //icon 
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import Feather from 'react-native-vector-icons/Feather'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 import UserNavigator from "./UserNavigator";
+import CommunityNavigator from "./CommunityNavigator";
 
 
 const Tab = createBottomTabNavigator();
@@ -20,7 +20,7 @@ const Main = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Post Feed"
       tabBarOptions={{
         keyboardHidesTabBar: true,
         showLabel: false,
@@ -96,16 +96,19 @@ const Main = () => {
           }}
         />
       ) : null}
-
+          */}
       <Tab.Screen
-        name="User"
-        component={UserNavigator}
+        name="Feed"
+        component={CommunityNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="user" color={color} size={30} />
+            <FontAwesome6 name="earth-asia" color={color} size={30} />
           ),
+          headerShown: false,
         }}
-      /> */}
+      /> 
+
+      
     </Tab.Navigator>
   );
 };

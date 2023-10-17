@@ -30,7 +30,7 @@ const SingleProduct = (props) => {
 
 
     return (
-        <View style={[tailwind`flex-1`]}>
+        <View style={[tailwind`flex-1` ]}>
             {/* header */}
             <Image
                 source={require('../../assests/1223348.jpg')}
