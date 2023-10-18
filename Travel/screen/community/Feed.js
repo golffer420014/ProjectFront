@@ -15,10 +15,16 @@ const Feed = (props) => {
 
 
     useEffect(() => {
+        // axios
+        //     .get(`${baseURL}products`)
+        //     .then((res) => setFeed(res.data))
+
         axios
-            .get(`${baseURL}products`)
-            .then((res) => setFeed(res.data))
+            .get(`${baseURL}community`)
+            .then((res) => setFeed(res.data)) 
     }, []);
+
+    console.log(feed)
 
 
     return (
@@ -45,7 +51,7 @@ const Feed = (props) => {
                                             style={styles.image}
                                         />
                                         <View style={styles.titleView}>
-                                            <Text style={styles.postName}>{item.name}</Text>
+                                            <Text style={styles.postName}>{item.userId}</Text>
                                             <Text style={styles.postTitle}>{item.description}</Text>
                                         </View>
                                     </View>

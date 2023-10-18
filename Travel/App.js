@@ -25,21 +25,25 @@ LogBox.ignoreAllLogs(true)
 
 const App = () => {
   return (
-    <Auth>
-      <Provider store={store}>
+    // <Auth>
+    //   <Provider store={store}>
 
-        <NavigationContainer>
-          <StatusBar
-            hidden
-          />
-          {/* <Header /> */}
-          <Main />
-          <Toast ref={(ref) => Toast.setRef(ref)} />
+    //     <NavigationContainer>
+    //       <StatusBar
+    //         hidden
+    //       />
+    //       {/* <Header /> */}
+    //       <Main />
+    //       <Toast ref={(ref) => Toast.setRef(ref)} />
 
-        </NavigationContainer>
+    //     </NavigationContainer>
 
-      </Provider>
-    </Auth>
+    //   </Provider>
+    // </Auth>
+
+    <>
+      <TestApi/>
+    </>
 
 
 

@@ -14,7 +14,7 @@ app.options('*',cors())
 // Middleware
 app.use(bodyParser.json()); 
 app.use(morgan('tiny'));
-app.use(authJwt());
+// app.use(authJwt());
 // __dirname คือตัวแปรพิเศษใน Node.js ที่ระบุโฟลเดอร์ปัจจุบันของไฟล์ JavaScript ที่รันอยู่.
 app.use('/public/uploads', express.static(__dirname + '/public/uploads'))
 app.use(errorHandler); 
@@ -27,18 +27,20 @@ const productRouter = require('./routers/product');
 const categoryRouter = require('./routers/category');
 const usersRouter = require('./routers/users');
 const orderRouter = require('./routers/order');
+const communityRouter = require('./routers/community')
 
 const api = process.env.API_URL; 
  
-http://localhost:5000/api/v1/product
+// http://localhost:5000/api/v1/product
 app.use(`${api}/products`, productRouter)
-http://localhost:5000/api/v1/category
+// http://localhost:5000/api/v1/category
 app.use(`${api}/category`, categoryRouter)
-http://localhost:5000/api/v1/users
+// http://localhost:5000/api/v1/users
 app.use(`${api}/users`, usersRouter)
-http://localhost:5000/api/v1/order
+// http://localhost:5000/api/v1/order
 app.use(`${api}/order`, orderRouter)
-
+// http://localhost:5000/api/v1/community 
+app.use(`${api}/community`, communityRouter)
 
 mongoose.connect(process.env.CONNECTION_STRING,{
     useNewUrlParser : true,
