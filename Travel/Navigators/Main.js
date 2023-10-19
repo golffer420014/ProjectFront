@@ -4,40 +4,34 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // Stacks
 import HomeNavigator from "./HomeNavigator";
 import CartNavigator from "./CartNavigator";
+import UserNavigator from "./UserNavigator";
+import CommunityNavigator from "./CommunityNavigator";
+import AdminNavigator from "./AdminNavigator";
 
 
 //icon 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
-import UserNavigator from "./UserNavigator";
-import CommunityNavigator from "./CommunityNavigator";
+
+import AuthGlobal from "../context/store/AuthGlobal";
 
 
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
 
+  const context = useContext(AuthGlobal)
+
 
   return (
     <Tab.Navigator
-      initialRouteName="Post Feed"
+      initialRouteName="Home"
       tabBarOptions={{
         keyboardHidesTabBar: true,
         showLabel: false,
         activeTintColor: "#f47a7e",
       }}
-      // screenOptions={{
-      //   tabBarStyle: { height: 60 },
-      // }}
-      // tabBarOptions={{
-      //   keyboardHidesTabBar: true,
-      //   showLabel: true,
-      //   activeTintColor: "#f47a7e",
-      //   inactiveTintColor: "black",
-      //   labelStyle: {
-      //     fontSize: 15, // Set the font size to 20
-      //   },
-      // }}
+      
     >
     {/* home */}
       <Tab.Screen
@@ -61,7 +55,19 @@ const Main = () => {
           headerShown: false,
         }}
       />
-      {/* maps */}
+      {/* auth */}
+      {context.stateUser.user.isAdmin == true ? (
+        <Tab.Screen
+          name="Admin"
+          component={AdminNavigator}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <AntDesign name="setting" color={color} size={30} />
+            ),
+            headerShown: false,
+          }}
+        />
+      ) : null}
       <Tab.Screen
         name="User"
         component={UserNavigator}
@@ -97,7 +103,9 @@ const Main = () => {
         />
       ) : null}
           */}
-      <Tab.Screen
+
+          {/* commu */}
+      {/* <Tab.Screen
         name="Feed"
         component={CommunityNavigator}
         options={{
@@ -106,7 +114,7 @@ const Main = () => {
           ),
           headerShown: false,
         }}
-      /> 
+      />  */}
 
       
     </Tab.Navigator>

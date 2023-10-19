@@ -30,7 +30,7 @@ const PostFeed = () => {
               <Text style={styles.postName}>Location</Text>
             </View>
           </View>
-
+          
         </View>
 
       </View>

@@ -14,7 +14,8 @@ import { useEffect } from 'react/cjs/react.development';
 const UserProfile = (props) => {
   const context = useContext(AuthGlobal)
   const [userProfile, setUserProfile] = useState()
-  console.log('this is', JSON.stringify(context, null, 2)) 
+  console.log('LOG login =', JSON.stringify(context, null, 2))
+  console.log('LOG user =', JSON.stringify(userProfile, null, 2))
 
   useFocusEffect(
     useCallback(() => {

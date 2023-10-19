@@ -21,10 +21,14 @@ const Feed = (props) => {
 
         axios
             .get(`${baseURL}community`)
-            .then((res) => setFeed(res.data)) 
+            .then((res) => {
+                setFeed(res.data)
+                console.log(res.data)
+            }) 
+
+            
     }, []);
 
-    console.log(feed)
 
 
     return (
@@ -37,7 +41,7 @@ const Feed = (props) => {
                 </Text>
                 </View>
             </TouchableOpacity>
-
+            
             <ScrollView>
                 {feed.map((item, index) => {
                     return (
@@ -63,6 +67,10 @@ const Feed = (props) => {
                                 <Image
                                     source={require('../../assests/1223348.jpg')}
                                     style={styles.coverImage}
+                                />
+                                <Image
+                                    style={{ width: '100%', height: 200, resizeMode: 'stretch' }}
+                                    source={{ uri: 'http://localhost:5000/public/uploads/1223348.jpg-1696187346789.jpeg' }}
                                 />
                             </View>
                         </View>
