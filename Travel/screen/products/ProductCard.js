@@ -13,9 +13,9 @@ import Entypo from 'react-native-vector-icons/Entypo'
 var { width } = Dimensions.get('window')
 
 const ProductCard = (props) => {
-    const { name, rating , description } = props
+    const { name, rating, description, myFile } = props
 
-    //  console.log('this is', JSON.stringify(props, null, 2))
+     console.log('this is', JSON.stringify(props, null, 2))
 
 
 
@@ -25,11 +25,11 @@ const ProductCard = (props) => {
                 <View style={styles.imageContainer}>
                     <Image
                     style={[styles.image, {  width: 200, height: '100%' }]}
-                        source={require('../../assests/1223348.jpg')}
-                        // source={{
-                        //     uri: image ?
-                        //         image : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
-                        // }}
+                        // source={require('../../assests/1223348.jpg')}
+                        source={{
+                            uri: myFile ?
+                                myFile : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
+                        }}
                     /> 
             </View>
             <View style={styles.details}>

@@ -91,21 +91,11 @@ const Main = () => {
         }}
       />
 
-      {context.stateUser.user.isAdmin == true ? (
-        <Tab.Screen
-          name="Admin"
-          component={AdminNavigator}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <Icon name="cog" color={color} size={30} />
-            ),
-          }}
-        />
-      ) : null}
+      
           */}
 
           {/* commu */}
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Feed"
         component={CommunityNavigator}
         options={{
@@ -114,7 +104,7 @@ const Main = () => {
           ),
           headerShown: false,
         }}
-      />  */}
+      /> 
 
       
     </Tab.Navigator>

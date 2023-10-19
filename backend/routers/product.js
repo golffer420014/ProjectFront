@@ -66,40 +66,54 @@ router.get(`/:id`, async (req, res) => {
         res.status(500).json({ success: false })
     }
 })
+
+
 //create
-router.post(`/`, uploadOptions.single('image'), async (req, res) => {
+// router.post(`/`, uploadOptions.single('image'), async (req, res) => {
+//     try {
+//         const category = await Category.findById(req.body.category);
+//         if (!category) return res.status(400).send('invalid Category')
+
+//         const file = req.file;
+//         if (!file) return res.status(400).send('No image in the request')
+
+//         const fileNanme = req.file.filename
+//         // req.protocol = htpp // req.get = localhost
+//         const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
+
+//         let product = new Product({
+//             name: req.body.name,
+//             description: req.body.description,
+//             ritchDescription: req.body.ritchDescription,
+//             image: `${basePath}${fileNanme}`, //http://localhost:5000/public/uploads/image-123
+//             brand: req.body.brand,
+//             price: req.body.price,
+//             category: req.body.category,
+//             countInStock: req.body.countInStock,
+//             rating: req.body.rating,
+//             numReviews: req.body.numReviews,
+//             isFeatured: req.body.isFeatured,
+//         })
+
+//         product = await product.save();
+//         res.send(product)
+//     } catch (err) {
+//         res.status(500).send('product cannot be create')
+//     }
+// })
+
+router.post("/uploads", async (req, res) => {
+    const body = req.body;
     try {
-        const category = await Category.findById(req.body.category);
-        if (!category) return res.status(400).send('invalid Category')
-
-        const file = req.file;
-        if (!file) return res.status(400).send('No image in the request')
-
-        const fileNanme = req.file.filename
-        // req.protocol = htpp // req.get = localhost
-        const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
-
-        let product = new Product({
-            name: req.body.name,
-            description: req.body.description,
-            ritchDescription: req.body.ritchDescription,
-            image: `${basePath}${fileNanme}`, //http://localhost:5000/public/uploads/image-123
-            brand: req.body.brand,
-            price: req.body.price,
-            category: req.body.category,
-            countInStock: req.body.countInStock,
-            rating: req.body.rating,
-            numReviews: req.body.numReviews,
-            isFeatured: req.body.isFeatured,
-        })
-
-
-        product = await product.save();
-        res.send(product)
-    } catch (err) {
-        res.status(500).send('product cannot be create')
+        const newImage = await Product.create(body)
+        newImage.save();
+        res.status(201).json({ msg: "New image uploaded...!" })
+    } catch (error) {
+        res.status(409).json({ message: error.message })
     }
 })
+
+
 // edit
 router.put('/:id', async (req, res) => {
     try {
