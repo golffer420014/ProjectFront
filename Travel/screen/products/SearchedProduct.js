@@ -7,6 +7,9 @@ let windowWidth = Dimensions.get('window').width
 
 const SearchedProduct = (props) => {
     const { productsFiltered } = props;
+
+    console.log('this is', JSON.stringify('productsFiltered',productsFiltered, null, 2))
+
     return (
         <Content style={{ width: windowWidth }}>
             {productsFiltered.length > 0 ? (
@@ -21,14 +24,14 @@ const SearchedProduct = (props) => {
                         <Left>
                             <Thumbnail
                                 source={{
-                                    uri: item.image ?
-                                        item.image : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
+                                    uri: item.imageProducts.myFile ?
+                                        item.imageProducts.myFile : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
                                 }}
                             />
                         </Left>
                         <Body>
                             <Text>{item.name}</Text>
-                            <Text note>{item.description}</Text>
+                            <Text note>{item.location}</Text>
                         </Body>
                     </ListItem>
                 ))

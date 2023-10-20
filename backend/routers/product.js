@@ -105,45 +105,31 @@ router.post(`/`, async (req, res) => {
 // edit
 router.put('/:id', async (req, res) => {
     try {
-        if (!mongoose.isValidObjectId(req.params.id)) {
-            return res.status(400).send('Invalid Product Id');
-        }
+        
 
         const category = await Category.findById(req.body.category);
         if (!category) {
             res.status(500).send('Invalid Category')
         }
 
-        const product = await Product.findById(req.body.category);
+        const product = await Product.findById(req.body.id);
         if (!product) {
             res.status(500).send('Invalid product')
         }
 
-        const file = req.file;
-        let imagepath;
-        if (file) {
-            const fileNanme = req.file.filename
-            // req.protocol = htpp // req.get = localhost
-            const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
-            imagepath = `${basePath}${fileNanme}`
-        } else {
-            imagepath = product.image
-        }
+
 
         const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id,
             {
                 name: req.body.name,
                 description: req.body.description,
-                ritchDescription: req.body.ritchDescription,
-                image: imagepath,
-                brand: req.body.brand,
-                price: req.body.price,
                 category: req.body.category,
-                countInStock: req.body.countInStock,
+                imageProducts: req.body.imageProducts,
+                location: req.body.location,
                 rating: req.body.rating,
-                numReviews: req.body.numReviews,
-                isFeatured: req.body.isFeatured,
+                latitude: req.body.latitude,
+                longitude: req.body.longitude,
             },
             { new: true }
         )
@@ -212,7 +198,7 @@ router.put(
         const files = req.files;
         let imagesPaths = [];
         const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
-
+ 
         if (files) {
             files.map((file) => {
                 imagesPaths.push(`${basePath}${file.filename}`);

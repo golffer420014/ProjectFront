@@ -47,6 +47,23 @@ router.post("/", async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 })
+ 
+router.delete('/:id', (req, res) => {
+    try {
+        ImageProducts.findByIdAndRemove(req.params.id)
+            .then(product => {
+                if (product) {
+                    return res.status(200).json({ success: true, message: 'Image product is delete' })
+                } else {
+                    return res.status(404).json({ success: false, message: 'Image product is delete' })
+                }
+            }) 
+    } catch (err) {
+        console.log(err)
+        return res.status(404).json({ success: false, error: err })
+    }
+
+})
 
 
 

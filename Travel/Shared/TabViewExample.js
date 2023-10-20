@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text , ScrollView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const Tab = createMaterialTopTabNavigator();
@@ -10,9 +10,11 @@ function TabViewExample(props) {
 
     function Description() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#ffff' , padding:20 , color:'gainsboro'}}>
-                <Text style={{fontSize:18}}>{props.description}</Text>
+            <ScrollView>
+            <View style={{ flex: 1, backgroundColor: '#ffff' , padding:20 , color:'gainsboro' , textAlign: 'center'}}>
+                <Text style={{fontSize:15}}>{props.description}</Text>
             </View>
+            </ScrollView>
         );
     }
 

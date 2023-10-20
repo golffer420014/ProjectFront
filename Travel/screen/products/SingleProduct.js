@@ -33,10 +33,15 @@ const SingleProduct = (props) => {
         <View style={[tailwind`flex-1` ]}>
             {/* header */}
             <Image
-                source={require('../../assests/1223348.jpg')}
-                style={{ width: wp(100), height: hp(55) }}
-            />
-            <SafeAreaView style={
+                // style={{ width: 'auto', height: hp(55), resizeMode: 'stretch' }}
+                style={styles.image}
+                source={{
+                    uri: item.imageProducts.myFile ?
+                        item.imageProducts.myFile : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
+                }}
+            /> 
+
+            <SafeAreaView style={ 
                 tailwind
                     `flex-row 
                     justify-between 
@@ -44,6 +49,7 @@ const SingleProduct = (props) => {
                     w-full 
                     absolute
                     `}>
+                    
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
                     style={[
@@ -95,7 +101,7 @@ const SingleProduct = (props) => {
                     <Text style={[tailwind`pt-1 mb-5`, { fontSize: wp(5) }]}>
                         <FontAwesome name="map-marker" color={'#f36d72'} size={wp(5)} />
                         {' '}
-                        {item.name}
+                        {item.location}
                     </Text>
 
                     {/* <View
@@ -144,7 +150,8 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: 250
+        height: 380,
+        resizeMode:"stretch"
     },
     contentContainer: {
         marginTop: 20,

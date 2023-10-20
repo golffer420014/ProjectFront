@@ -13,7 +13,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 var { width } = Dimensions.get('window')
 
 const ProductCard = (props) => {
-    const { name, rating, description, imageProducts } = props
+    const { name, rating, location, imageProducts } = props
 
     //  console.log('this is', JSON.stringify(props, null, 2))
 
@@ -23,17 +23,20 @@ const ProductCard = (props) => {
         <View style={styles.container}>
         
                 <View style={styles.imageContainer}>
+                {imageProducts ?(
                     <Image
-                    style={[styles.image, {  width: 200, height: '100%' }]}
+                        style={[styles.image, { width: 200, height: '100%' }]}
                         // source={require('../../assests/1223348.jpg')}
                         source={{
                             uri: imageProducts.myFile ?
                                 imageProducts.myFile : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
                         }}
                     /> 
+                ): null}
+                    
             </View>
             <View style={styles.details}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={{  justifyContent: 'space-between'}}>
                     <Text style={styles.title} numberOfLines={1}>
                         {name}
                     </Text>
@@ -47,11 +50,12 @@ const ProductCard = (props) => {
                 <View style={{ flexDirection: 'row' , alignItems:'center'}}>
                     <Entypo name='location-pin' color='#f36d72' size={18} />
                     <Text style={styles.location} numberOfLines={1}>
-                        {description}
+                        {location}
                     </Text>
                 </View>
                 
             </View>
+            
             
         </View>
     )
@@ -80,13 +84,13 @@ const styles = StyleSheet.create({
     imageContainer:{
         flex: 1,
         width:'auto',
-        padding:10,
         alignItems:'center',
         overflow: "hidden" ,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
 
     },
     image: {
-        aspectRatio:1.5,
         borderRadius:10,
         resizeMode: 'cover'
     },
@@ -97,11 +101,10 @@ const styles = StyleSheet.create({
     title:{
         fontWeight:'bold',
         color:'black',
-        fontSize:20,
+        fontSize:15,
         marginBottom:2
     },
     location:{
-        fontSize:15
     },
     rating:{
         fontSize:15

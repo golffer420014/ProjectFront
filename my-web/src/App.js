@@ -27,9 +27,13 @@ function App() {
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
-    const base64 = await convertToBase64(file);
-    console.log(base64)
-    setPostImage({ ...postImage, myFile: base64 })
+    if (file.size <= 300 * 1024) { // 300KB limit
+      const base64 = await convertToBase64(file);
+      console.log(base64);
+      setPostImage({ ...postImage, myFile: base64 });
+    } else {
+      console.error('File size exceeds the limit (300KB).');
+    }
   }
 
   return (
