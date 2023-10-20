@@ -4,7 +4,7 @@ import './App.css'
 
 import axios from 'axios';
 
-const url = "http://localhost:5000/api/v1/products/uploads"
+const url = "http://localhost:5000/api/v1/imageProducts"
 
 function App() {
 
@@ -23,6 +23,7 @@ function App() {
     createPost(postImage)
     console.log("Uploaded")
   }
+
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
