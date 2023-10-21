@@ -51,7 +51,6 @@ const App = () => {
           <Toast ref={(ref) => Toast.setRef(ref)} />
 
         </NavigationContainer>
-
       </Provider>
     </Auth>
 

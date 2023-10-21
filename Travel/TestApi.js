@@ -25,7 +25,7 @@ const TestApi = () => {
       <Item picker>
         <Picker
           mode="dropdown"
-          style={{ width: 10 }}
+          style={{ textAlign:'center' }}
           selectedValue={provine}
           placeholder="Select your country"
           onValueChange={(e) => setProvine(e)}

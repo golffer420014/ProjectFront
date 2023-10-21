@@ -104,19 +104,23 @@ const ProductContainer = (props) => {
 
 
     // category
-    const changeCtg = (ctg) => {
-        {
-            ctg === 'all'
-                ? [setProductsCtg(initialState), setActive(true)]
-                : [
-                    setProductsCtg(
-                        products.filter((i) => i.category.id === ctg),
-                        setActive(true)
-                    ),
-                ]
+    const changeCtg = (ctg, province) => {
+        if (ctg === 'all' && province === 'all') {
+            setProductsCtg(initialState);
+            setActive(true);
+        } else {
+            const filteredProducts = products.filter((item) => {
+                return (
+                    (ctg === 'all' || item.category.id === ctg) &&
+                    (province === 'ทั้งหมด' || item.provine === province)
+                );
+            });
+            setProductsCtg(filteredProducts);
+            setActive(true);
         }
+    };
 
-    }
+
 
 
     return (
@@ -165,12 +169,15 @@ const ProductContainer = (props) => {
                                         setActive={setActive}
                                     />
                                 </View>
+                                    <View style={{ backgroundColor:'#f36d72' ,width:'100%',height:50}}>
+
+                                </View>
                                 {productsCtg.length > 0 ? (
                                     <ScrollView>
                                         <View style={styles.listContainer}>
-
                                             {productsCtg.map((item) => {
                                                 return (
+
                                                     <ProductList
                                                         navigation={props.navigation}
                                                         key={item.id}
@@ -227,7 +234,7 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         flexWrap: "wrap",
         backgroundColor: "gainsboro",
-        marginBottom: 100,
+        marginBottom: 50,
     },
     center: {
         justifyContent: 'center',
