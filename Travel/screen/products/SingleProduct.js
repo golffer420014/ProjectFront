@@ -33,11 +33,10 @@ const SingleProduct = (props) => {
         <View style={[tailwind`flex-1` ]}>
             {/* header */}
             <Image
-                // style={{ width: 'auto', height: hp(55), resizeMode: 'stretch' }}
-                style={styles.image}
+                style={{ width: 'auto', height: hp(55), resizeMode: 'stretch' }}
                 source={{
-                    uri: item.imageProducts.myFile ?
-                        item.imageProducts.myFile : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
+                    uri: item.image ?
+                        item.image : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
                 }}
             /> 
 

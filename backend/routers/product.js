@@ -77,22 +77,22 @@ router.post(`/`, async (req, res) => {
         const category = await Category.findById(req.body.category);
         if (!category) return res.status(400).send('invalid Category')
 
-        const image = await ImageProducts.findById(req.body.imageProducts);
-        if (!image) return res.status(400).send('invalid image')
+       
 
 
         let product = new Product({
             name: req.body.name,
             description: req.body.description,
             category: req.body.category,
-            imageProducts: req.body.imageProducts,
+            image: req.body.image,
             location: req.body.location,
             rating: req.body.rating,
+            provine: req.body.provine,
             latitude: req.body.latitude,
             longitude: req.body.longitude,
         })
 
-        product = await product.save();
+        product = await product.save(); 
         res.send(product)
     } catch (err) {
         res.status(500).send('product cannot be create')
@@ -109,7 +109,7 @@ router.put('/:id', async (req, res) => {
 
         const category = await Category.findById(req.body.category);
         if (!category) {
-            res.status(500).send('Invalid Category')
+            res.status(500).send('Invalid Category') 
         }
 
         const product = await Product.findById(req.body.id);
@@ -120,16 +120,17 @@ router.put('/:id', async (req, res) => {
 
 
         const updatedProduct = await Product.findByIdAndUpdate(
-            req.params.id,
+            req.params.id, 
             {
-                name: req.body.name,
-                description: req.body.description,
-                category: req.body.category,
-                imageProducts: req.body.imageProducts,
-                location: req.body.location,
-                rating: req.body.rating,
-                latitude: req.body.latitude,
-                longitude: req.body.longitude,
+                // name: req.body.name,
+                // description: req.body.description,
+                // category: req.body.category,
+                // image: req.body.image,
+                // location: req.body.location,
+                // rating: req.body.rating,
+                provine: req.body.provine,
+                // latitude: req.body.latitude,
+                // longitude: req.body.longitude,
             },
             { new: true }
         )

@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         flexWrap: "wrap",
         backgroundColor: "gainsboro",
-        marginBottom: 20
+        marginBottom: 100,
     },
     center: {
         justifyContent: 'center',

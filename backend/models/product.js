@@ -10,9 +10,13 @@ const productSchema = mongoose.Schema({
         type: String,
         // required:true
     },
-    imageProducts: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ImageProducts',
+    // imageProducts: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'ImageProducts',
+    //     // required: true
+    // },
+    image: {
+        type: String,
         // required: true
     },
     category: {
@@ -27,6 +31,9 @@ const productSchema = mongoose.Schema({
     rating: {
         type: String,
         default: '0'
+    },
+    provine:{
+        type:String
     },
     latitude: {
         type: String,

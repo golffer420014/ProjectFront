@@ -13,7 +13,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 var { width } = Dimensions.get('window')
 
 const ProductCard = (props) => {
-    const { name, rating, location, imageProducts } = props
+    const { name, rating, location, image } = props
 
     //  console.log('this is', JSON.stringify(props, null, 2))
 
@@ -23,16 +23,16 @@ const ProductCard = (props) => {
         <View style={styles.container}>
         
                 <View style={styles.imageContainer}>
-                {imageProducts ?(
+                
                     <Image
                         style={[styles.image, { width: 200, height: '100%' }]}
                         // source={require('../../assests/1223348.jpg')}
                         source={{
-                            uri: imageProducts.myFile ?
-                                imageProducts.myFile : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
+                            uri: image ?
+                                image : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
                         }}
                     /> 
-                ): null}
+                
                     
             </View>
             <View style={styles.details}>
@@ -60,6 +60,26 @@ const ProductCard = (props) => {
         </View>
     )
 }
+
+{/* <Item picker>
+    <Picker
+        mode="dropdown"
+        style={{ width: 10 }}
+        selectedValue={data.RECORDS}
+        placeholder="Select your country"
+        placeholderStyle={{ color: '#007aff' }}
+        placeholderIconColor="#007aff"
+        onValueChange={(e) => setProvine(e)}
+    >
+        {data.RECORDS.map((c) => {
+            return <Picker.Item
+                key={c.code}
+                label={c.name_th}
+                value={c.name_th}
+            />
+        })}
+    </Picker>
+</Item> */}
 
 const mapDispatchToProps = (dispatch) => {
     return {
