@@ -134,7 +134,7 @@ const ProductContainer = (props) => {
                                 <AntDesign name="search1" color={"red"} size={20} />
                             </View>
                             <Input
-                                placeholder="Search"
+                                placeholder="ค้นหา"
                                 onFocus={openList}
                                 onChangeText={(text) => searchProduct(text)}
                             />
@@ -188,8 +188,8 @@ const ProductContainer = (props) => {
                                         </View>
                                     </ScrollView>
                                 ) : (
-                                    <View style={[styles.center, { height: height / 2 }]}>
-                                        <Text style={{ fontSize: 25 }}>No products found!!</Text>
+                                    <View style={[styles.center, { height: height / 3 }]}>
+                                        <Text style={{ fontSize: 25 }}>ไม่พบ สถานที่ท่องเที่ยว</Text>
                                     </View>
                                 )}
 

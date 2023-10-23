@@ -20,7 +20,6 @@ import Auth from './context/store/Auth';
 import Main from './Navigators/Main';
 
 //screen
-import Header from './Shared/Header'
 import { StatusBar } from '@gluestack-ui/themed'
 import TestApi from './TestApi';
 
