@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         margin: 10,
         borderRadius: 20,
-        padding: 10,
+        padding: 20,
         borderWidth: 2,
-        borderColor: 'orange'
+        borderColor: '#f36d72'
     },
 });
 

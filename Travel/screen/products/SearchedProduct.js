@@ -38,7 +38,7 @@ const SearchedProduct = (props) => {
             ) : (
                 <View style={styles.center}>
                     <Text style={{ alignSelf: 'center' }}>
-                        No products match the selected criteria
+                        ไม่พบ สถานที่ท่องเที่ยว
                     </Text>
                 </View>
             )}
