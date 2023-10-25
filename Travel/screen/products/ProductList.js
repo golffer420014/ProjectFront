@@ -29,7 +29,7 @@ const ProductList = (props) => {
 
                 <View style={{
                     width: width / 2,
-                    backgroundColor: 'gainsboro',
+                    backgroundColor: '#dfdfdf',
                     position: 'relative'
                 }}
                 >

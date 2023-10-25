@@ -105,11 +105,11 @@ const ProductContainer = (props) => {
 
     // category
     const changeCtg = (ctg, province) => {
-        if (ctg === 'all' && province === 'all') {
+        if (ctg === 'all' && province === 'ทั้งหมด') {
             setProductsCtg(initialState);
             setActive(true);
         } else {
-            const filteredProducts = products.filter((item) => {
+            const filteredProducts = products.filter((item) => { 
                 return (
                     (ctg === 'all' || item.category.id === ctg) &&
                     (province === 'ทั้งหมด' || item.provine === province)
@@ -169,7 +169,7 @@ const ProductContainer = (props) => {
                                         setActive={setActive}
                                     />
                                 </View>
-                                    <View style={{ backgroundColor:'#f36d72' ,width:'100%',height:50}}>
+                                    <View style={{ backgroundColor:'#ffff' ,width:'100%',height:60}}>
 
                                 </View>
                                 {productsCtg.length > 0 ? (
