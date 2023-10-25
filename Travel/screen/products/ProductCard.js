@@ -61,25 +61,6 @@ const ProductCard = (props) => {
     )
 }
 
-{/* <Item picker>
-    <Picker
-        mode="dropdown"
-        style={{ width: 10 }}
-        selectedValue={data.RECORDS}
-        placeholder="Select your country"
-        placeholderStyle={{ color: '#007aff' }}
-        placeholderIconColor="#007aff"
-        onValueChange={(e) => setProvine(e)}
-    >
-        {data.RECORDS.map((c) => {
-            return <Picker.Item
-                key={c.code}
-                label={c.name_th}
-                value={c.name_th}
-            />
-        })}
-    </Picker>
-</Item> */}
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -96,15 +77,14 @@ const styles = StyleSheet.create({
         width: 182,
         height: 200,
         borderRadius: 20,
-        elevation: 1,
+        elevation: 5,
         backgroundColor: 'white',
         marginLeft:10,
-        marginTop:20,
     },
     imageContainer:{
         flex: 1,
         width:'auto',
-        alignItems:'center',
+        alignItems:'stretch',
         overflow: "hidden" ,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,

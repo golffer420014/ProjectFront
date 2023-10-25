@@ -29,8 +29,9 @@ const ProductList = (props) => {
 
                 <View style={{
                     width: width / 2,
-                    backgroundColor: '#dfdfdf',
-                    position: 'relative'
+                    // backgroundColor: '#dfdfdf',
+                    position: 'relative',
+                    marginTop:20
                 }}
                 >
                     <ProductCard {...item} />

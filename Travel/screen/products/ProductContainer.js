@@ -1,9 +1,7 @@
-
-
 import React, { useState, useEffect } from 'react'
 import { Container, Item, Header, Icon, Input } from 'native-base'
 import { StyleSheet, View, Text, ScrollView, Dimensions, ActivityIndicator, Keyboard } from 'react-native'
-
+import LinearGradient from 'react-native-linear-gradient';
 
 // base
 import baseURL from '../../assests/common/baseUrl';
@@ -109,7 +107,7 @@ const ProductContainer = (props) => {
             setProductsCtg(initialState);
             setActive(true);
         } else {
-            const filteredProducts = products.filter((item) => { 
+            const filteredProducts = products.filter((item) => {
                 return (
                     (ctg === 'all' || item.category.id === ctg) &&
                     (province === 'ทั้งหมด' || item.provine === province)
@@ -157,9 +155,9 @@ const ProductContainer = (props) => {
                         <ScrollView>
 
                             <View style={styles.container}>
-                                <View>
+                                {/* <View>
                                     <Banner />
-                                </View>
+                                </View> */}
                                 <View>
                                     <CategoryFilter
                                         categories={categories}
@@ -169,12 +167,18 @@ const ProductContainer = (props) => {
                                         setActive={setActive}
                                     />
                                 </View>
-                                    <View style={{ backgroundColor:'#ffff' ,width:'100%',height:60}}>
+                                <View style={{ backgroundColor: '#ffff', width: '100%', height: 60 }}>
 
                                 </View>
                                 {productsCtg.length > 0 ? (
                                     <ScrollView>
-                                        <View style={styles.listContainer}>
+                                        <LinearGradient
+                                            colors={['#dfdfdf', '#dfdfdf']}
+                                            // colors={['#FF5F6D', '#FFC371']}
+                                            // colors={['#2E3192', '#1BFFFF']}
+                                            // colors={['#BFF098', '#6FD6FF']}
+                                            style={styles.listContainer}
+                                        >
                                             {productsCtg.map((item) => {
                                                 return (
 
@@ -185,12 +189,19 @@ const ProductContainer = (props) => {
                                                     />
                                                 )
                                             })}
-                                        </View>
+                                        </LinearGradient>
                                     </ScrollView>
                                 ) : (
-                                    <View style={[styles.center, { height: height / 3 }]}>
-                                        <Text style={{ fontSize: 25 }}>ไม่พบ สถานที่ท่องเที่ยว</Text>
-                                    </View>
+                                    <LinearGradient
+                                                colors={['#dfdfdf', '#dfdfdf']}
+                                                // colors={['#FF5F6D', '#FFC371']}
+                                                style={{borderTopLeftRadius:30, borderTopRightRadius:30}}
+                                    >
+                                        <View style={[styles.center, { height: height, top: -200 }]}>
+                                            <Text style={{ fontSize: 25 ,fontWeight:'bold' ,color:'black' }}>ไม่พบสถานที่ท่องเที่ยว</Text>
+                                        </View>
+                                    </LinearGradient>
+
                                 )}
 
 
@@ -203,7 +214,7 @@ const ProductContainer = (props) => {
 
             ) : (
                 //loading
-                <Container style={[styles.center, { backgroundColor: '#f2f2f2' }]}>
+                <Container style={[styles.center, { backgroundColor: '#dfdfdf' }]}>
                     <ActivityIndicator size="large" color='#f36d72' />
                 </Container>
             )}
@@ -225,19 +236,20 @@ const styles = StyleSheet.create({
     },
     container: {
         flexWrap: "wrap",
-        backgroundColor: "gainsboro",
+        backgroundColor: "#ffff",
     },
     listContainer: {
-        // height: height,
         flex: 1,
-        flexDirection: "row",
-        alignItems: "flex-start",
-        flexWrap: "wrap",
-        backgroundColor: "gainsboro",
-        marginBottom: 50,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        flexWrap: 'wrap',
+        height: height / 1.5,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
     },
     center: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+
     }
 })

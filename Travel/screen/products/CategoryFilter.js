@@ -21,7 +21,7 @@ const CategoryFilter = (props) => {
     <View>
       <Item picker style={styles.pickerContainer}>
         <Picker
-          mode="dropdown"
+          mode="dialog"
           selectedValue={provine}
           style={styles.picker}
           onValueChange={(value) => setProvine(value)}
@@ -134,8 +134,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 99,
     backgroundColor: '#ffff',
-    bottom: -61,
-    right: 0,
+    bottom: -60,
+    right: 20,
     width:200,
     // borderRadius: 30,
     // borderColor:'#f36d72'
