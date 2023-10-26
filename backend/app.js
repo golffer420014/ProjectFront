@@ -56,7 +56,7 @@ mongoose.connect(process.env.CONNECTION_STRING,{
     console.log('connect DB error',err)
 })
 
-app.listen(5000, ()=>{
+app.listen(3000, ()=>{
     // console.log(api);
     console.log('server is runnimg is http://localhost:5000');
 })

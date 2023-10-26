@@ -9,6 +9,8 @@ import Error from '../../Shared/Error'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import baseURL from '../../assests/common/baseUrl'
 import axios from 'axios'
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+import mime from "mime";
 
 import data from '../../data/from.json'
 
@@ -27,15 +29,29 @@ const ProductForm = (props) => {
   const [categories, setCategories] = useState([])
   const [mainImage, setMainImage] = useState()
   const [image, setImage] = useState()
-  const [province, setProvince] = useState()
+  const [provine, setprovine] = useState()
   const [location, setLocation] = useState()
   const [latitude, setLatitude] = useState()
   const [longitude, setLongitude] = useState()
   const [err, setErr] = useState()
   const [token, setToken] = useState()
-  const [isFeatured, setIsFeatured] = useState(false)
+
+  // console.log(name)
+  // console.log(description)
+  // console.log(location)
+  // console.log(latitude)
+  // console.log(longitude)
+  // console.log(rating)
+  console.log(provine)
 
   useEffect(() => {
+
+    AsyncStorage.getItem('jwt')
+      .then((res) => {
+        setToken(res)
+      })
+      .catch((err) => console.log('cant get token'))
+
     axios
       .get(`${baseURL}category`)
       .then((res) => setCategories(res.data))
@@ -44,21 +60,106 @@ const ProductForm = (props) => {
 
     return () => {
       setCategories([])
-      setProvince()
+      setprovine()
     }
 
   }, [])
 
-  // console.log(province)
-  // console.log(category)
+  const openImagePicker = () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 4000,
+      maxWidth: 4000,
+    };
+
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image picker error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        setMainImage(imageUri);
+        setImage(imageUri)
+      }
+    });
+  };
+
+  const addProduct = () => {
+    if (
+      name == "" ||
+      description == "" ||
+      location == "" ||
+      latitude == "" ||
+      longitude == "" ||
+      rating == ""
+    ) {
+      setErr('มีบางช่องยังว่างอยู่ !!')
+    }
+
+    let formData = new FormData();
+
+    const newImageUri = "file:///" + image.split("file:/").join("");
+
+    formData.append("image", {
+      uri: newImageUri,
+      type: mime.getType(newImageUri),
+      name: newImageUri.split("/").pop()
+    });
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("location", location);
+    formData.append("latitude", latitude);
+    formData.append("longitude", longitude);
+    formData.append("rating", rating);
+    formData.append("category", category);
+    formData.append("provine", provine);
+
+    const config = {
+      Headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    axios
+      .post(`${baseURL}products`, formData, config)
+      .then((res) => {
+        if (res.status == 200) {
+          Toast.show({
+            topOffset: 60,
+            type: 'success',
+            text1: "New Product success",
+            text2: ''
+          })
+          setTimeout(() => {
+            props.navigation.navigate("Products")
+          }, 500)
+        }
+      })
+      .catch((err) =>{
+        Toast.show({
+          topOffset: 60,
+          type: 'error',
+          text1: "Something wrong",
+          text2: 'Please try agian'
+        })
+      })
+
+  }
+
+
+
+
 
   return (
     <FormContainer title="Add Product">
       <View style={styles.imageContainer}>
         <Image style={styles.image} source={{ uri: mainImage }} />
-        <TouchableOpacity style={styles.imagePicker}>
+        <TouchableOpacity onPress={openImagePicker} style={styles.imagePicker}>
           {/* <Text style={{ color:'#f36d72'}}>IMAGE</Text> */}
-          <FontAwesome name='camera' color='white'/>
+          <FontAwesome name='camera' color='white' />
         </TouchableOpacity>
       </View>
       <View style={styles.label}>
@@ -102,6 +203,7 @@ const ProductForm = (props) => {
             placeholder="ละติจูติ"
             name="latitude"
             value={latitude}
+            keyboardType={"numeric"}
             onChangeText={(text) => setLatitude(text)}
           />
         </View>
@@ -114,6 +216,7 @@ const ProductForm = (props) => {
             placeholder="ลองจิจูด"
             name="longitude"
             value={longitude}
+            keyboardType={"numeric"}
             onChangeText={(text) => setLongitude(text)}
           />
         </View>
@@ -135,7 +238,7 @@ const ProductForm = (props) => {
 
 
       {/*  */}
-      {/* cat & province */}
+      {/* cat & provine */}
       {/*  */}
       <View style={{ flexDirection: 'row' }}>
         <View>
@@ -161,16 +264,16 @@ const ProductForm = (props) => {
 
         <View>
           <View style={[styles.label, { marginBottom: 10 }]}>
-            <Text style={{ fontWeight: 'bold', color: '#f36d72' }}>Province</Text>
+            <Text style={{ fontWeight: 'bold', color: '#f36d72' }}>provine</Text>
           </View>
           <Item picker style={styles.pickerContainer}>
             <Picker
               mode='dialog'
               style={{ width: undefined }}
-              selectedValue={province}
+              selectedValue={provine}
               placeholderStyle={{ color: "#007aff" }}
               placeholderIconColor="#007aff"
-              onValueChange={(e) => [setProvince(e)]}
+              onValueChange={(e) => [setprovine(e)]}
             >
               {data.RECORDS.map((c) => {
                 return <Picker.Item key={c.id} label={c.name_th} value={c.name_th} />
@@ -186,13 +289,13 @@ const ProductForm = (props) => {
         <EasyButton
           large
           main
-          // onPress
+         onPress={() => addProduct()}
         >
           <Text style={styles.buttonText}>Confirm</Text>
         </EasyButton>
       </View>
 
-      
+
     </FormContainer>
   )
 }

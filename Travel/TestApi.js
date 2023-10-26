@@ -1,67 +1,44 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+import React, { useState, useEffect } from 'react';
+import { Button, Image, View, Platform } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
-const TestApi = () => {
-  const [selectedImage, setSelectedImage] = React.useState(null);
+// permission
+import { request, PERMISSIONS } from 'react-native-permissions';
 
-  const handleImagePick = () => {
-    const options = {
-      title: 'Select an Image',
-      cancelButtonTitle: 'Cancel',
-      takePhotoButtonTitle: 'Take Photo',
-      chooseFromLibraryButtonTitle: 'Choose from Library',
-      mediaType: 'photo',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
+export default function TestApi() {
+  const [image, setImage] = useState(null);
 
-    ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else {
-        console.log('Selected Image URI: ', response.uri);
-        setSelectedImage({ uri: response.uri });
-      }
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
   };
 
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      request(PERMISSIONS.ANDROID.CAMERA);
+      request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
+      request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE);
+    } else if (Platform.OS === 'ios') {
+      request(PERMISSIONS.IOS.CAMERA);
+      request(PERMISSIONS.IOS.PHOTO_LIBRARY);
+    }
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>TestApi</Text>
-      <TouchableOpacity style={styles.button} onPress={handleImagePick}>
-        <Text style={styles.buttonText}>Pick an Image</Text>
-      </TouchableOpacity>
-      {selectedImage && <Image source={selectedImage} style={styles.image} />}
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
     </View>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    marginTop: 20,
-  },
-});
-
-export default TestApi;
+}

@@ -2,9 +2,7 @@ import { StyleSheet, Text, View, LogBox } from 'react-native'
 import React , {useEffect} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 
-// permission
-import { Platform } from 'react-native';
-import { request,PERMISSIONS } from 'react-native-permissions';
+
 
 //noti
 import Toast from 'react-native-toast-message'
@@ -27,16 +25,7 @@ import TestApi from './TestApi';
 LogBox.ignoreAllLogs(true)
 
 const App = () => {
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      request(PERMISSIONS.ANDROID.CAMERA);
-      request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
-      request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE);
-    } else if (Platform.OS === 'ios') {
-      request(PERMISSIONS.IOS.CAMERA);
-      request(PERMISSIONS.IOS.PHOTO_LIBRARY);
-    }
-  }, []);
+  
   return (
     <Auth>
       <Provider store={store}>
