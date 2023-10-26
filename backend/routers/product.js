@@ -104,9 +104,7 @@ router.post(`/`, async (req, res) => {
 
 // edit
 router.put('/:id', async (req, res) => {
-    try {
-        
-
+    try { 
         const category = await Category.findById(req.body.category);
         if (!category) {
             res.status(500).send('Invalid Category') 
