@@ -171,8 +171,18 @@ const ProductContainer = (props) => {
 
                                 </View>
                                 {productsCtg.length > 0 ? (
-                                    <ScrollView>
-                                        <LinearGradient
+                                        
+                                        <View style={styles.listContainer}>
+                                            {productsCtg.map((item) => {
+                                                return (
+                                                    <ProductList
+                                                        navigation={props.navigation}
+                                                        key={item.name}
+                                                        item={item}
+                                                    />
+                                                )
+                                            })}
+                                            {/* <LinearGradient
                                             colors={['#dfdfdf', '#dfdfdf']}
                                             // colors={['#FF5F6D', '#FFC371']}
                                             // colors={['#2E3192', '#1BFFFF']}
@@ -182,15 +192,16 @@ const ProductContainer = (props) => {
                                             {productsCtg.map((item) => {
                                                 return (
 
-                                                    <ProductList
-                                                        navigation={props.navigation}
-                                                        key={item.id}
-                                                        item={item}
-                                                    />
+                                                        <ProductList
+                                                            navigation={props.navigation}
+                                                            key={item.id}
+                                                            item={item}
+                                                        />
                                                 )
                                             })}
-                                        </LinearGradient>
-                                    </ScrollView>
+                                        </LinearGradient> */}
+                                        </View>
+                                       
                                 ) : (
                                     <LinearGradient
                                                 colors={['#dfdfdf', '#dfdfdf']}

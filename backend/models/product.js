@@ -10,11 +10,7 @@ const productSchema = mongoose.Schema({
         type: String,
         // required:true
     },
-    // imageProducts: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'ImageProducts',
-    //     // required: true
-    // },
+
     image: {
         type: String,
     },

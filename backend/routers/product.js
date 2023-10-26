@@ -8,9 +8,8 @@ const multer = require('multer')
 const FILE_TYPE_MAP = {
     'image/png': 'png',
     'image/jpeg': 'jpeg',
-    'image/jpg': 'jpg'
-}
-
+    'image/jpg': 'jpg',
+};
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const isValid = FILE_TYPE_MAP[file.mimetype];
@@ -20,7 +19,7 @@ const storage = multer.diskStorage({
             uploadError = null;
         }
         // cb = callback
-        cb(uploadError, 'C:/Users/golfy/Desktop/lern-mern/backend/public/uploads')
+        cb(uploadError, 'C:/Users/golfy/Desktop/App/backend/public/uploads')
     },
     filename: function (req, file, cb) {
         //ทุกพื้นที่ว่างจะถูกเติมด้วย - เช่น 'golf suriya' จะเป็น 'golf-suriya'
@@ -79,7 +78,8 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
     if (!file) return res.status(400).send('No image in the request');
 
     const fileName = file.filename;
-    const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+    const baseAndroid = `http://10.0.2.2:3000/public/uploads/`;
+    // req.protocol = http
     let product = new Product({
         // image: req.body.image,
         name: req.body.name,
@@ -87,19 +87,18 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
         location: req.body.location,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
-        rating: req.body.rating,
-        category: req.body.category,
+        rating: req.body.rating, 
+        category: req.body.category, 
         provine: req.body.provine,
-        image: `${basePath}${fileName}`, // "http://localhost:3000/public/upload/image-2323232"
+        image: `${baseAndroid}${fileName}`, 
     });
 
     product = await product.save();
 
+
     if (!product) return res.status(500).send('The product cannot be created');
 
-    const imageUrl = `${basePath}${fileName}`;
-
-    res.json({ imageUrl }); // Send the image URL in the response
+    res.send(product);
 });
 
 
