@@ -1,48 +1,67 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Item, Picker } from 'native-base'
-
-// import Provine from './data/from.json'
-// console.log(JSON.stringify(Provine.RECORDS, null, 2))
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 
 const TestApi = () => {
+  const [selectedImage, setSelectedImage] = React.useState(null);
 
-  const data = require('./data/from.json')
+  const handleImagePick = () => {
+    const options = {
+      title: 'Select an Image',
+      cancelButtonTitle: 'Cancel',
+      takePhotoButtonTitle: 'Take Photo',
+      chooseFromLibraryButtonTitle: 'Choose from Library',
+      mediaType: 'photo',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
 
-  const [provine,setProvine] = useState()
-
-  // useEffect(()=>{
-  //   setProvine(Provine.RECORDS)
-  // },[])
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        console.log('Selected Image URI: ', response.uri);
+        setSelectedImage({ uri: response.uri });
+      }
+    });
+  };
 
   return (
-    <View >
-      <Text>dwadwa</Text>
-      {/* {provine.RECORDS.map(item => (
-        <Text style={{ color: 'red' }} key={item.id}>{item.name_th}</Text>
-      ))} */}
-
-      <Item picker>
-        <Picker
-          mode="dropdown"
-          style={{ textAlign:'center' }}
-          selectedValue={provine}
-          placeholder="Select your country"
-          onValueChange={(e) => setProvine(e)}
-        >
-          {data.RECORDS.map((c) => {
-            return <Picker.Item
-              key={c.code}
-              label={c.name_th}
-              value={c.name_th}
-            />
-          })}
-        </Picker>
-      </Item>
+    <View style={styles.container}>
+      <Text>TestApi</Text>
+      <TouchableOpacity style={styles.button} onPress={handleImagePick}>
+        <Text style={styles.buttonText}>Pick an Image</Text>
+      </TouchableOpacity>
+      {selectedImage && <Image source={selectedImage} style={styles.image} />}
     </View>
-  )
-}
+  );
+};
 
-export default TestApi
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginTop: 20,
+  },
+});
 
-const styles = StyleSheet.create({})
+export default TestApi;

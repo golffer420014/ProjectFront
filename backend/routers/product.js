@@ -81,15 +81,15 @@ router.post(`/`, async (req, res) => {
 
 
         let product = new Product({
+            image: req.body.image,
             name: req.body.name,
             description: req.body.description,
-            category: req.body.category,
-            image: req.body.image,
             location: req.body.location,
-            rating: req.body.rating,
-            provine: req.body.provine,
             latitude: req.body.latitude,
             longitude: req.body.longitude,
+            rating: req.body.rating,
+            category: req.body.category,
+            provine: req.body.provine,
         })
 
         product = await product.save(); 
