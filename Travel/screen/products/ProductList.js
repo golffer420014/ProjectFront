@@ -1,37 +1,44 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View, Dimensions, ScrollView } from 'react-native';
+import { TouchableOpacity, View, Dimensions , ScrollView } from 'react-native';
 import { ListItem, Badge, Item, Picker } from 'native-base';
 
-import ProductCard from './ProductCard';
+import ProductCard from './ProductCard'
+
+import { Text } from 'react-native-svg';
 
 var { width } = Dimensions.get("window");
 
 const ProductList = (props) => {
-    const data = require('../../data/from.json');
-    const [provine, setProvine] = useState();
+
+
+    const data = require('../../data/from.json')
+
+    const [provine, setProvine] = useState()
+
 
     const { item } = props;
-
     return (
-        <ScrollView >
+        <View style={{marginBottom:10}}>
+            
             <TouchableOpacity
+                style={{ width: '50%' }}
                 onPress={() =>
                     props.navigation.navigate("Product Detail", { item: item })
                 }
             >
-                <View
-                    style={{
-                        width: width / 2,
-                        // backgroundColor: '#dfdfdf',
-                        marginTop: 20,
-                    }}
+
+                <View style={{
+                    width: width / 2,
+                    // backgroundColor: '#dfdfdf',
+                    marginTop:10
+                }}
                 >
                     <ProductCard {...item} />
                 </View>
+
             </TouchableOpacity>
-            {/* Render more products here */}
-        </ScrollView>
-    );
-};
+        </View>
+    )
+}
 
 export default ProductList;

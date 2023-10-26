@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Container, Item, Header, Icon, Input } from 'native-base'
 import { StyleSheet, View, Text, ScrollView, Dimensions, ActivityIndicator, Keyboard } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
@@ -15,9 +15,11 @@ import CategoryFilter from './CategoryFilter';
 
 //icons
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import { useFocusEffect } from '@react-navigation/native';
 
 
 var { height } = Dimensions.get('window')
+let windowWidth = Dimensions.get('window').width
 
 
 const ProductContainer = (props) => {
@@ -36,7 +38,8 @@ const ProductContainer = (props) => {
     //loading
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
+    useFocusEffect(
+    useCallback(() => {
 
         setFocus(false)
 
@@ -80,10 +83,12 @@ const ProductContainer = (props) => {
             setCategories([])
             setActive()
             setInitialState()
+            setLoading(true)
 
 
         }
     }, [])
+    )
 
     const searchProduct = (text) => {
         setProductsFiltered(
@@ -118,6 +123,13 @@ const ProductContainer = (props) => {
         }
     };
 
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
 
 
 
@@ -158,7 +170,7 @@ const ProductContainer = (props) => {
                                 {/* <View>
                                     <Banner />
                                 </View> */}
-                                <View>
+                                <View style={{backgroundColor:'#dfdfdf'}}>
                                     <CategoryFilter
                                         categories={categories}
                                         categoryFilter={changeCtg}
@@ -167,54 +179,43 @@ const ProductContainer = (props) => {
                                         setActive={setActive}
                                     />
                                 </View>
-                                <View style={{ backgroundColor: '#ffff', width: '100%', height: 60 }}>
+                                <View style={{ backgroundColor: '#ffff', width: '100%', height: 60 , zIndex:-99 }}>
 
                                 </View>
                                 {productsCtg.length > 0 ? (
-                                        
-                                        <View style={styles.listContainer}>
-                                            {productsCtg.map((item) => {
-                                                return (
-                                                    <ProductList
-                                                        navigation={props.navigation}
-                                                        key={item.name}
-                                                        item={item}
-                                                    />
-                                                )
-                                            })}
-                                            {/* <LinearGradient
-                                            colors={['#dfdfdf', '#dfdfdf']}
-                                            // colors={['#FF5F6D', '#FFC371']}
-                                            // colors={['#2E3192', '#1BFFFF']}
-                                            // colors={['#BFF098', '#6FD6FF']}
-                                            style={styles.listContainer}
-                                        >
-                                            {productsCtg.map((item) => {
-                                                return (
 
-                                                        <ProductList
-                                                            navigation={props.navigation}
-                                                            key={item.id}
-                                                            item={item}
-                                                        />
-                                                )
-                                            })}
-                                        </LinearGradient> */}
+                                    <ScrollView>
+                                        <View style={[styles.listProduct,]}>
+                                                {
+                                                    shuffleArray([...productsCtg]).map((item) => {
+                                                        return (
+                                                            <View style={{ width: '50%' }} key={item.id}>
+                                                                <ProductList
+                                                                    navigation={props.navigation}
+                                                                    item={item}
+                                                                />
+                                                            </View>
+                                                        );
+                                                    })
+                                                }
                                         </View>
-                                       
+
+                                    </ScrollView>
+
+
                                 ) : (
                                     <LinearGradient
-                                                colors={['#dfdfdf', '#dfdfdf']}
-                                                // colors={['#FF5F6D', '#FFC371']}
-                                                style={{borderTopLeftRadius:30, borderTopRightRadius:30}}
+                                        colors={['#dfdfdf', '#dfdfdf']}
+                                        // colors={['#FF5F6D', '#FFC371']}
+                                        style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30 }}
                                     >
                                         <View style={[styles.center, { height: height, top: -200 }]}>
-                                            <Text style={{ fontSize: 25 ,fontWeight:'bold' ,color:'black' }}>ไม่พบสถานที่ท่องเที่ยว</Text>
+                                            <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'black' }}>ไม่พบสถานที่ท่องเที่ยว</Text>
                                         </View>
                                     </LinearGradient>
 
                                 )}
-
+                                
 
                             </View>
 
@@ -262,5 +263,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
 
+    },
+    listProduct: {
+        backgroundColor: '#dfdfdf',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        borderTopRightRadius:20,
+        borderTopLeftRadius:20,
+        //justifyContent:'center', {} = horizo center
+        alignItems:'center',
     }
 })

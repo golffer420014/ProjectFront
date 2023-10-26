@@ -11,7 +11,8 @@ const SearchedProduct = (props) => {
     console.log('this is', JSON.stringify('productsFiltered',productsFiltered, null, 2))
 
     return (
-        <Content style={{ width: windowWidth }}>
+        // <Content style={{ width: windowWidth }}>
+            <Content style={{ width: windowWidth }}>
             {productsFiltered.length > 0 ? (
                 productsFiltered.map((item) => ( 
                     <ListItem

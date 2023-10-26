@@ -76,10 +76,9 @@ export default connect(null, mapDispatchToProps)(ProductCard)
 
 const styles = StyleSheet.create({
     container: {
-        width: 182,
+        width: 185,
         height: 200,
         borderRadius: 20,
-        elevation: 5,
         backgroundColor: 'white',
         marginLeft:10,
     },
