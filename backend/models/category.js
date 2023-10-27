@@ -21,6 +21,6 @@ categorySchema.method('toJSON', function () {
     return { ...result, id };
 });
 
-
+ 
 //สร้าง tabel category โดยเรียกใช้ function categorySchema
 exports.Category = mongoose.model('Category', categorySchema);

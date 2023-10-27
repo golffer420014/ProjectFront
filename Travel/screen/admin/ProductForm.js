@@ -44,6 +44,7 @@ const ProductForm = (props) => {
     if (!props.route.params) {
       setItem(null);
     } else {
+      setItem(props.route.params.item);
       setName(props.route.params.item.name);
       setDescription(props.route.params.item.description);
       setLocation(props.route.params.item.location);
@@ -186,7 +187,7 @@ const ProductForm = (props) => {
 
 
 
-  console.log(props.route.params.item.image)
+  // console.log(props.route.params.item.image)
 
 
 

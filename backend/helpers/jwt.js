@@ -10,7 +10,6 @@ function authJwt() {
     }).unless({
         path: [
             // (.*)สามารถเข้าถึงข้อมูลได้ทั้งหมดที่อยู่หลัง path เช่น http://localhost:5000/api/v1/products/get/featured/1
-            { url: /\/api\/v1\/users(.*)/, methods: ['GET', 'OPTIONS'] },
             { url: /\/public\/uploads(.*)/, methods: ['GET', 'OPTIONS'] },
             { url: /\/api\/v1\/products(.*)/, methods: ['GET', 'OPTIONS'] },
             { url: /\/api\/v1\/category(.*)/, methods: ['GET', 'OPTIONS'] },

@@ -55,6 +55,18 @@ const Main = () => {
           headerShown: false,
         }}
       />
+
+      <Tab.Screen
+        name="Feed"
+        component={CommunityNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <FontAwesome6 name="earth-asia" color={color} size={30} />
+          ),
+          headerShown: false,
+        }}
+      /> 
+
       {/* auth */}
       {context.stateUser.user.isAdmin == true ? (
         <Tab.Screen
@@ -95,16 +107,7 @@ const Main = () => {
           */}
 
           {/* commu */}
-      <Tab.Screen
-        name="Feed"
-        component={CommunityNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <FontAwesome6 name="earth-asia" color={color} size={30} />
-          ),
-          headerShown: false,
-        }}
-      /> 
+      
 
       
     </Tab.Navigator>

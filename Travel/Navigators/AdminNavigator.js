@@ -21,7 +21,9 @@ function MyStack() {
             />
             <Stack.Screen name="Categories" component={Categories} />
             <Stack.Screen name="Orders" component={Orders} />
-            <Stack.Screen name="ProductForm" component={ProductForm}/> 
+            <Stack.Screen name="ProductForm" component={ProductForm} 
+                options={{ title: 'Product Form' }}
+            /> 
         </Stack.Navigator>
     )
 }
