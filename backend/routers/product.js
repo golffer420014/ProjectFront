@@ -102,71 +102,60 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
 });
 
 
-// router.post(`/`, async (req, res) => {
-//     try {
-//         const category = await Category.findById(req.body.category);
-//         if (!category) return res.status(400).send('invalid Category')
-
-
-
-
-//         let product = new Product({
-//             image: req.body.image,
-//             name: req.body.name,
-//             description: req.body.description,
-//             location: req.body.location,
-//             latitude: req.body.latitude,
-//             longitude: req.body.longitude,
-//             rating: req.body.rating,
-//             category: req.body.category,
-//             provine: req.body.provine,
-//         })
-
-//         product = await product.save(); 
-//         res.send(product)
-//     } catch (err) {
-//         res.status(500).send('product cannot be create')
-//     }
-// })
 
 
 
 
 // edit
-router.put('/:id', async (req, res) => {
-    try {
-        const category = await Category.findById(req.body.category);
-        if (!category) {
-            res.status(500).send('Invalid Category')
-        }
 
-        const product = await Product.findById(req.body.id);
-        if (!product) {
-            res.status(500).send('Invalid product')
-        }
-
-
-
-        const updatedProduct = await Product.findByIdAndUpdate(
-            req.params.id,
-            {
-                // name: req.body.name,
-                // description: req.body.description,
-                // category: req.body.category,
-                // image: req.body.image,
-                // location: req.body.location,
-                // rating: req.body.rating,
-                provine: req.body.provine,
-                // latitude: req.body.latitude,
-                // longitude: req.body.longitude,
-            },
-            { new: true }
-        )
-        res.send(updatedProduct)
-    } catch (err) {
-        res.status(400).send('invalid Product Or Something wrong')
+router.put('/:id', uploadOptions.single('image'), async (req, res) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).send('Invalid Product Id');
     }
-})
+    const category = await Category.findById(req.body.category);
+    if (!category) return res.status(400).send('Invalid Category');
+
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(400).send('Invalid Product!');
+
+    const file = req.file;
+    let imagepath;
+
+    if (file) {
+        const fileName = file.filename;
+        const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+        imagepath = `${basePath}${fileName}`;
+    } else {
+        imagepath = product.image;
+    }
+
+    // const fileName = file.filename;
+    // const baseAndroid = `http://10.0.2.2:3000/public/uploads/`;
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+            
+            image: imagepath,
+            name: req.body.name,
+            description: req.body.description,
+            category: req.body.category,
+            location: req.body.location,
+            rating: req.body.rating,
+            provine: req.body.provine,
+            latitude: req.body.latitude,
+            longitude: req.body.longitude,
+        },
+        { new: true }
+    );
+
+    if (!updatedProduct)
+        return res.status(500).send('the product cannot be updated!');
+
+    res.send(updatedProduct);
+});
+
+
 // delete
 router.delete('/:id', (req, res) => {
     try {

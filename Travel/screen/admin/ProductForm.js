@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { StyleSheet, Text, View, Image, TouchableOpacity, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Item, Picker } from 'native-base'
@@ -35,16 +36,23 @@ const ProductForm = (props) => {
   const [longitude, setLongitude] = useState()
   const [err, setErr] = useState()
   const [token, setToken] = useState()
+  const [item, setItem] = useState();
 
-  // console.log(name)
-  // console.log(description)
-  // console.log(location)
-  // console.log(latitude)
-  // console.log(longitude)
-  // console.log(rating)
-  console.log(provine)
 
   useEffect(() => {
+
+    if (!props.route.params) {
+      setItem(null);
+    } else {
+      setName(props.route.params.item.name);
+      setDescription(props.route.params.item.description);
+      setLocation(props.route.params.item.location);
+      setLatitude(props.route.params.item.latitude);
+      setLongitude(props.route.params.item.longitude);
+      setRating(props.route.params.item.rating);
+      setCategory(props.route.params.item.category._id);
+      setprovine(props.route.params.item.provine);
+    }
 
     AsyncStorage.getItem('jwt')
       .then((res) => {
@@ -123,33 +131,62 @@ const ProductForm = (props) => {
       }
     }
 
-    axios
-      .post(`${baseURL}products`, formData, config)
-      .then((res) => {
-        if (res.status == 200) {
+
+    if (item !== null) {
+      axios
+        .put(`${baseURL}products/${props.route.params.item.id}`, formData, config)
+        .then((res) => {
+          if (res.status == 200 || res.status == 201) {
+            Toast.show({
+              topOffset: 60,
+              type: "success",
+              text1: "Product successfuly updated",
+              text2: ""
+            });
+            setTimeout(() => {
+              props.navigation.navigate("Products");
+            }, 500)
+          }
+        })
+        .catch((error) => {
           Toast.show({
             topOffset: 60,
-            type: 'success',
-            text1: "New Product success",
-            text2: ''
+            type: "error",
+            text1: "Updated error",
+            text2: "Please try again"
           })
-          setTimeout(() => {
-            props.navigation.navigate("Products")
-          }, 500)
-        }
-      })
-      .catch((err) =>{
-        Toast.show({
-          topOffset: 60,
-          type: 'error',
-          text1: "Something wrong",
-          text2: 'Please try agian'
         })
-      })
+    } else {
+      axios
+        .post(`${baseURL}products`, formData, config)
+        .then((res) => {
+          if (res.status == 200 || res.status == 201) {
+            Toast.show({
+              topOffset: 60,
+              type: "success",
+              text1: "New Product added",
+              text2: ""
+            });
+            setTimeout(() => {
+              props.navigation.navigate("Products");
+            }, 500)
+          }
+        })
+        .catch((error) => {
+          Toast.show({
+            topOffset: 60,
+            type: "error",
+            text1: "Add product error",
+            text2: "Please try again"
+          })
+        })
+    } 
 
   }
 
 
+
+  console.log(props.route.params.item.image)
 
 
 

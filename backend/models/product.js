@@ -25,7 +25,6 @@ const productSchema = mongoose.Schema({
 
     rating: {
         type: String,
-        default: '0'
     },
     provine:{
         type:String
