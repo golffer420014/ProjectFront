@@ -39,55 +39,55 @@ const ProductContainer = (props) => {
     const [loading, setLoading] = useState(true)
 
     useFocusEffect(
-    useCallback(() => {
+        useCallback(() => {
 
-        setFocus(false)
-
-        //category
-        setActive(-1)
-
-        //product
-        axios
-            .get(`${baseURL}products`)
-            .then(res => {
-                setProduct(res.data)
-                setProductsFiltered(res.data)
-
-                //category
-                setProductsCtg(res.data)
-                setInitialState(res.data)
-
-                //loading
-                setLoading(false)
-            })
-            .catch((err) => {
-                console.log('products call error')
-            })
-
-        //category
-        axios
-            .get(`${baseURL}category`)
-            .then(res => {
-                setCategories(res.data)
-            })
-            .catch((err) => {
-                console.log('category call error')
-            })
-
-        return () => {
-            setProduct([])
-            setProductsFiltered([])
-            setFocus()
+            setFocus(false)
 
             //category
-            setCategories([])
-            setActive()
-            setInitialState()
-            setLoading(true)
+            setActive(-1)
+
+            //product
+            axios
+                .get(`${baseURL}products`)
+                .then(res => {
+                    setProduct(res.data)
+                    setProductsFiltered(res.data)
+
+                    //category
+                    setProductsCtg(res.data)
+                    setInitialState(res.data)
+
+                    //loading
+                    setLoading(false)
+                })
+                .catch((err) => {
+                    console.log('products call error')
+                })
+
+            //category
+            axios
+                .get(`${baseURL}category`)
+                .then(res => {
+                    setCategories(res.data)
+                })
+                .catch((err) => {
+                    console.log('category call error')
+                })
+
+            return () => {
+                setProduct([])
+                setProductsFiltered([])
+                setFocus()
+
+                //category
+                setCategories([])
+                setActive()
+                setInitialState()
+                setLoading(true)
 
 
-        }
-    }, [])
+            }
+        }, [])
     )
 
     const searchProduct = (text) => {
@@ -170,7 +170,7 @@ const ProductContainer = (props) => {
                                 {/* <View>
                                     <Banner />
                                 </View> */}
-                                <View style={{backgroundColor:'#dfdfdf'}}>
+                                <View style={{ backgroundColor: '#dfdfdf' }}>
                                     <CategoryFilter
                                         categories={categories}
                                         categoryFilter={changeCtg}
@@ -179,43 +179,50 @@ const ProductContainer = (props) => {
                                         setActive={setActive}
                                     />
                                 </View>
-                                <View style={{ backgroundColor: '#ffff', width: '100%', height: 60 , zIndex:-99 }}>
 
-                                </View>
                                 {productsCtg.length > 0 ? (
 
-                                    <ScrollView>
-                                        <View style={[styles.listProduct,]}>
-                                                {
-                                                    shuffleArray([...productsCtg]).map((item) => {
-                                                        return (
-                                                            <View style={{ width: '50%' }} key={item.id}>
-                                                                <ProductList
-                                                                    navigation={props.navigation}
-                                                                    item={item}
-                                                                />
-                                                            </View>
-                                                        );
-                                                    })
-                                                }
+                                    <ScrollView >
+                                        <View style={[styles.listProduct]}>
+                                            {
+                                                shuffleArray([...productsCtg]).map((item) => {
+                                                    return (
+                                                        <View style={{ width: '50%' }} key={item.id}>
+                                                            <ProductList
+                                                                navigation={props.navigation}
+                                                                item={item}
+                                                            />
+                                                        </View>
+                                                    );
+                                                })
+                                            }
                                         </View>
 
                                     </ScrollView>
 
 
                                 ) : (
-                                    <LinearGradient
-                                        colors={['#dfdfdf', '#dfdfdf']}
-                                        // colors={['#FF5F6D', '#FFC371']}
-                                        style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30 }}
-                                    >
-                                        <View style={[styles.center, { height: height, top: -200 }]}>
-                                            <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'black' }}>ไม่พบสถานที่ท่องเที่ยว</Text>
+                                    <View style={[styles.listProduct]}>
+                                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', height: height }}>
+                                            <View style={{ width: '50%' }}>
+                                                <Text style={{ color: '#dfdfdf' }}>555</Text>
+                                            </View>
+                                            <View style={{ width: '50%' }}>
+                                                <View style={{ position: 'relative', top: 180, right: 100 }}>
+                                                    <Text style={{
+                                                        color: 'black',
+                                                        fontWeight: 'bold',
+                                                        fontSize: 20
+                                                    }}>
+                                                        ไม่พบสถานที่ท่องเที่ยว
+                                                    </Text>
+                                                </View>
+                                            </View>
                                         </View>
-                                    </LinearGradient>
+                                    </View>
 
                                 )}
-                                
+
 
                             </View>
 
@@ -268,9 +275,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#dfdfdf',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        borderTopRightRadius:20,
-        borderTopLeftRadius:20,
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
         //justifyContent:'center', {} = horizo center
-        alignItems:'center',
     }
 })

@@ -58,6 +58,6 @@ mongoose.connect(process.env.CONNECTION_STRING,{
 
 app.listen(3000, ()=>{
     // console.log(api);
-    console.log('server is runnimg is http://localhost:5000');
+    console.log('server is runnimg is http://localhost:3000');
 })
 

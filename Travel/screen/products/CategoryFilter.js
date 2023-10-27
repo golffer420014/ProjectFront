@@ -18,27 +18,30 @@ const CategoryFilter = (props) => {
 
 
   return (
-    <View>
-      <Item picker style={styles.pickerContainer}>
-        <Picker
-          mode="dialog"
-          selectedValue={provine}
-          style={styles.picker}
-          onValueChange={(value) => setProvine(value)}
-        >
-          {data.RECORDS.map((c) => (
-            <Picker.Item
-              key={c.id}
-              label={c.name_th}
-              value={c.name_th}
-              style={{
-                color: 'black',
-                textAlign: 'center'
-              }}
-            />
-          ))}
-        </Picker>
-      </Item>
+    <View style={{ height: 180 }}>
+      <View style={styles.pickerContainer}>
+        <Item picker >
+          <Picker
+            mode="dropdown"
+            selectedValue={provine}
+            style={styles.picker}
+            onValueChange={(value) => setProvine(value)}
+          >
+            {data.RECORDS.map((c) => (
+              <Picker.Item
+                key={c.id}
+                label={c.name_th}
+                value={c.name_th}
+                style={{
+                  color: 'black',
+                  textAlign: 'center'
+                }}
+              />
+            ))}
+          </Picker>
+        </Item>
+    </View>
+      
       <ScrollView
         bounces={true}
         horizontal={true}
@@ -54,20 +57,20 @@ const CategoryFilter = (props) => {
           >
             <View
               style={[styles.all,
-              { marginHorizontal:10  },
+              { marginHorizontal: 10 },
               ]}
             >
               <Image
                 source={require('../../assests/all.png')}
-                style={[props.active == -1 ? styles.ALLactive : styles.ALLinactive ,
-                  { width: 50, height: 50, borderRadius: 30,}
-                 ]}
+                style={[props.active == -1 ? styles.ALLactive : styles.ALLinactive,
+                { width: 50, height: 50, borderRadius: 30, }
+                ]}
               />
               <Text style={[styles.all, { margin: 5, fontWeight: 'bold' },
               props.active == -1 ? styles.active : styles.inactive
               ]} >All</Text>
             </View>
-              {/* <Text style={[styles.all, { margin: 5 },
+            {/* <Text style={[styles.all, { margin: 5 },
               props.active == -1 ? styles.active : styles.inactive
               ]}>All</Text> */}
           </TouchableOpacity>
@@ -81,7 +84,7 @@ const CategoryFilter = (props) => {
             >
               <View
                 style={[styles.center,
-                { marginHorizontal:10 },
+                { marginHorizontal: 10 },
                 props.active == props.categories.indexOf(item) ? styles.active : styles.inactive
                 ]}
               >
@@ -90,11 +93,11 @@ const CategoryFilter = (props) => {
                   style={{ width: 50, height: 50, borderRadius: 30 }}
                 />
                 <Text style={[styles.center,
-                { margin: 5,fontWeight:'bold' },
+                { margin: 5, fontWeight: 'bold' },
                 props.active == props.categories.indexOf(item) ? styles.active : styles.inactive
                 ]}>{item.name}</Text>
               </View>
-              
+
             </TouchableOpacity>
           ))}
         </ListItem>
@@ -107,7 +110,7 @@ const CategoryFilter = (props) => {
 
 
 const styles = StyleSheet.create({
-  all:{
+  all: {
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
   },
   active: {
     color: '#f36d72',
-    
+
   },
   inactive: {
     color: 'black',
@@ -134,12 +137,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 99,
     backgroundColor: '#ffff',
-    bottom: -60,
+    bottom: 10,
     right: 20,
-    width:200,
+    width: 200,
     // borderRadius: 30,
     // borderColor:'#f36d72'
-    
+
   },
 
 

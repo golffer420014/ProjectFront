@@ -20,7 +20,6 @@ const ProductCard = (props) => {
 
 
     return (
-        <ScrollView>
         <View style={styles.container}>
         
                 <View style={styles.imageContainer}>
@@ -59,7 +58,6 @@ const ProductCard = (props) => {
             
             
         </View>
-        </ScrollView>
     )
 }
 
