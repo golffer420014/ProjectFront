@@ -5,22 +5,37 @@ import {
   FlatList,
   Dimensions,
   TextInput,
-  StyleSheet
+  StyleSheet,
+  Image,
+  TouchableOpacity
 } from "react-native"
 import EasyButton from "../../Shared/StyledComponents/EasyButton"
 import axios from "axios"
 import baseURL from "../../assests/common/baseUrl"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+
+// icon
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 
 var { width } = Dimensions.get("window")
 
 const Item = (props) => {
   return (
     <View style={styles.item}>
-      <Text>{props.item.name}</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        <Image
+          source={{ uri: props.item.icon }}
+          style={{ width: 50, height: 50, borderRadius: 10 }}
+          resizeMode="contain"
+        />
+        <Text style={{ color: 'black', fontSize: 18, marginLeft: 10 }}>{props.item.name}</Text>
+      </View>
+
       <EasyButton
-        danger
-        medium
+        large
+        style={{ backgroundColor: 'gray', borderRadius: 10 }}
         onPress={() => props.delete(props.item._id)}
       >
         <Text style={{ color: "white", fontWeight: "bold" }}>Delete</Text>
@@ -34,6 +49,7 @@ const Categories = (props) => {
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState();
   const [token, setToken] = useState();
+  const [selectedImage, setSelectedImage] = useState();
 
   useEffect(() => {
     AsyncStorage.getItem("jwt")
@@ -56,6 +72,7 @@ const Categories = (props) => {
   const addCategory = () => {
     const category = {
       name: categoryName,
+      icon:selectedImage
     };
 
     const config = {
@@ -90,6 +107,26 @@ const Categories = (props) => {
       .catch((error) => alert("Error delete categories"));
   }
 
+  const openImagePicker = () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image picker error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        setSelectedImage(imageUri);
+      }
+    });
+  };
+
 
   return (
     <View style={{ position: "relative", height: "100%" }}>
@@ -103,20 +140,36 @@ const Categories = (props) => {
         />
       </View>
       <View style={styles.bottomBar}>
-        <View>
-          <Text style={{color:'black'}}>Add Category</Text>
-        </View>
-        <View style={{ width: width / 3 }}>
+        <TouchableOpacity
+          onPress={openImagePicker}
+        >
+          <View style={{ padding: 7, borderRadius: 60 }}>
+            {selectedImage ? (
+              <Image
+                style={{ width: 50, height: 50, borderRadius: 10 }}
+                source={{
+                  uri: selectedImage
+                }}
+              />
+            ) : <View style={{ padding: 10, backgroundColor: '#f36d72', borderRadius: 60 }}>
+                <FontAwesome6 name='images' size={20} color='white' />
+            </View>}
+
+          </View>
+        </TouchableOpacity>
+        <View style={{ width: width / 2 }}>
           <TextInput
+          placeholder="หมวดหมู่"
             value={categoryName}
-            style={styles.input}
+            style={[styles.input, { paddingLeft: 20 }]}
             onChangeText={(text) => setCategoryName(text)}
+            fontSize={15}
           />
         </View>
         <View>
           <EasyButton
             medium
-            primary
+            style={{ backgroundColor:'#f36d72',borderRadius:10}}
             onPress={() => addCategory()}
           >
             <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>
@@ -132,9 +185,9 @@ export default Categories
 const styles = StyleSheet.create({
 
   bottomBar: {
-    backgroundColor: "#dfdfdf",
+    backgroundColor: "#DFDFDF",
     width: width,
-    height: 60,
+    height: 80,
     padding: 2,
     flexDirection: "row",
     alignItems: "center",
@@ -147,8 +200,8 @@ const styles = StyleSheet.create({
     height: 40,
     // borderColor: "red",
     // borderWidth: 1,
-    borderRadius:20,
-    backgroundColor:'#ffff'
+    borderRadius: 20,
+    backgroundColor: '#ffff'
   },
   item: {
     shadowColor: "#000",

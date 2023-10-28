@@ -28,20 +28,20 @@ const App = () => {
 
 
 
-        launchCamera(options, response => {
-            console.log('Response = ', response);
-            if (response.didCancel) {
-                console.log('User cancelled camera');
-            } else if (response.error) {
-                console.log('Camera Error: ', response.error);
-            } else {
-                // Process the captured image
-                let imageUri = response.uri || response.assets?.[0]?.uri;
-                setSelectedImage(imageUri);
-                console.log(imageUri);
-            }
-        });
-    }
+    //     launchCamera(options, response => {
+    //         console.log('Response = ', response);
+    //         if (response.didCancel) {
+    //             console.log('User cancelled camera');
+    //         } else if (response.error) {
+    //             console.log('Camera Error: ', response.error);
+    //         } else {
+    //             // Process the captured image
+    //             let imageUri = response.uri || response.assets?.[0]?.uri;
+    //             setSelectedImage(imageUri);
+    //             console.log(imageUri);
+    //         }
+    //     });
+    // }
 
     return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
