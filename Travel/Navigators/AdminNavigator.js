@@ -5,6 +5,7 @@ import Products from '../screen/admin/Products';
 import Categories from '../screen/admin/Categories';
 import Orders from '../screen/admin/Orders';
 import ProductForm from '../screen/admin/ProductForm';
+import Event from '../screen/admin/Event';
 
 
 const Stack = createStackNavigator();
@@ -24,6 +25,7 @@ function MyStack() {
             <Stack.Screen name="ProductForm" component={ProductForm} 
                 options={{ title: 'Product Form' }}
             /> 
+            <Stack.Screen name="Event" component={Event} />
         </Stack.Navigator>
     )
 }

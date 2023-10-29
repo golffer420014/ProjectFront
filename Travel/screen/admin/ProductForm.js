@@ -192,7 +192,7 @@ const ProductForm = (props) => {
 
 
   return (
-    <FormContainer title="Add Product">
+    <FormContainer >
       <View style={styles.imageContainer}>
         <Image style={styles.image} source={{ uri: mainImage }} />
         <TouchableOpacity onPress={openImagePicker} style={styles.imagePicker}>
@@ -341,6 +341,14 @@ const ProductForm = (props) => {
 export default ProductForm
 
 const styles = StyleSheet.create({
+
+  container:{
+    marginBottom: 400,
+    // width: width,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
   label: {
     width: "80%",
     marginTop: 10

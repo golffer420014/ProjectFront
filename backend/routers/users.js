@@ -104,6 +104,7 @@ router.post('/login', async (req, res) => {
 
         res.status(200).send({
             user: user.email,
+            // phone: user.phone,
             token: token,
         })
     } else {

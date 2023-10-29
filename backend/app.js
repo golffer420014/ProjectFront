@@ -28,7 +28,7 @@ const categoryRouter = require('./routers/category');
 const usersRouter = require('./routers/users');
 const orderRouter = require('./routers/order');
 const communityRouter = require('./routers/community')
-const imageProductsRouter = require('./routers/imageProducts')
+const eventRouter = require('./routers/event')
 
 const api = process.env.API_URL; 
  
@@ -42,8 +42,12 @@ app.use(`${api}/users`, usersRouter)
 app.use(`${api}/order`, orderRouter)
 // http://localhost:5000/api/v1/community 
 app.use(`${api}/community`, communityRouter) 
+// http://localhost:5000/api/v1/event 
+app.use(`${api}/event`, eventRouter) 
+
+
 // http://localhost:5000/api/v1/imageProducts 
-app.use(`${api}/imageProducts`, imageProductsRouter)
+// app.use(`${api}/imageProducts`, imageProductsRouter)
 
 mongoose.connect(process.env.CONNECTION_STRING,{
     useNewUrlParser : true,

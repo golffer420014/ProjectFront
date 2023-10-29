@@ -25,14 +25,14 @@ const storage = multer.diskStorage({
         const fileName = file.originalname.split(' ').join('-');
         const extension = FILE_TYPE_MAP[file.mimetype];
         cb(null, `${fileName}-${Date.now()}.${extension}`);
-    }
+    } 
 })
 
 const uploadOptions = multer({ storage: storage })
 
-// http://localhost:5000/api/v1/category
+// http://localhost:5000/api/v1/category 
 // list
-router.get(`/`, async (req, res) => {
+router.get(`/`, async (req, res) => { 
     try {
         const categoryList = await Category.find();//ค้นหาข้อมูล
 

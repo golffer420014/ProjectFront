@@ -88,7 +88,7 @@ const Products = (props) => {
         <EasyButton
           main
           medium
-          // onPress={() => props.navigation.navigate('Categories')}
+          onPress={() => props.navigation.navigate('Event')}
         >
           <MaterialIcons name='event' size={20} color='white' />
           <Text style={styles.buttonText}>Event</Text>

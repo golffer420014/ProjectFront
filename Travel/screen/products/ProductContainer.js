@@ -167,9 +167,9 @@ const ProductContainer = (props) => {
                         <ScrollView>
 
                             <View style={styles.container}>
-                                {/* <View>
+                                <View>
                                     <Banner />
-                                </View> */}
+                                </View>
                                 <View style={{ backgroundColor: '#dfdfdf' }}>
                                     <CategoryFilter
                                         categories={categories}
