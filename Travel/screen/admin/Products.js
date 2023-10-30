@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions  } from 'react-native'
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions } from 'react-native'
 import React, { useCallback, useState } from 'react'
-import { Header, Item, Container , Input } from 'native-base'
+import { Header, Item, Container, Input } from 'native-base'
 import { useFocusEffect } from '@react-navigation/native'
 
 // icon
@@ -64,22 +64,22 @@ const Products = (props) => {
     )
   }
 
-  const deleteProduct = (id) =>{
+  const deleteProduct = (id) => {
     axios
-    .delete(`${baseURL}products/${id}` ,{
-      headers:{Authorization : `Bearer ${token}`}
-    })
-    .then((res) =>{
-      const product = productFilter.filter((item) => item.id !==id)
-      setProductFilter(product)
-      Toast.show({
-        topOffset: 60,
-        type: "success",
-        text1: `Delete Succeeded`,
-        // text2: "Please Login into your account",
-      });
-    })
-    .catch((err) => console.log(err))
+      .delete(`${baseURL}products/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then((res) => {
+        const product = productFilter.filter((item) => item.id !== id)
+        setProductFilter(product)
+        Toast.show({
+          topOffset: 60,
+          type: "success",
+          text1: `Delete Succeeded`,
+          // text2: "Please Login into your account",
+        });
+      })
+      .catch((err) => console.log(err))
   }
 
   return (
@@ -103,28 +103,29 @@ const Products = (props) => {
           <Text style={styles.buttonText}>Product</Text>
         </EasyButton>
 
-       <EasyButton
-       main
-       medium
+        <EasyButton
+          main
+          medium
           onPress={() => props.navigation.navigate('Categories')}
-       >
-        <FontAwesome name='plus' size={20} color='white' />
+        >
+          <FontAwesome name='plus' size={20} color='white' />
           <Text style={styles.buttonText}>Category</Text>
-       </EasyButton>
+        </EasyButton>
 
-        
-    </View>
-      <View>
-        <View style={{ backgroundColor: '#DFDFDF', paddingHorizontal:20 , marginBottom:10 }}>
-          <Item style={{ borderRadius: 20, backgroundColor: '#ffff' }}>
+
+      </View>
+      <View style={{
+        backgroundColor: '#DFDFDF' }}>
+        <View style={{ backgroundColor: '#DFDFDF', paddingHorizontal: 20, marginBottom: 10 }}>
+          <Item style={{ borderRadius: 20, backgroundColor: '#ffff',paddingHorizontal:7 }}>
             <View style={{ paddingLeft: 10 }}>
-              <FontAwesome name="search" color={"#f36d72"} size={20} />
+              <FontAwesome name="search" color={"#f36d72"} size={17} />
             </View>
             <Input
-              placeholder="ค้นหา"
-            //onFocus={openList}
+              placeholder="Search"
+              //onFocus={openList}
               keyboardType='ascii-capable'
-            onChangeText={(text) => searchProduct(text)}
+              onChangeText={(text) => searchProduct(text)}
             />
 
           </Item>
@@ -132,32 +133,26 @@ const Products = (props) => {
         </View>
       </View>
       {loading ? (
-        <View>
+        <View style={{height:width/.8 , justifyContent:'center'}}>
           <ActivityIndicator size='large' color='#f36d72' />
         </View>
       ) : (
-        <View>
-            <View elevation={1} style={styles.containerHeader}>
-            <Text style={styles.centeredTextLeft}>รูป</Text>
-            <Text style={{
-              fontWeight: 'bold',
-              color: 'black'
-            }}>ชื่อ</Text>
-            <Text style={{
-              fontWeight: 'bold',
-              color: 'black'
-            }}>จังหวัด</Text>
-            <Text style={styles.centeredTextRight}>หมวดหมู่</Text>
+        <View >
+          <View elevation={1} style={styles.containerHeader}>
+              <Text style={[styles.centeredTextLeft, { paddingLeft: 0 }]}>Image</Text>
+              <Text style={[styles.centeredTextLeft,{paddingLeft:30}]}>Name</Text>
+              <Text style={[styles.centeredTextLeft, { paddingLeft: 5 }]}>Province</Text>
+            <Text style={styles.centeredTextRight}>Category</Text>
           </View>
           <FlatList
             data={productFilter}
             renderItem={({ item, index }) => (
               <View>
                 <ListItem
-                   {...item}
-                    navigation={props.navigation}
-                    index={index}
-                    delete={deleteProduct}
+                  {...item}
+                  navigation={props.navigation}
+                  index={index}
+                  delete={deleteProduct}
                 />
               </View>
             )}
@@ -173,19 +168,24 @@ export default Products
 
 const styles = StyleSheet.create({
   containerHeader: {
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     height: 50,
-    backgroundColor: '#ffff'
+    backgroundColor: '#ffff',
+    borderBottomWidth:1,
+    borderColor:'#dfdfdf',
+    Bottom:5
   },
   centeredTextLeft: {
-    paddingLeft: 30,
+    // paddingLeft: 30,
     fontWeight: 'bold',
     color: 'black'
   },
   centeredTextRight: {
-    paddingRight: 14,
+    // paddingRight: 14,
     fontWeight: 'bold',
     color: 'black'
   },
@@ -195,9 +195,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#DFDFDF'
   },
   buttonContainer: {
-    margin: 10,
+    marginBottom: 10,
     alignSelf: 'center',
     flexDirection: 'row',
+    backgroundColor: 'white',
+    width: '100%',
+    justifyContent: 'space-evenly',
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    paddingVertical: 10
   },
   buttonText: {
     marginLeft: 4,

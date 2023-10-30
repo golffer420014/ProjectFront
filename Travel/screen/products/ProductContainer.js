@@ -139,9 +139,13 @@ const ProductContainer = (props) => {
                 <Container >
 
                     <Header searchBar rounded style={{ backgroundColor: '#dcdcdc' }}>
-                        <Item style={{ borderRadius: 20 }}>
+                        <Item style={{ 
+                            borderRadius: 20 ,
+                             marginTop:10 ,
+                              paddingHorizontal:10,
+                              }}>
                             <View style={{ paddingLeft: 10 }}>
-                                <AntDesign name="search1" color={"red"} size={20} />
+                                <AntDesign name="search1" color={"red"} size={17} />
                             </View>
                             <Input
                                 placeholder="ค้นหา"
@@ -164,13 +168,13 @@ const ProductContainer = (props) => {
                             productsFiltered={productsFiltered}
                         />
                     ) : (
-                        <ScrollView>
+                            <ScrollView style={{ backgroundColor: '#dfdfdf'  }}>
 
                             <View style={styles.container}>
-                                <View>
+                                {/* <View>
                                     <Banner />
-                                </View>
-                                <View style={{ backgroundColor: '#dfdfdf' }}>
+                                </View> */}
+                                <View style={{ backgroundColor: '#dfdfdf'  }}>
                                     <CategoryFilter
                                         categories={categories}
                                         categoryFilter={changeCtg}
@@ -182,12 +186,11 @@ const ProductContainer = (props) => {
 
                                 {productsCtg.length > 0 ? (
 
-                                    <ScrollView >
                                         <View style={[styles.listProduct]}>
                                             {
                                                 shuffleArray([...productsCtg]).map((item) => {
                                                     return (
-                                                        <View style={{ width: '50%' }} key={item.id}>
+                                                        <View style={{ width: '50%'  }} key={item.id}>
                                                             <ProductList
                                                                 navigation={props.navigation}
                                                                 item={item}
@@ -198,7 +201,6 @@ const ProductContainer = (props) => {
                                             }
                                         </View>
 
-                                    </ScrollView>
 
 
                                 ) : (
@@ -255,7 +257,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flexWrap: "wrap",
-        backgroundColor: "#ffff",
+        backgroundColor: "#dfdfdf",
     },
     listContainer: {
         flex: 1,

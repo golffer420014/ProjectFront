@@ -57,7 +57,7 @@ const SingleProduct = (props) => {
                     ]}
 
                 >
-                    <AntDesign name="arrowleft" color={'white'} size={wp(5)} />
+                    <AntDesign name="arrowleft" color={'black'} size={wp(5)} />
                 </TouchableOpacity>
             </SafeAreaView>
 

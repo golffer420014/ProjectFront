@@ -79,14 +79,14 @@ const ListItem = (props) => {
                     props.navigation.navigate("Product Detail", { item: props })
                 }
                 onLongPress={() => setModalVisible(true)}
-                style={[styles.container, { backgroundColor: props.index % 2 == 0 ? "white" : 'gainsboro' }]}
+                style={[styles.container, { backgroundColor: props.index % 2 == 0 ? "white" : '#dfdfdf' }]}
             >
                 <Image
                     source={{
                         uri: props.image ?
                             props.image : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
                     }}
-                    resizeMode='contain'
+                    resizeMode='stretch'
                     style={styles.image}
                 />
                 <Text style={styles.item} numberOfLines={1} ellipsizeMode='tail'>{props.name}</Text>
@@ -103,14 +103,14 @@ export default ListItem
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        // padding: 5,
+        padding: 5,
         // width: width
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     image: {
         borderRadius: 50,
-        width: width / 6,
+        width: width / 5,
         // height: 'auto',
         height: 50,
         margin: 2

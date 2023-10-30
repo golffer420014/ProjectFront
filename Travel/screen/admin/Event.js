@@ -38,7 +38,7 @@ const Item = (props) => {
                 style={{
                     backgroundColor: 'gray',
                     position: 'absolute',
-                    top: 5,
+                    top: 0,
                     right: 0,
                     borderRadius: 30,
                 }}
@@ -51,7 +51,7 @@ const Item = (props) => {
                 style={{
                     backgroundColor: '#f36d72',
                     position: 'absolute',
-                    top: 5,
+                    top: 0,
                     left: 0,
                     borderRadius: 30,
                 }}
@@ -193,11 +193,12 @@ export default Event
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 400,
         width: width,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#dfdfdf'
+        backgroundColor:'#dfdfdf',
+        paddingBottom:20
+        
     },
     imageContainer: {
         width: 180,

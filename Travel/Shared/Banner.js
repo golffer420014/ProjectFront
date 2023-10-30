@@ -1,6 +1,8 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Image, StyleSheet, Dimensions, View, ScrollView } from "react-native";
 import Swiper from "react-native-swiper/src";
+import baseURL from "../assests/common/baseUrl";
 
 var { width } = Dimensions.get("window");
 
@@ -8,16 +10,14 @@ const Banner = () => {
     const [bannerData, setBannerData] = useState([]);
 
     useEffect(() => {
-        setBannerData([
-            "https://images.vexels.com/media/users/3/126443/preview2/ff9af1e1edfa2c4a46c43b0c2040ce52-macbook-pro-touch-bar-banner.jpg",
-            "https://pbs.twimg.com/media/D7P_yLdX4AAvJWO.jpg",
-            // "http://localhost:5000/public/uploads/1223348.jpg-1696187346789.jpeg",
-            "https://www.yardproduct.com/blog/wp-content/uploads/2016/01/gardening-banner.jpg",
-        ]);
-
-        return () => {
-            setBannerData([]);
-        };
+        axios
+            .get(`${baseURL}event`)
+            .then((res) => {
+                setBannerData(res.data); // อัปเดตข้อมูลแบนเนอร์ด้วยข้อมูลที่ได้จาก API
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
 
     return (
@@ -25,26 +25,27 @@ const Banner = () => {
             <View style={styles.container}>
                 <View style={styles.swiper}>
                     <Swiper
-                        style={{ height: width / 2 }}
-                        showButtons={false}
+                        style={{ height: width / 2.5 }}
+                        showButtons={true}
                         autoplay={true}
                         autoplayTimeout={3}
                         activeDotColor="#f36d72"
-                        dotStyle={{ width: 20, height: 5 }}
-                        activeDotStyle={{ width: 20, height: 5 }}
+                    // dotStyle={{ width: 20, height: 5 }}
+                    // activeDotStyle={{ width: 20, height: 5 }}
+                        howsPagination={false} // ตั้งค่า showsPagination เป็น false เพื่อซ่อนจุดควบคุม
                     >
                         {bannerData.map((item) => {
                             return (
                                 <Image
-                                    key={item}
+                                    key={item} // ควรใช้ key ที่ไม่ซ้ำกัน
                                     style={styles.imageBanner}
-                                    resizeMode="contain"
-                                    source={{ uri: item }}
+                                    resizeMode="stretch"
+                                    source={{ uri: item.image }} // เปลี่ยนเป็น item.image
                                 />
                             );
                         })}
                     </Swiper>
-                    <View style={{ height: 20 }}></View>
+                    <View style={{ height: 10 }}></View>
                 </View>
             </View>
         </ScrollView>
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     imageBanner: {
-        height: width / 2,
+        height: width / 2.5,
         width: width - 40,
         borderRadius: 10,
         marginHorizontal: 20,

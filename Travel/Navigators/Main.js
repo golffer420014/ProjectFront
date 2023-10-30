@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // Stacks
-import HomeNavigator from "./HomeNavigator";
+import HomeNavigator from "./SearchNavigator";
 import CartNavigator from "./CartNavigator";
 import UserNavigator from "./UserNavigator";
 import CommunityNavigator from "./CommunityNavigator";
@@ -14,6 +14,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 
 import AuthGlobal from "../context/store/AuthGlobal";
+import SearchNavigator from "./SearchNavigator";
 
 
 const Tab = createBottomTabNavigator();
@@ -24,8 +25,9 @@ const Main = () => {
 
 
   return (
+    
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Search"
       tabBarOptions={{
         keyboardHidesTabBar: true,
         showLabel: false,
@@ -33,10 +35,11 @@ const Main = () => {
       }}
       
     >
-    {/* home */}
+    
+      {/* Home */}
       <Tab.Screen
-        name="Home"
-        component={HomeNavigator}
+        name="Cart"
+        component={CartNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <AntDesign name="home" color={color} size={30} />
@@ -44,10 +47,11 @@ const Main = () => {
           headerShown: false,
         }}
       />
+
       {/* search */}
       <Tab.Screen
-        name="Cart"
-        component={CartNavigator}
+        name="Search"
+        component={SearchNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <AntDesign name="search1" color={color} size={30} />

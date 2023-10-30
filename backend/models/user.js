@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    name: {
+    fname: {
+        type: String,
+        required: true,
+    },
+    lname: {
         type: String,
         required: true,
     },
@@ -13,7 +17,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    phone: {
+    address: {
         type: String,
         required: true,
     },
@@ -21,26 +25,30 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    street: {
+    birth: {
         type: String,
         default: ''
     },
-    apartment: {
+    gender: {
         type: String,
         default: ''
     },
-    zip :{
-        type: String,
-        default: ''
-    },
-    city: {
-        type: String,
-        default: ''
-    },
-    country: {
-        type: String,
-        default: ''
+    image:{
+        type:String,
+        default:null
     }
+    // zip :{
+    //     type: String,
+    //     default: ''
+    // },
+    // city: {
+    //     type: String,
+    //     default: ''
+    // },
+    // country: {
+    //     type: String,
+    //     default: ''
+    // }
 
 });
 

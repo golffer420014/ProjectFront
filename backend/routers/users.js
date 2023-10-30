@@ -116,16 +116,17 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
     try {
         let user = new User({
-            name: req.body.name,
+            fname: req.body.fname,
+            lname: req.body.lname,
             email: req.body.email,
             passwordHash: bcrypt.hashSync(req.body.password, 10),
-            phone: req.body.phone,
+            address: req.body.address,
             isAdmin: req.body.isAdmin,
-            street: req.body.street,
-            apartment: req.body.apartment,
-            zip: req.body.zip,
-            city: req.body.city,
-            country: req.body.country,
+            birth: req.body.birth,
+            gender: req.body.gender,
+            // zip: req.body.zip,
+            // city: req.body.city,
+            // country: req.body.country,
         })
         user = await user.save();
 

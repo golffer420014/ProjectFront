@@ -18,7 +18,7 @@ const CategoryFilter = (props) => {
 
 
   return (
-    <View style={{ height: 180 }}>
+    <View style={{ height: 180 , marginBottom:10 }}>
       <View style={styles.pickerContainer}>
         <Item picker >
           <Picker

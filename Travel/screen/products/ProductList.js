@@ -18,7 +18,7 @@ const ProductList = (props) => {
 
     const { item } = props;
     return (
-        <View style={{marginBottom:10,}}>
+        <View >
             
             <TouchableOpacity
                 onPress={() =>
@@ -27,8 +27,8 @@ const ProductList = (props) => {
             >
 
                 <View style={{
-                    // backgroundColor: '#dfdfdf',
-                    marginTop:10
+                    backgroundColor: '#dfdfdf',
+                    marginBottom:10
                 }}
                 >
                     <ProductCard {...item} />

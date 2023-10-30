@@ -8,6 +8,7 @@ import SingleProduct from '../screen/products/SingleProduct';
 import Login from '../screen/user/Login';
 import Register from '../screen/user/Register';
 import UserProfile from '../screen/user/UserProfile';
+import RegisterDetail from '../screen/user/RegisterDetail';
 
 
 const Stack = createStackNavigator()
@@ -25,6 +26,13 @@ function MyStack() {
             <Stack.Screen
                 name='Register'
                 component={Register}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name='RegisterDetail'
+                component={RegisterDetail}
                 options={{
                     headerShown: false,
                 }}
