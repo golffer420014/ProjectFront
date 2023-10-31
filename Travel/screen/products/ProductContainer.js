@@ -210,7 +210,7 @@ const ProductContainer = (props) => {
                                                 <Text style={{ color: '#dfdfdf' }}>555</Text>
                                             </View>
                                             <View style={{ width: '50%' }}>
-                                                <View style={{ position: 'relative', top: 180, right: 100 }}>
+                                                <View style={{ position: 'relative', top: 100, right: 100 }}>
                                                     <Text style={{
                                                         color: 'black',
                                                         fontWeight: 'bold',

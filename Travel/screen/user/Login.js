@@ -89,7 +89,7 @@ const Login = (props) => {
             </TouchableOpacity>
 
             {/* or */}
-            <View style={{ borderWidth: 1, width: '75%', borderColor: "#f36d72", marginVertical: 20 }}>
+            <View style={{ borderWidth: .7, width: '75%', borderColor: "#f36d72", marginVertical: 20 }}>
             </View>
             <View style={{ backgroundColor: 'white', top: -30, paddingHorizontal: 10 }}>
                 <Text style={styles.or}>or</Text>
@@ -236,9 +236,10 @@ const styles = StyleSheet.create({
         zIndex: 1,
         position: 'relative',
         // eslint-disable-next-line no-dupe-keys
-        top: 0,
+        top: -3,
         fontSize: 15,
-        color: 'black'
+        color: 'black',
+        borderRadius:50
     },
     input: {
         width: '100%',

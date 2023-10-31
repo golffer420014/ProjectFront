@@ -26,7 +26,7 @@ const RegisterDetail = ({ route, navigation }) => {
 
     // function Form Birth
     const [isCalendarVisible, setCalendarVisible] = useState(false);
-    const [selectedDate, setSelectedDate] = useState('01-01-2023');
+    const [selectedDate, setSelectedDate] = useState('');
 
 
 

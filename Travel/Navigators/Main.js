@@ -35,7 +35,6 @@ const Main = () => {
         showLabel: false,
         activeTintColor: "#f47a7e",
       }}
-      
     >
     
       {/* Home */}
