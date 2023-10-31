@@ -53,11 +53,11 @@ const SingleProduct = (props) => {
                     onPress={() => navigation.goBack()}
                     style={[
                         tailwind`p-2 rounded-full m-4`,
-                        { backgroundColor: 'rgba(255,255,255,0.5)' }
+                        { backgroundColor: '#f47a7e' }
                     ]}
 
                 >
-                    <AntDesign name="arrowleft" color={'black'} size={wp(5)} />
+                    <AntDesign name="arrowleft" color={'white'} size={wp(5)} />
                 </TouchableOpacity>
             </SafeAreaView>
 

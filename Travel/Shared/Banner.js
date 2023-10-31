@@ -18,6 +18,7 @@ const Banner = () => {
             .catch((error) => {
                 console.error(error);
             });
+
     }, []);
 
     return (
@@ -30,8 +31,8 @@ const Banner = () => {
                         autoplay={true}
                         autoplayTimeout={3}
                         activeDotColor="#f36d72"
-                    // dotStyle={{ width: 20, height: 5 }}
-                    // activeDotStyle={{ width: 20, height: 5 }}
+                        // dotStyle={{ width: 20, height: 5 }}
+                        // activeDotStyle={{ width: 20, height: 5 }}
                         howsPagination={false} // ตั้งค่า showsPagination เป็น false เพื่อซ่อนจุดควบคุม
                     >
                         {bannerData.map((item) => {
@@ -40,7 +41,9 @@ const Banner = () => {
                                     key={item} // ควรใช้ key ที่ไม่ซ้ำกัน
                                     style={styles.imageBanner}
                                     resizeMode="stretch"
-                                    source={{ uri: item.image }} // เปลี่ยนเป็น item.image
+                                    source={{
+                                        uri: item.image 
+                                    }} // เปลี่ยนเป็น item.image
                                 />
                             );
                         })}

@@ -6,6 +6,9 @@ import FormContainer from '../../Shared/Form/FormContainer'
 import Input from '../../Shared/Form/Input'
 import Error from '../../Shared/Error'
 
+//noti
+import Toast from 'react-native-toast-message'
+
 // icon
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -36,12 +39,16 @@ const Login = (props) => {
             password,
         };
         if (email === "" || password === "") {
-            setError('Please fill in form')
+            Toast.show({
+                topOffset: 60,
+                type: "error",
+                text1: "Please fill your form",
+                text2: "Please try again",
+            });
         } else {
             loginUser(user, context.dispatch)
         }
     }
-    console.log(passShow)
 
 
 
@@ -82,23 +89,23 @@ const Login = (props) => {
             </TouchableOpacity>
 
             {/* or */}
-            <View style={{ borderWidth: 1, width: '75%', borderColor: "#dfdfdf", marginVertical: 20 }}>
+            <View style={{ borderWidth: 1, width: '75%', borderColor: "#f36d72", marginVertical: 20 }}>
             </View>
             <View style={{ backgroundColor: 'white', top: -30, paddingHorizontal: 10 }}>
                 <Text style={styles.or}>or</Text>
             </View>
             {/* email */}
             <View style={[styles.input, { marginTop: -15 }]}>
-                <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Username or Email</Text>
+                <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -103 }}>Username or Email</Text>
                 <Input
-                    placeholder={"Enter Username"}
+                    placeholder={"Enter Username or Email"}
                     name={"email"}
                     id={"email"}
                     value={email}
                     onChangeText={(text) => setEmail(text.toLowerCase())}
                 />
                 <View style={styles.iconUser}>
-                    <FontAwesome name='user' size={25} color='#dfdfdf' />
+                    <FontAwesome name='user' size={25} color='#f36d72' />
                 </View>
             </View>
             {/* password */}
@@ -114,7 +121,7 @@ const Login = (props) => {
                         onChangeText={(text) => setPassowrd(text.toLowerCase())}
                     />
                     <View style={styles.iconPassword}>
-                        <FontAwesome name='lock' size={25} color='#dfdfdf' />
+                        <FontAwesome name='lock' size={25} color='#f36d72' />
                     </View>
                     <TouchableOpacity
                         onPress={() => setPassShow(true)}
@@ -139,13 +146,13 @@ const Login = (props) => {
                         onChangeText={(text) => setPassowrd(text.toLowerCase())}
                     />
                     <View style={styles.iconPassword}>
-                        <FontAwesome name='lock' size={25} color='#dfdfdf' />
+                        <FontAwesome name='unlock' size={25} color='#f36d72' />
                     </View>
                     <TouchableOpacity
                         onPress={() => setPassShow(false)}
                     >
                         <View style={styles.iconEye}>
-                            <Entypo name='eye' size={22} color='gray' />
+                            <Entypo name='eye' size={22} color='#f36d72' />
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity>

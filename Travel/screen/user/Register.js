@@ -70,7 +70,7 @@ const Register = (props) => {
                     onPress={() => navigation.goBack()}
 
                 >
-                    <View style={{ padding: 10, backgroundColor: '#f36d72', borderRadius: 50, position: 'absolute', top: -25, left: -190 }}>
+                    <View style={{ padding: 10, paddingHorizontal: 15, backgroundColor: '#f36d72', borderRadius: 50, position: 'absolute', top: -25, left: -190 }}>
                         <FontAwesome name='angle-left' size={20} color='white' />
                     </View>
                 </TouchableOpacity>

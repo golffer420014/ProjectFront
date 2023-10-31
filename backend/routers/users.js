@@ -124,6 +124,7 @@ router.post('/register', async (req, res) => {
             isAdmin: req.body.isAdmin,
             birth: req.body.birth,
             gender: req.body.gender,
+            image: req.body.image,
             // zip: req.body.zip,
             // city: req.body.city,
             // country: req.body.country,

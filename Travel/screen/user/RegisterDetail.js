@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View,TouchableOpacity,ScrollView } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native'
 import React ,{useState,useEffect} from 'react'
 import Input from '../../Shared/Form/Input';
 import { Calendar } from 'react-native-calendars';
 import Modal from 'react-native-modal';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 
 // icon
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -19,16 +20,26 @@ const RegisterDetail = ({ route, navigation }) => {
     const [fname, setFname] = useState("");
     const[lname,setLname] = useState("");
     const [address, setAddress] = useState("");
+    const [image, setImage] = useState('https://cdn-icons-png.flaticon.com/128/4140/4140048.png')
     // function Gender
     const [selectedGender, setSelectedGender] = useState('');
 
     // function Form Birth
     const [isCalendarVisible, setCalendarVisible] = useState(false);
-    const [selectedDate, setSelectedDate] = useState('Birth');
+    const [selectedDate, setSelectedDate] = useState('01-01-2023');
 
 
 
     const register = () => {
+
+        // if (!user) {
+        //     Toast.show({
+        //         topOffset: 60,
+        //         type: "error",
+        //         text1: "Please fill your form",
+        //         text2: "Please try again",
+        //     });
+        // } 
 
         let user = {
             fname: fname,
@@ -38,6 +49,7 @@ const RegisterDetail = ({ route, navigation }) => {
             address: address,
             birth: selectedDate,
             gender: selectedGender,
+            image:image,
             isAdmin: false,
         }
 
@@ -85,7 +97,27 @@ const RegisterDetail = ({ route, navigation }) => {
         setCalendarVisible(true);
     };
 
-    console.log(address)
+    const openImagePicker = () => {
+        const options = {
+            mediaType: 'photo',
+            includeBase64: false,
+            maxHeight: 4000,
+            maxWidth: 4000,
+        };
+
+        launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('Image picker error: ', response.error);
+            } else {
+                let imageUri = response.uri || response.assets?.[0]?.uri;
+                // setMainImage(imageUri);
+                setImage(imageUri)
+            }
+        });
+    };
+
 
 
   return (
@@ -95,12 +127,23 @@ const RegisterDetail = ({ route, navigation }) => {
                   onPress={() => navigation.goBack()}
 
               >
-                  <View style={{ padding: 10, backgroundColor: '#f36d72', borderRadius: 50, position: 'absolute', top: -40, left: -190 }}>
+                  <View style={{ padding: 10,paddingHorizontal:15, backgroundColor: '#f36d72', borderRadius: 50, position: 'absolute', top: -40, left: -190 }}>
                       <FontAwesome name='angle-left' size={20} color='white' />
                   </View>
               </TouchableOpacity>
 
-              <Text style={{ fontWeight: 'bold', color: 'black', fontSize: 22, marginVertical: 20 }}>Create Account</Text>
+
+              <Text style={{ fontWeight: 'bold', color: 'black', fontSize: 22, marginBottom: 20 }}>Create Account</Text>
+              
+              {/* image */}
+              <View style={styles.imageContainer}>
+                  <Image style={styles.image} source={{ uri: image }} />
+                  <TouchableOpacity onPress={openImagePicker} style={styles.imagePicker}>
+                      {/* <Text style={{ color:'#f36d72'}}>IMAGE</Text> */}
+                      <FontAwesome name='camera' color='white' />
+                  </TouchableOpacity>
+              </View>
+              
               {/* fname */}
               <View style={[styles.input, { marginTop: 5 }]}>
                   <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>First Name</Text>
@@ -227,6 +270,32 @@ const RegisterDetail = ({ route, navigation }) => {
 export default RegisterDetail
 
 const styles = StyleSheet.create({
+
+    imageContainer: {
+        width: 100,
+        height: 100,
+        borderStyle: "solid",
+        borderWidth: 8,
+        padding: 0,
+        justifyContent: "center",
+        borderRadius: 100,
+        borderColor: "#E0E0E0",
+        // elevation: 10
+    },
+    image: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 100
+    },
+    imagePicker: {
+        position: "absolute",
+        right: 5,
+        bottom: 5,
+        backgroundColor: "gray",
+        padding: 8,
+        borderRadius: 100,
+        elevation: 20
+    },
     container: {
         width: '100%',
         height: '100%',

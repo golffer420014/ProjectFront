@@ -12,6 +12,8 @@ import AdminNavigator from "./AdminNavigator";
 //icon 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import AuthGlobal from "../context/store/AuthGlobal";
 import SearchNavigator from "./SearchNavigator";
@@ -42,7 +44,7 @@ const Main = () => {
         component={CartNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign name="home" color={color} size={30} />
+            <FontAwesome name="home" color={color} size={37} style={{ alignItems: 'center', justifyContent: 'center' }} />
           ),
           headerShown: false,
         }}
@@ -54,7 +56,7 @@ const Main = () => {
         component={SearchNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign name="search1" color={color} size={30} />
+            <Ionicons name="search-circle-sharp" color={color} size={40} style={{ alignItems: 'center', justifyContent: 'center' }} />
           ),
           headerShown: false,
         }}
@@ -65,7 +67,7 @@ const Main = () => {
         component={CommunityNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome6 name="earth-asia" color={color} size={30} />
+            <FontAwesome6 name="earth-asia" color={color} size={30} style={{ alignItems: 'center', justifyContent: 'center' }} />
           ),
           headerShown: false,
         }}
@@ -89,7 +91,7 @@ const Main = () => {
         component={UserNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign name="login" color={color} size={30} />
+            <FontAwesome name="user" color={color} size={30} style={{ alignItems: 'center', justifyContent: 'center' }} />
           ),
           headerShown: false,
         }}

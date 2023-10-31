@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from "react";
+
 import { createStackNavigator } from "@react-navigation/stack"
 
 import ProductContainer from '../screen/products/ProductContainer';
@@ -10,19 +11,40 @@ import Register from '../screen/user/Register';
 import UserProfile from '../screen/user/UserProfile';
 import RegisterDetail from '../screen/user/RegisterDetail';
 
+import AuthGlobal from "../context/store/AuthGlobal";
+
 
 const Stack = createStackNavigator()
 
+
+
 function MyStack() {
+    const context = useContext(AuthGlobal)
+    console.log(context.stateUser.isAuthenticated)
     return (
-        <Stack.Navigator>
-            <Stack.Screen
+
+        <>
+            {context.stateUser.isAuthenticated == true ?(
+                <Stack.Navigator>
+
+                <Stack.Screen
+                    name='User Profile'
+                    component={UserProfile}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                </Stack.Navigator>
+            ) :
+                <Stack.Navigator>
+                    <Stack.Screen
                 name='Login'
                 component={Login}
                 options={{
                     headerShown: false,
                 }}
             />
+            
             <Stack.Screen
                 name='Register'
                 component={Register}
@@ -37,15 +59,11 @@ function MyStack() {
                     headerShown: false,
                 }}
             />
-            <Stack.Screen
-                name='User Profile'
-                component={UserProfile}
-                options={{
-                    headerShown: false,
-                }}
-            />
+                </Stack.Navigator>
+            }
+            
+        </>
 
-        </Stack.Navigator>
     )
 }
 

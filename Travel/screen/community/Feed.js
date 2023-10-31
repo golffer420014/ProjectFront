@@ -24,9 +24,9 @@ const Feed = (props) => {
             .then((res) => {
                 setFeed(res.data)
                 console.log(res.data)
-            }) 
+            })
 
-            
+
     }, []);
 
 
@@ -38,10 +38,10 @@ const Feed = (props) => {
                 <View style={styles.textInputView} >
                     <Text style={styles.textInput}>
                         What you thing?
-                </Text>
+                    </Text>
                 </View>
             </TouchableOpacity>
-            
+
             <ScrollView>
                 {feed.map((item, index) => {
                     return (
@@ -56,6 +56,7 @@ const Feed = (props) => {
                                         />
                                         <View style={styles.titleView}>
                                             <Text style={styles.postName}>{item.userId}</Text>
+                                            <Text>dawdwa</Text>
                                             <Text style={styles.postTitle}>{item.description}</Text>
                                         </View>
                                     </View>
@@ -64,6 +65,11 @@ const Feed = (props) => {
                                     </View>
 
                                 </View>
+
+                                {/* desc */}
+                                <View>
+                                </View>
+
                                 <Image
                                     source={require('../../assests/1223348.jpg')}
                                     style={styles.coverImage}
@@ -119,40 +125,40 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        alignItems:'center'
+        alignItems: 'center'
     },
     postView: {
         width: '100%',
         alignItems: "center",
         marginVertical: 20,
     },
-    image:{
-        backgroundColor:'rgba(0,0,0,0.06)',
-        width:50,
-        height:50,
-        borderRadius:50,
-    },
-    imageView:{
-        display:'flex',
-        flexDirection:'row',
-        alignItems:'center'
-    },
-    postName:{
-        fontSize:16,
-        fontWeight:'bold'
-    },
-    postTitle:{
-        fontSize:11,
-        color:'#989898'
-    },
-    titleView:{
-        marginLeft:15
-    },
-    coverImage:{
-        width:'90%',
-        height:200,
+    image: {
         backgroundColor: 'rgba(0,0,0,0.06)',
-        marginTop:20,
-        borderRadius:10
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+    },
+    imageView: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    postName: {
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+    postTitle: {
+        fontSize: 11,
+        color: '#989898'
+    },
+    titleView: {
+        marginLeft: 15
+    },
+    coverImage: {
+        width: '90%',
+        height: 200,
+        backgroundColor: 'rgba(0,0,0,0.06)',
+        marginTop: 20,
+        borderRadius: 10
     }
 })
