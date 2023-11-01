@@ -63,7 +63,6 @@ router.put(`/:id`, async (req, res) => {
         if (!user) {
             return res.status(404).json("User not found");
         }
-        console.log(req.body)
 
         const userUpdate = await User.findOneAndUpdate(
             { _id: req.params.id },
@@ -132,7 +131,6 @@ router.delete('/:id', (req, res) => {
 router.get(`/get/count`, async (req, res) => {
     try {
         const userCount = await User.countDocuments();
-        // .populate('category'); // จอยกับ table category
 
         res.send({
             userCount: userCount
@@ -184,9 +182,6 @@ router.post('/register', async (req, res) => {
             birth: req.body.birth,
             gender: req.body.gender,
             image: req.body.image,
-            // zip: req.body.zip,
-            // city: req.body.city,
-            // country: req.body.country,
         })
         user = await user.save();
 

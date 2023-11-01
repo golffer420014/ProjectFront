@@ -151,7 +151,7 @@ const RegisterDetail = ({ route, navigation }) => {
                       placeholder={"First Name"}
                       name={"fname"}
                       id={"fname"}
-                      onChangeText={(text) => setFname(text.toLowerCase())}
+                      onChangeText={(text) => setFname(text)}
                   />
                   <View style={styles.iconUser}>
                       <FontAwesome name='user' size={25} color='#f36d72' />
@@ -164,7 +164,7 @@ const RegisterDetail = ({ route, navigation }) => {
                       placeholder={"Last Name"}
                       name={"lname"}
                       id={"lname"}
-                      onChangeText={(text) => setLname(text.toLowerCase())}
+                      onChangeText={(text) => setLname(text)}
                   />
                   <View style={styles.iconUser}>
                       <FontAwesome name='user' size={25} color='#f36d72' />
@@ -177,7 +177,7 @@ const RegisterDetail = ({ route, navigation }) => {
                       placeholder={"Adress"}
                       name={"adress"}
                       id={"adress"}
-                      onChangeText={(text) => setAddress(text.toLowerCase())}
+                      onChangeText={(text) => setAddress(text)}
                   />
                   <View style={styles.iconUser}>
                       <FontAwesome name='address-card' size={20} color='#f36d72' />
@@ -212,7 +212,7 @@ const RegisterDetail = ({ route, navigation }) => {
                               styles.radioButton,
                               selectedGender === 'male' && styles.radioButtonSelected,
                           ]}
-                          onPress={() => setSelectedGender('male')}
+                          onPress={() => setSelectedGender('Male')}
                       />
                       <Text style={styles.radioButtonLabel}>Male</Text>
                       <TouchableOpacity
@@ -220,7 +220,7 @@ const RegisterDetail = ({ route, navigation }) => {
                               styles.radioButton,
                               selectedGender === 'female' && styles.radioButtonSelected,
                           ]}
-                          onPress={() => setSelectedGender('female')}
+                          onPress={() => setSelectedGender('Female')}
                       />
                       <Text style={styles.radioButtonLabel}>Female</Text>
                   </View>
@@ -233,7 +233,7 @@ const RegisterDetail = ({ route, navigation }) => {
                       placeholder={"Birth"}
                       name={"birth"}
                       id={"birth"}
-                      onChangeText={(text) => setBirth(text.toLowerCase())}
+                      onChangeText={(text) => setBirth(text)}
                   />
                   <View style={styles.iconUser}>
                       <FontAwesome name='user' size={25} color='#dfdfdf' />
@@ -247,7 +247,7 @@ const RegisterDetail = ({ route, navigation }) => {
                       placeholder={"Gender"}
                       name={"gender"}
                       id={"gender"}
-                      onChangeText={(text) => setGender(text.toLowerCase())}
+                      onChangeText={(text) => setGender(text)}
                   />
                   <View style={styles.iconUser}>
                       <FontAwesome name='user' size={25} color='#dfdfdf' />

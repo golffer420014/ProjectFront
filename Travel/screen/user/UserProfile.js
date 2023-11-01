@@ -116,14 +116,12 @@ const UserProfile = ({ props, navigation }) => {
         console.log('Image picker error: ', response.error);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
-        // setMainImage(imageUri);
-        setImage(imageUri)
+        
       }
     });
   };
 
   const handleEdit = (id) => {
-    //  console.log(userProfile)
     let formData = {
       image: image,
       fname: fname,
@@ -133,6 +131,7 @@ const UserProfile = ({ props, navigation }) => {
       birth: selectedDate,
       gender: selectedGender
     };
+     console.log(formData)
 
     const config = {
       headers: {
@@ -166,6 +165,8 @@ const UserProfile = ({ props, navigation }) => {
       })
   }
 
+  
+
   if (loading) {
     return (
       <View style={{
@@ -178,6 +179,7 @@ const UserProfile = ({ props, navigation }) => {
       </View>
     );
   }
+
 
   return (
     <>
@@ -244,7 +246,7 @@ const UserProfile = ({ props, navigation }) => {
                 placeholder={"First Name"}
                 name={"fname"}
                 id={"fname"}
-                onChangeText={(text) => setFname(text.toLowerCase())}
+                onChangeText={(text) => setFname(text)}
               />
               <View style={styles.iconUserEdit}>
                 <FontAwesome name='user' size={25} color='#f36d72' />
@@ -257,7 +259,7 @@ const UserProfile = ({ props, navigation }) => {
                 placeholder={"Last Name"}
                 name={"lname"}
                 id={"lname"}
-                onChangeText={(text) => setLname(text.toLowerCase())}
+                onChangeText={(text) => setLname(text)}
               />
               <View style={styles.iconUserEdit}>
                 <FontAwesome name='user' size={25} color='#f36d72' />
@@ -270,7 +272,7 @@ const UserProfile = ({ props, navigation }) => {
                 placeholder={"Address"}
                 name={"address"}
                 id={"address"}
-                onChangeText={(text) => setAddress(text.toLowerCase())}
+                onChangeText={(text) => setAddress(text)}
               />
               <View style={styles.iconUserEdit}>
                 <FontAwesome name='address-card' size={20} color='#f36d72' />
@@ -284,7 +286,7 @@ const UserProfile = ({ props, navigation }) => {
                 placeholder={"Email"}
                 name={"email"}
                 id={"email"}
-                onChangeText={(text) => setEmail(text.toLowerCase())}
+                onChangeText={(text) => setEmail(text)}
               />
               <View style={styles.iconUserEdit}>
                 <FontAwesome name='address-card' size={20} color='#f36d72' />
@@ -318,17 +320,17 @@ const UserProfile = ({ props, navigation }) => {
                 <TouchableOpacity
                   style={[
                     styles.radioButton,
-                    selectedGender === 'male' && styles.radioButtonSelected,
+                    selectedGender === 'Male' && styles.radioButtonSelected,
                   ]}
-                  onPress={() => setSelectedGender('male')}
+                  onPress={() => setSelectedGender('Male')}
                 />
                 <Text style={styles.radioButtonLabel}>Male</Text>
                 <TouchableOpacity
                   style={[
                     styles.radioButton,
-                    selectedGender === 'female' && styles.radioButtonSelected,
+                    selectedGender === 'Female' && styles.radioButtonSelected,
                   ]}
-                  onPress={() => setSelectedGender('female')}
+                  onPress={() => setSelectedGender('Female')}
                 />
                 <Text style={styles.radioButtonLabel}>Female</Text>
               </View>
