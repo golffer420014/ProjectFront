@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native'
 
-const Input = (props) => {
+const InputFormProduct = (props) => {
     return (
         <TextInput
             style={styles.input}
@@ -29,8 +29,7 @@ const styles = StyleSheet.create({
         padding: 20,
         borderWidth: 2,
         borderColor: '#dfdfdf',
-        paddingLeft:55
     },
 });
 
-export default Input;
+export default InputFormProduct;

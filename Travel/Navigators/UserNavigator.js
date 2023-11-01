@@ -12,6 +12,7 @@ import UserProfile from '../screen/user/UserProfile';
 import RegisterDetail from '../screen/user/RegisterDetail';
 
 import AuthGlobal from "../context/store/AuthGlobal";
+import UserEditPassowrd from "../screen/user/UserEditPassowrd";
 
 
 const Stack = createStackNavigator()
@@ -34,6 +35,13 @@ function MyStack() {
                         headerShown: false,
                     }}
                 />
+                    <Stack.Screen
+                        name='UserEditPassowrd'
+                        component={UserEditPassowrd}
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
                 </Stack.Navigator>
             ) :
                 <Stack.Navigator>

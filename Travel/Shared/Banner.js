@@ -13,7 +13,7 @@ const Banner = () => {
         axios
             .get(`${baseURL}event`)
             .then((res) => {
-                setBannerData(res.data); // อัปเดตข้อมูลแบนเนอร์ด้วยข้อมูลที่ได้จาก API
+                setBannerData(res.data.slice(0, 2)); // อัปเดตข้อมูลแบนเนอร์ด้วยข้อมูลที่ได้จาก API
             })
             .catch((error) => {
                 console.error(error);
@@ -27,18 +27,17 @@ const Banner = () => {
                 <View style={styles.swiper}>
                     <Swiper
                         style={{ height: width / 2.5 }}
-                        showButtons={true}
+                        showButtons={false}
                         autoplay={true}
                         autoplayTimeout={3}
                         activeDotColor="#f36d72"
                         // dotStyle={{ width: 20, height: 5 }}
                         // activeDotStyle={{ width: 20, height: 5 }}
-                        howsPagination={false} // ตั้งค่า showsPagination เป็น false เพื่อซ่อนจุดควบคุม
                     >
-                        {bannerData.map((item) => {
+                        {bannerData.map((item,index) => {
                             return (
                                 <Image
-                                    key={item} // ควรใช้ key ที่ไม่ซ้ำกัน
+                                    key={index} // ควรใช้ key ที่ไม่ซ้ำกัน
                                     style={styles.imageBanner}
                                     resizeMode="stretch"
                                     source={{

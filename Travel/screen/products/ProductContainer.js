@@ -235,7 +235,7 @@ const ProductContainer = (props) => {
 
             ) : (
                 //loading
-                <Container style={[styles.center, { backgroundColor: '#dfdfdf' }]}>
+                <Container style={[styles.center, { backgroundColor: '#ffff' }]}>
                     <ActivityIndicator size="large" color='#f36d72' />
                 </Container>
             )}

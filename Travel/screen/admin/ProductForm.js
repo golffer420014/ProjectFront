@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { StyleSheet, Text, View, Image, TouchableOpacity, Platform } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions ,ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Item, Picker } from 'native-base'
 import FormContainer from '../../Shared/Form/FormContainer'
-import Input from '../../Shared/Form/Input'
+import Input from '../../Shared/Form/InputFormProduct'
 import EasyButton from '../../Shared/StyledComponents/EasyButton'
 import Toast from 'react-native-toast-message'
 import Error from '../../Shared/Error'
@@ -19,7 +19,7 @@ import data from '../../data/from.json'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
-
+var { width } = Dimensions.get('window');
 const ProductForm = (props) => {
 
   const [pickerValue, setPickerValue] = useState()
@@ -192,7 +192,8 @@ const ProductForm = (props) => {
 
 
   return (
-    <FormContainer >
+    <ScrollView>
+      <View style={styles.viewContainer}>
       <View style={styles.imageContainer}>
         <Image style={styles.image} source={{ uri: mainImage }} />
         <TouchableOpacity onPress={openImagePicker} style={styles.imagePicker}>
@@ -201,27 +202,27 @@ const ProductForm = (props) => {
         </TouchableOpacity>
       </View>
       <View style={styles.label}>
-        <Text style={{ fontWeight: 'bold', color: '#f36d72' }}>Name</Text>
+        <Text style={{ fontWeight: 'bold', color: 'black' }}>Name</Text>
       </View>
-      <Input
+        <Input
         placeholder="ชื่อ"
         name="name"
         value={name}
         onChangeText={(text) => setName(text)}
       />
       <View style={styles.label}>
-        <Text style={{ fontWeight: 'bold', color: '#f36d72' }}>Description</Text>
+        <Text style={{ fontWeight: 'bold', color: 'black' }}>Description</Text>
       </View>
-      <Input
+        <Input
         placeholder="รายละเอียดสถานที่"
         name="description"
         value={description}
         onChangeText={(text) => setDescription(text)}
       />
       <View style={styles.label}>
-        <Text style={{ fontWeight: 'bold', color: '#f36d72' }}>Location</Text>
+        <Text style={{ fontWeight: 'bold', color: 'black' }}>Location</Text>
       </View>
-      <Input
+        <Input
         placeholder="อำเภอ จังหวัด"
         name="location"
         value={location}
@@ -235,9 +236,9 @@ const ProductForm = (props) => {
 
         <View style={[styles.inputContainer]}>
           <View style={[styles.label, { marginLeft: 5 }]}>
-            <Text style={{ fontWeight: 'bold', color: '#f36d72' }}>Latitude</Text>
+            <Text style={{ fontWeight: 'bold', color: 'black' }}>Latitude</Text>
           </View>
-          <Input
+            <Input
             placeholder="ละติจูติ"
             name="latitude"
             value={latitude}
@@ -248,9 +249,9 @@ const ProductForm = (props) => {
 
         <View style={[styles.inputContainer,]}>
           <View style={[styles.label, { marginLeft: 10 }]}>
-            <Text style={{ fontWeight: 'bold', color: '#f36d72' }}>Longitude</Text>
+            <Text style={{ fontWeight: 'bold', color: 'black' }}>Longitude</Text>
           </View>
-          <Input
+            <Input
             placeholder="ลองจิจูด"
             name="longitude"
             value={longitude}
@@ -264,9 +265,9 @@ const ProductForm = (props) => {
 
 
       <View style={styles.label}>
-        <Text style={{ fontWeight: 'bold', color: '#f36d72' }}>Rating</Text>
+        <Text style={{ fontWeight: 'bold', color: 'black' }}>Rating</Text>
       </View>
-      <Input
+        <Input
         placeholder="คะแนน สถานที่"
         name="rating"
         value={rating}
@@ -281,11 +282,11 @@ const ProductForm = (props) => {
       <View style={{ flexDirection: 'row' }}>
         <View>
           <View style={[styles.label, { marginBottom: 10 }]}>
-            <Text style={{ fontWeight: 'bold', color: '#f36d72' }}>Category</Text>
+            <Text style={{ fontWeight: 'bold', color: 'black' }}>Category</Text>
           </View>
           <Item picker style={styles.pickerContainer}>
             <Picker
-              mode="dialog"
+                mode="dropdown"
               style={{ width: undefined }}
               placeholder="Select your Category"
               selectedValue={pickerValue}
@@ -302,11 +303,11 @@ const ProductForm = (props) => {
 
         <View>
           <View style={[styles.label, { marginBottom: 10 }]}>
-            <Text style={{ fontWeight: 'bold', color: '#f36d72' }}>provine</Text>
+            <Text style={{ fontWeight: 'bold', color: 'black' }}>provine</Text>
           </View>
           <Item picker style={styles.pickerContainer}>
             <Picker
-              mode='dialog'
+              mode='dropdown'
               style={{ width: undefined }}
               selectedValue={provine}
               placeholderStyle={{ color: "#007aff" }}
@@ -334,24 +335,34 @@ const ProductForm = (props) => {
       </View>
 
 
-    </FormContainer>
+    </View>
+    </ScrollView>
   )
 }
 
 export default ProductForm
 
 const styles = StyleSheet.create({
+  viewContainer:{
+    paddingBottom: 400,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'whitesomke',
+    paddingTop:20,
+  },
 
   container:{
     marginBottom: 400,
     // width: width,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
+    // backgroundColor: 'red'
   },
   label: {
     width: "80%",
-    marginTop: 10
+    marginTop: 10,
+    left:10
   },
   buttonContainer: {
     width: "80%",
@@ -363,26 +374,27 @@ const styles = StyleSheet.create({
     color: "white"
   },
   imageContainer: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     borderStyle: "solid",
     borderWidth: 8,
     padding: 0,
     justifyContent: "center",
     borderRadius: 100,
-    borderColor: "#E0E0E0",
-    // elevation: 10
+    borderColor: "#dfdfdf",
+    elevation: 10
   },
   image: {
     width: "100%",
     height: "100%",
-    borderRadius: 100
+    borderRadius: 100,
+    backgroundColor:'white'
   },
   imagePicker: {
     position: "absolute",
     right: 5,
     bottom: 5,
-    backgroundColor: "gray",
+    backgroundColor: "#f47a7e",
     padding: 8,
     borderRadius: 100,
     elevation: 20
@@ -390,13 +402,14 @@ const styles = StyleSheet.create({
   pickerContainer: {
     width: 160,
     backgroundColor: 'white',
-    borderRadius: 20,
-    marginLeft: 5
+    borderRadius: 10,
+    marginLeft: 5,
+    borderColor: "#dfdfdf",
   },
 
   inputContainer: {
     width: 200,
     borderRadius: 20,
-    marginHorizontal: -17
+    marginHorizontal: -17,
   },
 })

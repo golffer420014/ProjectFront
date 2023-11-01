@@ -56,6 +56,36 @@ router.post('/', async (req, res) => {
     }
 
 })
+//put
+router.put(`/:id`, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json("User not found");
+        }
+        console.log(req.body)
+
+        const userUpdate = await User.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                fname: req.body.fname || user.fname,
+                lname: req.body.lname || user.lname,
+                email: req.body.email || user.email,
+                address: req.body.address || user.address,
+                birth: req.body.birth || user.birth,
+                gender: req.body.gender || user.gender,
+                image: req.body.image || user.image,
+            },
+            { new: true }
+        );
+
+        return res.status(200).json(userUpdate);
+         
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+});
+
 //delete
 router.delete('/:id', (req, res) => {
     User.findByIdAndRemove(req.params.id).then(user => {

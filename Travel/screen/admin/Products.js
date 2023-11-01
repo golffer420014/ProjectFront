@@ -115,7 +115,7 @@ const Products = (props) => {
 
       </View>
       <View style={{
-        backgroundColor: '#DFDFDF' }}>
+        backgroundColor: '#DFDFDF', paddingTop:10 }}>
         <View style={{ backgroundColor: '#DFDFDF', paddingHorizontal: 20, marginBottom: 10 }}>
           <Item style={{ borderRadius: 20, backgroundColor: '#ffff',paddingHorizontal:7 }}>
             <View style={{ paddingLeft: 10 }}>
@@ -133,7 +133,7 @@ const Products = (props) => {
         </View>
       </View>
       {loading ? (
-        <View style={{height:width/.8 , justifyContent:'center'}}>
+        <View style={{height:width/.8 , justifyContent:'center' ,backgroundColor:'#ffff'}}>
           <ActivityIndicator size='large' color='#f36d72' />
         </View>
       ) : (
@@ -192,13 +192,13 @@ const styles = StyleSheet.create({
 
   container: {
     marginBottom: 160,
-    backgroundColor: '#DFDFDF'
+    backgroundColor: 'white'
   },
   buttonContainer: {
     marginBottom: 10,
     alignSelf: 'center',
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '#dfdfdf',
     width: '100%',
     justifyContent: 'space-evenly',
     borderBottomRightRadius: 20,

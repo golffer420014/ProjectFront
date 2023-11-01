@@ -194,15 +194,17 @@ export default Event
 const styles = StyleSheet.create({
     container: {
         width: width,
+        height:width/.5,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor:'#dfdfdf',
-        paddingBottom:20
+        paddingBottom:20,
+        marginTop:-20
         
     },
     imageContainer: {
-        width: 180,
-        height: 180,
+        width: 150,
+        height: 150,
         borderStyle: "solid",
         borderWidth: 8,
         padding: 0,
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         borderColor: "#E0E0E0",
         marginTop: 10,
-        // elevation: 10
+        // elevation: 1
     },
     image: {
         width: "100%",
