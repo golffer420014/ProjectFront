@@ -17,15 +17,19 @@ import baseURL from '../../assests/common/baseUrl';
 import FormContainer from '../../Shared/Form/FormContainer';
 import { useNavigation } from '@react-navigation/native';
 
-const UserEditPassowrd = ({ navigation }) => {
+const UserEditPassowrd = (props) => {
+    // console.log('props =', JSON.stringify(props, null, 2))
+    const id = props.route.params.userId
+    const token = props.route.params.token
+    // console.log(token)
     const [password, setPassword] = useState("");
     const [conPassword, setConPassword] = useState("");
     const [passShow, setPassShow] = useState(false)
 
-    // const navigation = useNavigation()
+    const navigation = useNavigation()
 
     
-    const handleConfirm = () => {
+    const handleConfirm = (props) => {
 
         if ( password === "" || conPassword === "") {
             Toast.show({
@@ -42,10 +46,39 @@ const UserEditPassowrd = ({ navigation }) => {
                 text2: "Please try again",
             });
         } else {
-            // props.navigation.navigate('RegisterDetail', {
-            //     email: email,
-            //     password: password,
-            // });
+            let formData = {
+                password:password
+            };
+
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            axios
+                .put(`${baseURL}users/password/${id}`, JSON.stringify(formData), config)
+                .then((res) => {
+                    if (res.status == 200 || res.status == 201) {
+                        Toast.show({
+                            topOffset: 60,
+                            type: "success",
+                            text1: "updated successfuly ",
+                            text2: ""
+                        });
+                        setTimeout(() => {
+                            navigation.goBack()
+                        }, 500)
+                    }
+                })
+                .catch((error) => {
+                    Toast.show({
+                        topOffset: 60,
+                        type: "error",
+                        text1: "Updated error",
+                        text2: "Please try again"
+                    })
+                })
         }
 
     }

@@ -51,7 +51,7 @@ const UserProfile = ({ props, navigation }) => {
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
 
-  // console.log('LOG login =', JSON.stringify(image, null, 2))
+  // console.log('LOG login =', JSON.stringify(userProfile, null, 2))
 
 
 
@@ -164,8 +164,8 @@ const UserProfile = ({ props, navigation }) => {
           text2: "Please try again"
         })
       })
-
   }
+
   if (loading) {
     return (
       <View style={{
@@ -182,7 +182,10 @@ const UserProfile = ({ props, navigation }) => {
   return (
     <>
       <TouchableOpacity
-        onPress={() => navigation.navigate('UserEditPassowrd')}
+        onPress={() => navigation.navigate('UserEditPassowrd', { 
+          userId: userProfile ? userProfile.id : '',
+          token:token
+           })}
       >
         <View style={styles.editPassword}>
           <MaterialIcons name='key' size={18} color='#f36d72' />

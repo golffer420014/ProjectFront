@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 router.get(`/`, async (req, res) => {
     try {
         const userList = await User.find()//ค้นหาข้อมูล
-            .select('-passwordHash')
+            // .select('-passwordHash')
 
         if (userList) {
             console.log('user success')
@@ -85,6 +85,35 @@ router.put(`/:id`, async (req, res) => {
         return res.status(500).json(error);
     }
 });
+//put password
+router.put(`/password/:id`, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json("User not found");
+        }
+
+        // เข้ารหัสรหัสผ่านใหม่
+        const newPasswordHash = bcrypt.hashSync(req.body.password, 10);
+
+        // อัปเดทรหัสผ่านในฐานข้อมูล
+        const passwordUpdated = await User.findByIdAndUpdate(
+            req.params.id,
+            { passwordHash: newPasswordHash },
+            { new: true }
+        );
+
+        if (!passwordUpdated) {
+            return res.status(400).json("Password update failed");
+        }
+
+        // ส่งค่ากลับหรือส่งสถานะสำเร็จกลับไป
+        return res.status(200).json({ message: "Password updated successfully" });
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+});
+
 
 //delete
 router.delete('/:id', (req, res) => {

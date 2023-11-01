@@ -182,50 +182,7 @@ const Register = (props) => {
                     </View>
                     }
                 
-                {/* <View style={[styles.input, { marginTop: 5 }]}>
-                    <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Username</Text>
-                    <Input
-                        placeholder={"Name"}
-                        name={"name"}
-                        id={"name"}
-                        onChangeText={(text) => setName(text)}
-                    />
-                    <View style={styles.iconUser}>
-                        <FontAwesome name='user' size={25} color='#dfdfdf' />
-                    </View>
-                </View>
-
-                <View style={[styles.input, { marginTop: 5 }]}>
-                    <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Username</Text>
-                    <Input
-                        placeholder={"Phone Number"}
-                        name={"phone"}
-                        id={"phone"}
-                        keyboardType={"numeric"}
-                        onChangeText={(text) => setPhone(text)}
-                    />
-                    <View style={styles.iconUser}>
-                        <FontAwesome name='user' size={25} color='#dfdfdf' />
-                    </View>
-                </View> */}
-
-                {/* <View style={[styles.input, { marginTop: 5 }]}>
-                    <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Username</Text>
-                    <Input
-                        placeholder={"Country"}
-                        name={"country"}
-                        id={"country"}
-                        onChangeText={(text) => setCountry(text)}
-                    />
-                    <View style={styles.iconUser}>
-                        <FontAwesome name='user' size={25} color='#dfdfdf' />
-                    </View>
-                </View> */}
                 
-                
-                {/* <View style={styles.buttonGroup}>
-                    {error ? <Error message={error} /> : null}
-                </View> */}
 
                 <TouchableOpacity
                     onPress={() => handleNext()}
@@ -238,15 +195,7 @@ const Register = (props) => {
                 
 
 
-                {/* <View>
-                    <Button title='Register' onPress={() => register()} />
-                </View>
-                <View>
-                    <Button title='Back to Login' onPress={
-                        () => props.navigation.navigate('Login')
-                    } />
-                </View> */}
-
+            
 
             </View>
 
