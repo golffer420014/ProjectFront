@@ -122,7 +122,7 @@ const Login = (props) => {
                             onChangeText={(text) => setPassowrd(text.toLowerCase())}
                         />
                         <View style={styles.iconPassword}>
-                            <FontAwesome name='lock' size={25} color='#f36d72' />
+                            <FontAwesome name='lock' size={25} color='gray' />
                         </View>
                         <TouchableOpacity
                             onPress={() => setPassShow(true)}
@@ -131,7 +131,11 @@ const Login = (props) => {
                                 <Entypo name='eye-with-line' size={22} color='gray' />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={
+                                () => props.navigation.navigate('UserForgetPassword')
+                            }
+                        >
                             <Text style={{ color: '#f36d72', fontWeight: 'bold', position: 'relative', right: -105 }}>Forgot Password?</Text>
                         </TouchableOpacity>
                     </View>
@@ -147,7 +151,7 @@ const Login = (props) => {
                             onChangeText={(text) => setPassowrd(text.toLowerCase())}
                         />
                         <View style={styles.iconPassword}>
-                            <FontAwesome name='unlock' size={25} color='#f36d72' />
+                            <FontAwesome name='lock' size={25} color='#f36d72' />
                         </View>
                         <TouchableOpacity
                             onPress={() => setPassShow(false)}
@@ -156,7 +160,11 @@ const Login = (props) => {
                                 <Entypo name='eye' size={22} color='#f36d72' />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={
+                                () => props.navigation.navigate('UserForgetPassword')
+                            }
+                        >
                             <Text style={{ color: '#f36d72', fontWeight: 'bold', position: 'relative', right: -105 }}>Forgot Password?</Text>
                         </TouchableOpacity>
                     </View>}

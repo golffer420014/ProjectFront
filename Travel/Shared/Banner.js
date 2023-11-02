@@ -27,12 +27,12 @@ const Banner = () => {
                 <View style={styles.swiper}>
                     <Swiper
                         style={{ height: width / 2.5 }}
-                        showButtons={false}
-                        autoplay={true}
-                        autoplayTimeout={3}
+                        // showButtons={false}
+                        // autoplay={true}
+                        // autoplayTimeout={3}
                         activeDotColor="#f36d72"
-                        // dotStyle={{ width: 20, height: 5 }}
-                        // activeDotStyle={{ width: 20, height: 5 }}
+                        dotStyle={{ width: 0, height: 0 }}
+                        activeDotStyle={{ width: 0, height: 0 }}
                     >
                         {bannerData.map((item,index) => {
                             return (
@@ -65,10 +65,10 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     imageBanner: {
-        height: width / 2.5,
-        width: width - 40,
-        borderRadius: 10,
-        marginHorizontal: 20,
+        flex: 1,
+        width: null,
+        height: null,
+        borderRadius: 5,
     },
 });
 

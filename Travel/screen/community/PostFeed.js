@@ -1,99 +1,90 @@
-/* eslint-disable no-dupe-keys */
-import { StyleSheet, Text, View, SafeAreaView, TextInput, Image } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
-import React from 'react'
-import tailwind from 'twrnc'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { StyleSheet, Text, View, ScrollView ,Image, TextInput} from 'react-native'
+import React, { useState, useEffect } from 'react'
+import Input from '../../Shared/Form/Input';
+import InputFormProduct from '../../Shared/Form/InputFormProduct';
 
+const PostFeed = (props) => {
+  console.log(JSON.stringify(props, null, 2)) 
+  const [fname, setFname] = useState();
+  const[lname,setLname] = useState();
+  const [image, setImage] = useState();
 
-const PostFeed = () => {
-
-  const navigation = useNavigation()
+  useEffect(() => {
+    if (props.route.params?.userProfile) {
+      const { fname, lname, image } = props.route.params.userProfile;
+      setFname(fname);
+      setLname(lname);
+      setImage(image);
+    }
+  }, [props.route.params?.userProfile]);
 
 
   return (
-    <View style={styles.mainPostView}>
+    <ScrollView style={{ backgroundColor: "white",  }}>
+      <View style={styles.containerWrapper}>
+        <View style={styles.container}>
 
-
-      <View style={styles.postView}>
-
-        <View style={styles.postBox}>
-
-          <View style={styles.imageView}>
+          <View style={styles.header}>
             <Image
-              source={require('../../assests/1223348.jpg')}
-              style={styles.image}
+              source={{ uri: image }}
+              style={styles.imageProfile}
             />
-            <View style={styles.titleView}>
-              <Text style={styles.postName}>Name</Text>
-              <Text style={styles.postName}>Location</Text>
+            <View style={{ width: 5 }}></View>
+            <View>
+              <Text style={{ color: 'black' }}>{fname + ' ' + lname}</Text>
             </View>
           </View>
-          
-        </View>
-
-      </View>
-      <View style={styles.TextInput}>
-        <TextInput
-          placeholder='ความในใจ...'
-        />
-      </View>
-      <View style={styles.upload}>
-          <View>
-            
+          <View style={styles.desc}>
+            <TextInput
+              style={styles.inputDesc}
+              placeholder="คุณคิดอะไรอยู่"
+              multiline={true}
+              numberOfLines={4} // You can set the number of lines according to your need
+              textAlignVertical="top"
+              textAlign="left"
+            />
           </View>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   )
 }
-
 export default PostFeed
 
+
+
 const styles = StyleSheet.create({
-  mainView: {
-    flex: 1,
-    backgroundColor: '#ffff'
+  containerWrapper:{
+  borderWidth:1,
+  padding:20,
+  width:'90%',
+  alignSelf:'center'
   },
-  postView: {
-    width: '100%',
-    alignItems: "center",
-    marginVertical: 20,
+  container: {
+    width: null,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
-  image: {
+  imageProfile:{
     backgroundColor: 'rgba(0,0,0,0.06)',
     width: 50,
     height: 50,
     borderRadius: 50,
   },
-  postBox: {
-    width: '90%',
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center'
+  header:{
+    width:'100%',
+    padding:10,
+    flexDirection:'row',
   },
-  titleView: {
-    marginLeft: 15
+  desc:{
+    width: '100%',
   },
-  imageView: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
+  inputDesc:{
+    height: 100,
+    padding: 10,
+    borderWidth:3,
+    borderRadius:10,
+    borderColor:'#dfdfdf',
   },
-  postName: {
-    fontSize: 16,
-    fontWeight: 'bold'
-  },
-  TextInput:{
-    width:'90%',
-    borderWidth: 1, // Add a border to the TextInput
-    borderColor: 'gray', // Border color
-    borderRadius: 4, // Add rounded corners
-    padding: 8, // Add padding inside the TextInput
-    fontSize: 16, // Set the font size
-    alignSelf:'center',
-    height:200,
-    borderRadius:10
-  }
 })

@@ -113,6 +113,22 @@ router.put(`/password/:id`, async (req, res) => {
     }
 });
 
+//get forgetPassword
+router.get(`/forgetPassword/:email`, async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.params.email });
+        if (!user) {
+            return res.status(404).json("User not found");
+        }
+
+        res.send(user)
+
+        
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+});
+
 
 //delete
 router.delete('/:id', (req, res) => {

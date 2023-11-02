@@ -116,7 +116,8 @@ const UserProfile = ({ props, navigation }) => {
         console.log('Image picker error: ', response.error);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
-        
+        setImage(imageUri)
+
       }
     });
   };

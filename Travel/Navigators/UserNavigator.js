@@ -13,6 +13,7 @@ import RegisterDetail from '../screen/user/RegisterDetail';
 
 import AuthGlobal from "../context/store/AuthGlobal";
 import UserEditPassowrd from "../screen/user/UserEditPassowrd";
+import UserForgetPassword from "../screen/user/UserForgetPassword";
 
 
 const Stack = createStackNavigator()
@@ -25,16 +26,16 @@ function MyStack() {
     return (
 
         <>
-            {context.stateUser.isAuthenticated == true ?(
+            {context.stateUser.isAuthenticated == true ? (
                 <Stack.Navigator>
 
-                <Stack.Screen
-                    name='User Profile'
-                    component={UserProfile}
-                    options={{
-                        headerShown: false,
-                    }}
-                />
+                    <Stack.Screen
+                        name='User Profile'
+                        component={UserProfile}
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
                     <Stack.Screen
                         name='UserEditPassowrd'
                         component={UserEditPassowrd}
@@ -46,30 +47,38 @@ function MyStack() {
             ) :
                 <Stack.Navigator>
                     <Stack.Screen
-                name='Login'
-                component={Login}
-                options={{
-                    headerShown: false,
-                }}
-            />
-            
-            <Stack.Screen
-                name='Register'
-                component={Register}
-                options={{
-                    headerShown: false,
-                }}
-            />
-            <Stack.Screen
-                name='RegisterDetail'
-                component={RegisterDetail}
-                options={{
-                    headerShown: false,
-                }}
-            />
+                        name='Login'
+                        component={Login}
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
+
+                    <Stack.Screen
+                        name='UserForgetPassword'
+                        component={UserForgetPassword}
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
+
+                    <Stack.Screen
+                        name='Register'
+                        component={Register}
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
+                    <Stack.Screen
+                        name='RegisterDetail'
+                        component={RegisterDetail}
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
                 </Stack.Navigator>
             }
-            
+
         </>
 
     )

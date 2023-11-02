@@ -63,7 +63,7 @@ const Register = (props) => {
 
     return (
         <ScrollView
-            
+            style={{ backgroundColor: 'white' }}
         >
             <View style={styles.container}>
                 <TouchableOpacity
@@ -111,7 +111,7 @@ const Register = (props) => {
                                 </View>
                             </TouchableOpacity>
                             <View style={styles.iconPassowrd}>
-                                <FontAwesome name='lock' size={25} color='#f36d72' />
+                                <FontAwesome name='lock' size={25} color='gray' />
                             </View>
                         </View>
 
@@ -132,7 +132,7 @@ const Register = (props) => {
                                 </View>
                             </TouchableOpacity>
                             <View style={styles.iconPassowrd}>
-                                <FontAwesome name='lock' size={25} color='#f36d72' />
+                                <FontAwesome name='lock' size={25} color='gray' />
                             </View>
                         </View>
                     </View>
@@ -155,7 +155,7 @@ const Register = (props) => {
                                 </View>
                             </TouchableOpacity>
                             <View style={styles.iconPassowrd}>
-                                <FontAwesome name='unlock' size={25} color='#f36d72' />
+                                <FontAwesome name='lock' size={25} color='#f36d72' />
                             </View>
                         </View>
 
@@ -176,7 +176,7 @@ const Register = (props) => {
                                 </View>
                             </TouchableOpacity>
                             <View style={styles.iconPassowrd}>
-                                <FontAwesome name='unlock' size={25} color='#f36d72' />
+                                <FontAwesome name='lock' size={25} color='#f36d72' />
                             </View>
                         </View>
                     </View>
@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        paddingBottom:200,
         paddingTop:40
     },
     input: {

@@ -28,15 +28,15 @@ LogBox.ignoreAllLogs(true)
 const App = () => {
   
   return (
-    <Auth>
+    <Auth >
       <Provider store={store}>
 
-        <NavigationContainer>
+        <NavigationContainer >
           <StatusBar
             hidden
           />
           {/* <Header /> */}
-          <Main />
+          <Main  />
           <Toast ref={(ref) => Toast.setRef(ref)} />
 
         </NavigationContainer>

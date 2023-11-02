@@ -180,7 +180,7 @@ const RegisterDetail = ({ route, navigation }) => {
                       onChangeText={(text) => setAddress(text)}
                   />
                   <View style={styles.iconUser}>
-                      <FontAwesome name='address-card' size={20} color='#f36d72' />
+                      <FontAwesome name='address-card' size={18} color='#f36d72' />
                   </View>
               </View>
 
@@ -210,7 +210,7 @@ const RegisterDetail = ({ route, navigation }) => {
                       <TouchableOpacity
                           style={[
                               styles.radioButton,
-                              selectedGender === 'male' && styles.radioButtonSelected,
+                              selectedGender === 'Male' && styles.radioButtonSelected,
                           ]}
                           onPress={() => setSelectedGender('Male')}
                       />
@@ -218,7 +218,7 @@ const RegisterDetail = ({ route, navigation }) => {
                       <TouchableOpacity
                           style={[
                               styles.radioButton,
-                              selectedGender === 'female' && styles.radioButtonSelected,
+                              selectedGender === 'Female' && styles.radioButtonSelected,
                           ]}
                           onPress={() => setSelectedGender('Female')}
                       />
@@ -227,32 +227,7 @@ const RegisterDetail = ({ route, navigation }) => {
               </View>
 
               
-              {/* <View style={[styles.input, { marginTop: 5 }]}>
-                  <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Gender</Text>
-                  <Input
-                      placeholder={"Birth"}
-                      name={"birth"}
-                      id={"birth"}
-                      onChangeText={(text) => setBirth(text)}
-                  />
-                  <View style={styles.iconUser}>
-                      <FontAwesome name='user' size={25} color='#dfdfdf' />
-                  </View>
-              </View>
-
-
-              <View style={[styles.input, { marginTop: 5 }]}>
-                  <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Gender</Text>
-                  <Input
-                      placeholder={"Gender"}
-                      name={"gender"}
-                      id={"gender"}
-                      onChangeText={(text) => setGender(text)}
-                  />
-                  <View style={styles.iconUser}>
-                      <FontAwesome name='user' size={25} color='#dfdfdf' />
-                  </View>
-              </View> */}
+             
 
               <TouchableOpacity
                   onPress={() => register()}
@@ -313,7 +288,7 @@ const styles = StyleSheet.create({
     iconUser: {
         position: 'absolute',
         left: 60,
-        bottom: 28
+        bottom: 31
     },
     iconEye: {
         position: 'absolute',

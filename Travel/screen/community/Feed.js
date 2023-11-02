@@ -1,40 +1,68 @@
 import { StyleSheet, Text, View, TextInput, ActivityIndicator, FlatList, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import baseURL from '../../assests/common/baseUrl'
 import { Image } from 'react-native'
 
-
+//icon
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import PostFeed from './PostFeed'
+
+//auth
+import AuthGlobal from '../../context/store/AuthGlobal';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const Feed = (props) => {
 
+    const context = useContext(AuthGlobal);
+
     const [feed, setFeed] = useState([])
+    const [token,setToken] = useState()
+    const [userProfile, setUserProfile] = useState()
 
 
     useEffect(() => {
-        // axios
-        //     .get(`${baseURL}products`)
-        //     .then((res) => setFeed(res.data))
 
         axios
             .get(`${baseURL}community`)
             .then((res) => {
                 setFeed(res.data)
-                console.log(res.data)
             })
-
-
     }, []);
+
+    const postCommu = () =>{
+        if (
+            context.stateUser.isAuthenticated === false ||
+            context.stateUser.isAuthenticated === null
+        ) {
+            alert('you must be login first')
+        }
+        else {
+            AsyncStorage.getItem("jwt")
+                .then((res) => {
+                    setToken(res)
+                    axios
+                        .get(`${baseURL}users/${context.stateUser.user.userId}`, {
+                            headers: { Authorization: `Bearer ${res}` },
+                        })
+                        .then((user) => {
+                            setUserProfile(user.data);
+                            props.navigation.navigate('Post Feed', {
+                                userProfile: user.data,
+                                token: res,
+                            });
+                        })
+                })
+                .catch((error) => console.log(error));
+        }
+    }
 
 
 
     return (
         <View style={styles.mainView}>
             <Text style={styles.Heading}>Community</Text>
-            <TouchableOpacity onPress={() => props.navigation.navigate('Post Feed')}>
+            <TouchableOpacity onPress={() => postCommu() }>
                 <View style={styles.textInputView} >
                     <Text style={styles.textInput}>
                         What you thing?
