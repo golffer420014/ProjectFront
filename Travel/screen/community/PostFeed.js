@@ -1,13 +1,27 @@
-import { StyleSheet, Text, View, ScrollView ,Image, TextInput} from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Modal, TouchableHighlight } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import Input from '../../Shared/Form/Input';
-import InputFormProduct from '../../Shared/Form/InputFormProduct';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+import Toast from 'react-native-toast-message';
+import LinearGradient from 'react-native-linear-gradient';
+import { Item, Picker } from 'native-base'
+
+// icon
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import Entypo from 'react-native-vector-icons/Entypo'
+
+//province json
+import allProvince from '../../data/from.json'
+import EasyButton from '../../Shared/StyledComponents/EasyButton';
 
 const PostFeed = (props) => {
-  console.log(JSON.stringify(props, null, 2)) 
   const [fname, setFname] = useState();
-  const[lname,setLname] = useState();
+  const [lname, setLname] = useState();
   const [image, setImage] = useState();
+  const [imagePost, setImagePost] = useState();
+  const [province, setProvince] = useState()
+  const [modalVisible, setModalVisible] = useState(false)
+
 
   useEffect(() => {
     if (props.route.params?.userProfile) {
@@ -18,9 +32,80 @@ const PostFeed = (props) => {
     }
   }, [props.route.params?.userProfile]);
 
+  const openImagePicker = () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 4000,
+      maxWidth: 4000,
+    };
+
+
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image picker error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        setImagePost(imageUri)
+
+      }
+    });
+  };
+  const PostBtn = () =>{
+
+  }
+
+
 
   return (
-    <ScrollView style={{ backgroundColor: "white",  }}>
+    <ScrollView style={{ backgroundColor: "white", }}>
+
+      <Modal
+        animationType='fade'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false)
+        }}
+      >
+        <View style={styles.centeredView}>
+          <ScrollView>
+            <View style={styles.modalView}>
+              <TouchableHighlight
+                underlayColor="#E8E8E8"
+                onPress={() => {
+                  setModalVisible(false)
+                }}
+                style={{
+                  alignSelf: 'flex-end',
+                  position: 'absolute',
+                  top: 10,
+                  right: 15,
+                }}
+              >
+                <FontAwesome name='close' color='#f47a7e' size={20} />
+              </TouchableHighlight>
+              {allProvince.RECORDS.map((item, index) => (
+                index !== 0 ?
+                  <TouchableOpacity key={index} onPress={() => {
+                    setProvince(item.name_th);
+                    setModalVisible(false);
+                  }}>
+                    <View style={styles.boxProvince}>
+                      <Text style={styles.textStyle}>{item.name_th}</Text>
+                    </View>
+                  </TouchableOpacity>
+                  : null
+              ))}
+
+            </View>
+          </ScrollView>
+        </View>
+
+      </Modal>
+
       <View style={styles.containerWrapper}>
         <View style={styles.container}>
 
@@ -29,10 +114,14 @@ const PostFeed = (props) => {
               source={{ uri: image }}
               style={styles.imageProfile}
             />
-            <View style={{ width: 5 }}></View>
+            <View style={{ width: 10 }}></View>
             <View>
               <Text style={{ color: 'black' }}>{fname + ' ' + lname}</Text>
+              <Text style={{ color: 'black' }}>{province ? province : ''}</Text>
             </View>
+            <TouchableOpacity onPress={() => PostBtn()} style={styles.postBtn}>
+              <AntDesign name='sharealt' color='white' size={20} />
+            </TouchableOpacity>
           </View>
           <View style={styles.desc}>
             <TextInput
@@ -44,8 +133,39 @@ const PostFeed = (props) => {
               textAlign="left"
             />
           </View>
+
         </View>
+        <LinearGradient
+          colors={['#ff9a9e', '#fcb69f']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
+          start={{ x: 0, y: 0 }} // จุดเริ่มต้น (บนซ้าย)
+          end={{ x: 1, y: 0 }} // จุดสิ้นสุด (บนขวา)
+          style={styles.pickerContainer}
+        >
+
+
+          <TouchableOpacity onPress={openImagePicker} style={styles.imagePicker}>
+            <FontAwesome name='camera' color='#f47a7e' size={15} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.imagePicker}>
+            <Entypo name='location' color='#f47a7e' size={15} />
+          </TouchableOpacity>
+        </LinearGradient>
+
+        {imagePost ? (
+          <View>
+            <TouchableOpacity onPress={() => setImagePost(null)} style={[styles.postBtn, { zIndex: 1 }]}>
+              <AntDesign name='close' color='white' size={20} />
+            </TouchableOpacity>
+            <Image
+              source={{ uri: imagePost ? imagePost : '' }}
+              style={styles.imagePost}
+            />
+          </View>
+        ) :
+          null
+          }
       </View>
+
     </ScrollView>
   )
 }
@@ -54,11 +174,15 @@ export default PostFeed
 
 
 const styles = StyleSheet.create({
-  containerWrapper:{
-  borderWidth:1,
-  padding:20,
-  width:'90%',
-  alignSelf:'center'
+  containerWrapper: {
+    borderWidth: 3,
+    borderStyle: 'dashed',
+    padding: 20,
+    width: '90%',
+    alignSelf: 'center' ,
+    borderColor:'#fcb69f',
+    borderRadius:20,
+    paddingBottom:110
   },
   container: {
     width: null,
@@ -66,25 +190,86 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  imageProfile:{
+  imageProfile: {
     backgroundColor: 'rgba(0,0,0,0.06)',
     width: 50,
     height: 50,
     borderRadius: 50,
   },
-  header:{
-    width:'100%',
-    padding:10,
-    flexDirection:'row',
+  header: {
+    width: '100%',
+    padding: 10,
+    flexDirection: 'row',
   },
-  desc:{
+  postBtn:{
+    position:'absolute',
+    backgroundColor: '#ff886a',
+    borderRadius: 50,
+    justifyContent: 'center',
+    padding:10,
+    top:10,
+    right:10
+  },
+  desc: {
     width: '100%',
   },
-  inputDesc:{
+  inputDesc: {
     height: 100,
     padding: 10,
+    borderWidth: 3,
+    borderRadius: 10,
+    borderColor: '#fcb69f',
+  },
+  pickerContainer: {
+    marginVertical: 5,
+    padding: 10,
+    borderRadius: 10,
+    flexDirection: 'row'
+  },
+  imagePicker: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 50,
+    marginRight: 5
+  },
+  imagePost: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#f36d72",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  textStyle: {
+    color: "black",
+    fontSize:15,
+    paddingVertical:5,
+  },
+  boxProvince:{
+    width: 260,
+    justifyContent:'center',
     borderWidth:3,
+    marginVertical:3,
+    paddingHorizontal:10,
     borderRadius:10,
-    borderColor:'#dfdfdf',
+    borderColor:'#dfdfdf'
   },
 })

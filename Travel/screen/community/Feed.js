@@ -17,7 +17,7 @@ const Feed = (props) => {
     const context = useContext(AuthGlobal);
 
     const [feed, setFeed] = useState([])
-    const [token,setToken] = useState()
+    const [token, setToken] = useState()
     const [userProfile, setUserProfile] = useState()
 
 
@@ -30,7 +30,7 @@ const Feed = (props) => {
             })
     }, []);
 
-    const postCommu = () =>{
+    const postCommu = () => {
         if (
             context.stateUser.isAuthenticated === false ||
             context.stateUser.isAuthenticated === null
@@ -62,7 +62,7 @@ const Feed = (props) => {
     return (
         <View style={styles.mainView}>
             <Text style={styles.Heading}>Community</Text>
-            <TouchableOpacity onPress={() => postCommu() }>
+            <TouchableOpacity onPress={() => postCommu()}>
                 <View style={styles.textInputView} >
                     <Text style={styles.textInput}>
                         What you thing?
@@ -84,7 +84,7 @@ const Feed = (props) => {
                                         />
                                         <View style={styles.titleView}>
                                             <Text style={styles.postName}>{item.userId}</Text>
-                                            <Text>dawdwa</Text>
+                                            <Text>Location</Text>
                                             <Text style={styles.postTitle}>{item.description}</Text>
                                         </View>
                                     </View>
@@ -93,8 +93,9 @@ const Feed = (props) => {
                                     </View>
 
                                 </View>
-
-                                {/* desc */}
+                                <View>
+                                    <Text>Post Desc</Text>
+                                </View>
                                 <View>
                                 </View>
 
