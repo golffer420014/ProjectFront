@@ -1,6 +1,8 @@
 import React from 'react'
 import { createStackNavigator } from "@react-navigation/stack"
 
+// icon 
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 //screen 
 import Login from '../screen/user/Login';
@@ -23,12 +25,17 @@ function MyStack() {
             />
             
             <Stack.Screen
-                name='Post Feed'
+                name="Post Feed"
                 component={PostFeed}
-                options={{
+                options={() => ({
                     headerShown: true,
                     headerTitleAlign: 'center',
-                }}
+                    headerBackImage: () => (
+                        <AntDesign name="arrowleft" size={24} color="#ff886a" />
+                    ),
+                    headerBackTitleVisible: false,
+                    // เพิ่มสไตล์เพิ่มเติมตามที่ต้องการ
+                })}
             />
             
 

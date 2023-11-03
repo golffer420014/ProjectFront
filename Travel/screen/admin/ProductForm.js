@@ -185,6 +185,8 @@ const ProductForm = (props) => {
 
   }
 
+  
+
 
 
   // console.log(props.route.params.item.image)

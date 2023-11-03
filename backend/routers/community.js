@@ -60,7 +60,6 @@ router.post(`/`, async (req, res) => {
     } catch (error) {
         return res.status(500).json(error.message);
     }
-
 })
 //like
 router.post(`/likePost/:id`, async (req, res) => {
@@ -90,12 +89,13 @@ router.post(`/likePost/:id`, async (req, res) => {
  router.put(`/:id`, async (req, res) => {
 try {
     const post = await Community.findById(req.params.id);
-    if (post.userId === req.body.userId) {
+    if (post) {
         const updatedPost = await Community.findByIdAndUpdate(
             req.params.id,
             {
-                imageUrl: req.body.imageUrl,
-                desc: req.body.desc,
+                image: req.body.image,
+                desc: req.body.desc , 
+                province: req.body.province
             },
             { new: true }
         );
@@ -112,8 +112,9 @@ try {
 
 router.delete(`/:id`, async (req, res) => {
     try {
+        console.log(req.params.id)
         const post = await Community.findById(req.params.id);
-        if (post.userId === req.body.userId) {
+        if (post) {
             await post.delete()
             return res.status(200).json({ msg: "Successfully deleted post" });
         } else {

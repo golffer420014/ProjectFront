@@ -132,7 +132,6 @@ const UserProfile = ({ props, navigation }) => {
       birth: selectedDate,
       gender: selectedGender
     };
-     console.log(formData)
 
     const config = {
       headers: {

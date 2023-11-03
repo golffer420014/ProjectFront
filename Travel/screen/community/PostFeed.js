@@ -21,7 +21,7 @@ import allProvince from '../../data/from.json'
 import { useNavigation } from '@react-navigation/native';
 
 const PostFeed = (props) => {
-  const [token,setToken] = useState()
+  const [token, setToken] = useState()
   const [id, setId] = useState()
   const [fname, setFname] = useState();
   const [lname, setLname] = useState();
@@ -33,17 +33,29 @@ const PostFeed = (props) => {
 
   const navigate = useNavigation()
 
+  console.log('edit', JSON.stringify(props.route.params.item, null, 2))
+
   useEffect(() => {
-    if (props.route.params?.userProfile) {
+    if (props.route.params?.item) {
       AsyncStorage.getItem('jwt')
-      .then(res => setToken(res))
+        .then(res => setToken(res))
+      setFname(props.route.params.item.userId.fname);
+      setLname(props.route.params.item.userId.lname);
+      setImage(props.route.params.item.userId.image);
+      setDesc(props.route.params.item.desc)
+      setProvince(props.route.params.item.province)
+      setImagePost(props.route.params.item.image)
+      setId(props.route.params.item.id);
+    } else {
+      AsyncStorage.getItem('jwt')
+        .then(res => setToken(res))
       const { fname, lname, image, id } = props.route.params.userProfile;
       setFname(fname);
       setLname(lname);
       setImage(image);
       setId(id);
     }
-  }, [props.route.params?.userProfile]);
+  }, [props.route.params?.userProfile, props.route.params?.item]);
 
   const openImagePicker = () => {
     const options = {
@@ -75,7 +87,45 @@ const PostFeed = (props) => {
         text1: "Please fill form or image",
         text2: "Please try again",
       });
-    }else{
+    } else if (props.route.params.item ) {
+      let put = {
+        image: imagePost,
+        desc: desc,
+        province: province
+      }
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      }
+
+      axios
+        .put(`${baseURL}community/${props.route.params.item.id}`, put, config)
+
+        .then((res) => {
+          if (res.status === 200) {
+            Toast.show({
+              topOffset: 60,
+              type: "success",
+              text1: "Updated Succeeded",
+              text2: "Please Login into your account",
+            });
+            setTimeout(() => {
+              navigate.goBack()
+            }, 500)
+          }
+        })
+        .catch((err) => {
+          Toast.show({
+            topOffset: 60,
+            type: "error",
+            text1: "Something went wrong",
+            text2: "Please try again",
+          });
+        })
+    } else {
       let post = {
         userId: id,
         image: imagePost,
@@ -116,9 +166,8 @@ const PostFeed = (props) => {
         })
     }
 
-    
-  }
 
+  }
 
 
   return (
@@ -241,8 +290,8 @@ const styles = StyleSheet.create({
   containerWrapper: {
     borderWidth: 3,
     borderStyle: 'dashed',
-    padding: 20,
-    width: '90%',
+    padding: 10,
+    width: '95%',
     alignSelf: 'center',
     borderColor: '#fcb69f',
     borderRadius: 20,

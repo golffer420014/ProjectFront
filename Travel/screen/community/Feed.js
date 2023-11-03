@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, ActivityIndicator, FlatList, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableHighlight, ActivityIndicator, Modal, ScrollView, TouchableOpacity } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useState, useEffect, useContext, useCallback } from 'react'
 import axios from 'axios'
@@ -12,6 +12,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import AuthGlobal from '../../context/store/AuthGlobal';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+//shared
+import EasyButton from '../../Shared/StyledComponents/EasyButton';
+import Toast from 'react-native-toast-message';
+
 
 const Feed = (props) => {
 
@@ -21,7 +25,9 @@ const Feed = (props) => {
     const [token, setToken] = useState()
     const [userProfile, setUserProfile] = useState()
     const [loading, setLoading] = useState(true)
+    const [modalVisible, setModalVisible] = useState(false)
 
+    // console.log('feed', JSON.stringify(dataFeed, null, 2))
 
 
 
@@ -32,6 +38,7 @@ const Feed = (props) => {
                 .then((res) => {
                     setDataFeed(res.data)
                     setLoading(false)
+                    setModalVisible(false)
                 })
 
         }, [])
@@ -65,6 +72,46 @@ const Feed = (props) => {
                 .catch((error) => console.log(error));
         }
     }
+
+
+    const deletePost = (id) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        axios
+            .delete(`${baseURL}community/${id}`, config)
+
+            .then((res) => {
+                if (res.status === 200) {
+                    Toast.show({
+                        topOffset: 60,
+                        type: "success",
+                        text1: "Delete Succeeded",
+                        text2: "Please Login into your account",
+                    });
+                    setTimeout(() => {
+                        const newFeed = dataFeed.filter((item) => item.id !== id);
+                        setDataFeed(newFeed);
+                    }, 500)
+                }
+            })
+            .catch((err) => {
+                Toast.show({
+                    topOffset: 60,
+                    type: "error",
+                    text1: "Something went wrong",
+                    text2: "Please try again",
+                });
+            })
+    
+    }
+
+    
+
 
     if (loading == true) {
         return (
@@ -103,33 +150,110 @@ const Feed = (props) => {
                                             style={styles.image}
                                         />
                                         <View style={styles.titleView}>
-                                            <Text style={styles.postName}>{item.userId.fname}</Text>
+                                            <Text style={styles.postName}>{item.userId.fname} {item.userId.lname}</Text>
                                             <Text>{item.province}</Text>
                                         </View>
                                     </View>
-                                    <View>
-                                        <AntDesign name="edit" size={20} />
-                                    </View>
+                                    {context.stateUser.user.userId != item.userId.id ? (
+                                        null
+                                    ) :
+                                        <TouchableOpacity
+                                            onPress={() => setModalVisible(true)}
+                                        >
+                                            <View style={{}}>
+                                                <AntDesign name="edit" size={20} color='black' />
+                                            </View>
+                                        </TouchableOpacity>
+                                    }
+
+                                    <Modal
+                                        animationType='fade'
+                                        transparent={true}
+                                        visible={modalVisible}
+                                        onRequestClose={() => {
+                                            setModalVisible(false)
+                                        }}
+                                    >
+                                        <View style={styles.centeredView}>
+                                            <View style={styles.modalView}>
+                                                <TouchableHighlight
+                                                    underlayColor="#E8E8E8"
+                                                    onPress={() => {
+                                                        setModalVisible(false)
+                                                    }}
+                                                    style={{
+                                                        alignSelf: 'flex-end',
+                                                        position: 'absolute',
+                                                        top: 5,
+                                                        right: 10,
+                                                    }}
+                                                >
+                                                    <AntDesign name='close' size={20} />
+                                                </TouchableHighlight>
+                                                <EasyButton
+                                                    medium
+                                                    secondary
+                                                    onPress={() => {
+                                                        // กรองเฉพาะข้อมูลที่มี userId ตรงกับ userId ของ user จาก context
+                                                        const filteredData = dataFeed.filter(
+                                                            (item) => item.userId.id === context.stateUser.user.userId
+                                                        );
+
+                                                        // เช็คว่ามีข้อมูลหลังจากกรองหรือไม่ ถ้ามีก็ส่ง item แรกที่ผ่านการกรอง
+                                                        if (filteredData.length > 0) {
+                                                            props.navigation.navigate("Post Feed", {
+                                                                item: filteredData[0],
+                                                            });
+                                                        } else {
+                                                            console.log('No matching data found');
+                                                        }
+
+                                                        // ปิด modal
+                                                        setModalVisible(false);
+                                                    }}
+                                                >
+                                                    <Text style={styles.textStyle}>Edit</Text>
+                                                </EasyButton>
+                                                <EasyButton
+                                                    medium
+                                                    danger
+                                                    onPress={() => [deletePost(item.id), setModalVisible(false)]}
+
+                                                >
+                                                    <Text style={styles.textStyle}>Delete</Text>
+                                                </EasyButton>
+
+                                            </View>
+                                        </View>
+
+                                    </Modal>
+
 
                                 </View>
                                 {item.desc ? (
                                     <View style={styles.desc}>
                                         <Text style={{ color: 'black', fontSize: 15 }}>{item.desc}</Text>
                                     </View>
-                                ) : 
-                                null
+                                ) :
+                                    <View style={{height:10}}>
+                                    </View>
                                 }
                                 <View>
                                 </View>
 
                                 <Image
-                                    source={{ uri: item.userId.image }}
+                                    source={{ uri: item.image }}
                                     style={styles.coverImage}
                                 />
-                                <Image
-                                    style={{ width: '100%', height: 200, resizeMode: 'stretch' }}
-                                    source={{ uri: 'http://localhost:5000/public/uploads/1223348.jpg-1696187346789.jpeg' }}
-                                />
+                                
+
+                            </View>
+                            <View style={{
+                                height: 20,
+                                width: '100%',
+                                backgroundColor: '#dfdfdf',
+                            }}>
+
                             </View>
                         </View>
                     )
@@ -145,7 +269,8 @@ export default Feed
 const styles = StyleSheet.create({
     mainView: {
         flex: 1,
-        backgroundColor: '#ffff'
+        backgroundColor: '#ffff',
+        marginBottom:-5
     },
     Heading: {
         fontSize: 32,
@@ -156,21 +281,24 @@ const styles = StyleSheet.create({
     },
     textInputView: {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent:'center',
+        paddingHorizontal:5,
     },
 
     textInput: {
         height: 40,
-        width: '90%',
+        width: '100%',
         backgroundColor: '#F0F0F0',
         borderRadius: 20,
         padding: 10,
         paddingLeft: 20,
-        marginVertical: 20,
+        marginVertical: 10,
     },
     mainPostView: {
         width: '100%',
-        // backgroundColor:'gray'
+        // backgroundColor:'gray',
+        paddingVertical:5,
     },
     postBox: {
         width: '100%',
@@ -178,20 +306,19 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal:5,
-        paddingRight:20
+        paddingHorizontal: 10,
+        paddingRight: 20,
+
     },
     postView: {
         width: '100%',
         alignItems: "center",
-        marginBottom: -170
     },
     image: {
         backgroundColor: 'rgba(0,0,0,0.06)',
         width: 50,
         height: 50,
         borderRadius: 50,
-        marginBottom:5
     },
     imageView: {
         display: 'flex',
@@ -211,18 +338,41 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         padding: 10,
-        marginVertical:3,
-        borderWidth: 1,
-        borderColor: '#B1B1B1',
+        marginVertical: 3,
+        borderWidth: 1.5,
+        borderColor: '#dfdfdf',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        top:5
-        
-
+        top: 5,
     },
     coverImage: {
         width: '100%',
         height: 200,
         backgroundColor: 'rgba(0,0,0,0.06)',
-    }
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#f36d72",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold"
+    },
 })
