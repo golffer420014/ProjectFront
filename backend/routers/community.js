@@ -26,7 +26,7 @@ router.get(`/timelinePosts`, async (req, res) => {
 //list
 router.get(`/`, async (req, res) => {
     try {
-        const CommunityList = await Community.find();//ค้นหาข้อมูล
+        const CommunityList = await Community.find().populate('userId', 'image fname lname');
 
         res.status(200).send(CommunityList)
     } catch (err) {
@@ -54,7 +54,7 @@ router.post(`/`, async (req, res) => {
             throw new Error("Fill all fields!");
         }
 
-        const Post = await Community.create({ ...req.body, userId: req.body.userId })
+        const Post = await Community.create({ ...req.body || null, userId: req.body.userId })
 
         res.send(Post)
     } catch (error) {

@@ -32,15 +32,6 @@ const RegisterDetail = ({ route, navigation }) => {
 
     const register = () => {
 
-        // if (!user) {
-        //     Toast.show({
-        //         topOffset: 60,
-        //         type: "error",
-        //         text1: "Please fill your form",
-        //         text2: "Please try again",
-        //     });
-        // } 
-
         let user = {
             fname: fname,
             lname: lname,
@@ -55,7 +46,7 @@ const RegisterDetail = ({ route, navigation }) => {
 
 
        
-        
+
        
 
         axios

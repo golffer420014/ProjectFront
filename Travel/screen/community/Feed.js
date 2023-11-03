@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TextInput, ActivityIndicator, FlatList, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect, useContext } from 'react'
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useState, useEffect, useContext, useCallback } from 'react'
 import axios from 'axios'
 import baseURL from '../../assests/common/baseUrl'
 import { Image } from 'react-native'
@@ -16,19 +17,27 @@ const Feed = (props) => {
 
     const context = useContext(AuthGlobal);
 
-    const [feed, setFeed] = useState([])
+    const [dataFeed, setDataFeed] = useState([])
     const [token, setToken] = useState()
     const [userProfile, setUserProfile] = useState()
+    const [loading, setLoading] = useState(true)
 
 
-    useEffect(() => {
 
-        axios
-            .get(`${baseURL}community`)
-            .then((res) => {
-                setFeed(res.data)
-            })
-    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            axios
+                .get(`${baseURL}community`)
+                .then((res) => {
+                    setDataFeed(res.data)
+                    setLoading(false)
+                })
+
+        }, [])
+    )
+
+
 
     const postCommu = () => {
         if (
@@ -57,7 +66,18 @@ const Feed = (props) => {
         }
     }
 
-
+    if (loading == true) {
+        return (
+            <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#ffff'
+            }}>
+                <ActivityIndicator size="large" color="#f36d72" />
+            </View>
+        );
+    }
 
     return (
         <View style={styles.mainView}>
@@ -71,7 +91,7 @@ const Feed = (props) => {
             </TouchableOpacity>
 
             <ScrollView>
-                {feed.map((item, index) => {
+                {dataFeed.map((item, index) => {
                     return (
                         <View style={styles.mainPostView}>
 
@@ -79,13 +99,12 @@ const Feed = (props) => {
                                 <View style={styles.postBox}>
                                     <View style={styles.imageView}>
                                         <Image
-                                            source={require('../../assests/1223348.jpg')}
+                                            source={{ uri: item.userId.image }}
                                             style={styles.image}
                                         />
                                         <View style={styles.titleView}>
-                                            <Text style={styles.postName}>{item.userId}</Text>
-                                            <Text>Location</Text>
-                                            <Text style={styles.postTitle}>{item.description}</Text>
+                                            <Text style={styles.postName}>{item.userId.fname}</Text>
+                                            <Text>{item.province}</Text>
                                         </View>
                                     </View>
                                     <View>
@@ -93,14 +112,18 @@ const Feed = (props) => {
                                     </View>
 
                                 </View>
-                                <View>
-                                    <Text>Post Desc</Text>
-                                </View>
+                                {item.desc ? (
+                                    <View style={styles.desc}>
+                                        <Text style={{ color: 'black', fontSize: 15 }}>{item.desc}</Text>
+                                    </View>
+                                ) : 
+                                null
+                                }
                                 <View>
                                 </View>
 
                                 <Image
-                                    source={require('../../assests/1223348.jpg')}
+                                    source={{ uri: item.userId.image }}
                                     style={styles.coverImage}
                                 />
                                 <Image
@@ -150,22 +173,25 @@ const styles = StyleSheet.create({
         // backgroundColor:'gray'
     },
     postBox: {
-        width: '90%',
+        width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingHorizontal:5,
+        paddingRight:20
     },
     postView: {
         width: '100%',
         alignItems: "center",
-        marginVertical: 20,
+        marginBottom: -170
     },
     image: {
         backgroundColor: 'rgba(0,0,0,0.06)',
         width: 50,
         height: 50,
         borderRadius: 50,
+        marginBottom:5
     },
     imageView: {
         display: 'flex',
@@ -174,20 +200,29 @@ const styles = StyleSheet.create({
     },
     postName: {
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: 'black'
     },
-    postTitle: {
-        fontSize: 11,
-        color: '#989898'
-    },
+
     titleView: {
         marginLeft: 15
     },
+    desc: {
+        justifyContent: 'center',
+        width: '100%',
+        padding: 10,
+        marginVertical:3,
+        borderWidth: 1,
+        borderColor: '#B1B1B1',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        top:5
+        
+
+    },
     coverImage: {
-        width: '90%',
+        width: '100%',
         height: 200,
         backgroundColor: 'rgba(0,0,0,0.06)',
-        marginTop: 20,
-        borderRadius: 10
     }
 })

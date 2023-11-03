@@ -1,9 +1,15 @@
 import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Modal, TouchableHighlight } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
-import Toast from 'react-native-toast-message';
 import LinearGradient from 'react-native-linear-gradient';
 import { Item, Picker } from 'native-base'
+
+import axios from 'axios';
+import baseURL from '../../assests/common/baseUrl';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// noti
+import Toast from 'react-native-toast-message';
 
 // icon
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -12,23 +18,30 @@ import Entypo from 'react-native-vector-icons/Entypo'
 
 //province json
 import allProvince from '../../data/from.json'
-import EasyButton from '../../Shared/StyledComponents/EasyButton';
+import { useNavigation } from '@react-navigation/native';
 
 const PostFeed = (props) => {
+  const [token,setToken] = useState()
+  const [id, setId] = useState()
   const [fname, setFname] = useState();
   const [lname, setLname] = useState();
   const [image, setImage] = useState();
   const [imagePost, setImagePost] = useState();
   const [province, setProvince] = useState()
   const [modalVisible, setModalVisible] = useState(false)
+  const [desc, setDesc] = useState()
 
+  const navigate = useNavigation()
 
   useEffect(() => {
     if (props.route.params?.userProfile) {
-      const { fname, lname, image } = props.route.params.userProfile;
+      AsyncStorage.getItem('jwt')
+      .then(res => setToken(res))
+      const { fname, lname, image, id } = props.route.params.userProfile;
       setFname(fname);
       setLname(lname);
       setImage(image);
+      setId(id);
     }
   }, [props.route.params?.userProfile]);
 
@@ -53,8 +66,57 @@ const PostFeed = (props) => {
       }
     });
   };
-  const PostBtn = () =>{
+  const PostBtn = () => {
 
+    if ((imagePost == null || imagePost === '') && (desc == null || desc === '')) {
+      Toast.show({
+        topOffset: 60,
+        type: "error",
+        text1: "Please fill form or image",
+        text2: "Please try again",
+      });
+    }else{
+      let post = {
+        userId: id,
+        image: imagePost,
+        desc: desc,
+        province: province
+      }
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      }
+
+      axios
+        .post(`${baseURL}community`, post, config)
+
+        .then((res) => {
+          if (res.status === 200) {
+            Toast.show({
+              topOffset: 60,
+              type: "success",
+              text1: "Post Succeeded",
+              text2: "Please Login into your account",
+            });
+            setTimeout(() => {
+              navigate.goBack()
+            }, 500)
+          }
+        })
+        .catch((err) => {
+          Toast.show({
+            topOffset: 60,
+            type: "error",
+            text1: "Something went wrong",
+            text2: "Please try again",
+          });
+        })
+    }
+
+    
   }
 
 
@@ -131,6 +193,8 @@ const PostFeed = (props) => {
               numberOfLines={4} // You can set the number of lines according to your need
               textAlignVertical="top"
               textAlign="left"
+              value={desc} // Bind the TextInput value to the state
+              onChangeText={(text) => setDesc(text)} // Update the state on text change
             />
           </View>
 
@@ -163,7 +227,7 @@ const PostFeed = (props) => {
           </View>
         ) :
           null
-          }
+        }
       </View>
 
     </ScrollView>
@@ -179,10 +243,10 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     padding: 20,
     width: '90%',
-    alignSelf: 'center' ,
-    borderColor:'#fcb69f',
-    borderRadius:20,
-    paddingBottom:110
+    alignSelf: 'center',
+    borderColor: '#fcb69f',
+    borderRadius: 20,
+    paddingBottom: 110
   },
   container: {
     width: null,
@@ -201,14 +265,14 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: 'row',
   },
-  postBtn:{
-    position:'absolute',
+  postBtn: {
+    position: 'absolute',
     backgroundColor: '#ff886a',
     borderRadius: 50,
     justifyContent: 'center',
-    padding:10,
-    top:10,
-    right:10
+    padding: 10,
+    top: 10,
+    right: 10
   },
   desc: {
     width: '100%',
@@ -260,16 +324,16 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: "black",
-    fontSize:15,
-    paddingVertical:5,
+    fontSize: 15,
+    paddingVertical: 5,
   },
-  boxProvince:{
+  boxProvince: {
     width: 260,
-    justifyContent:'center',
-    borderWidth:3,
-    marginVertical:3,
-    paddingHorizontal:10,
-    borderRadius:10,
-    borderColor:'#dfdfdf'
+    justifyContent: 'center',
+    borderWidth: 3,
+    marginVertical: 3,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    borderColor: '#dfdfdf'
   },
 })

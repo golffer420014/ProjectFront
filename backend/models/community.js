@@ -3,23 +3,23 @@ const mongoose = require('mongoose');
 
 const communitySchema = mongoose.Schema({
     userId: {
-        type: String,
-        require:true
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: 'User',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
-    imageUrl: {
+    image: {
         type: String,
-        require: true
     },
     desc: {
         type: String,
-        require: true
     },
     likes: {
         type: [String],
         default: []
     },
+    province:{
+        type:String
+    }
     
    
 }, {timestamps:true})
