@@ -26,7 +26,7 @@ const ListItem = (props) => {
 
 
     return (
-        <View>
+        <View >
             <Modal
                 animationType='fade'
                 transparent={true}
@@ -110,10 +110,11 @@ const styles = StyleSheet.create({
     },
     image: {
         borderRadius: 50,
-        width: width / 5,
+        width: width / 7,
         // height: 'auto',
         height: 50,
-        margin: 2
+        margin: 2,
+        marginLeft:15
     },
     item: {
         flexWrap: "wrap",

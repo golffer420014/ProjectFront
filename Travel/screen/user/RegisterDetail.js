@@ -47,8 +47,6 @@ const RegisterDetail = ({ route, navigation }) => {
 
        
 
-       
-
         axios
             .post(`${baseURL}users/register`, user)
 

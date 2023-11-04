@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Dimensions, ScrollView } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { Header, Item, Container, Input } from 'native-base'
 import { useFocusEffect } from '@react-navigation/native'
@@ -140,24 +140,25 @@ const Products = (props) => {
         <View >
           <View elevation={1} style={styles.containerHeader}>
               <Text style={[styles.centeredTextLeft, { paddingLeft: 0 }]}>Image</Text>
-              <Text style={[styles.centeredTextLeft,{paddingLeft:30}]}>Name</Text>
+              <Text style={[styles.centeredTextLeft,{paddingLeft:0}]}>Name</Text>
               <Text style={[styles.centeredTextLeft, { paddingLeft: 5 }]}>Province</Text>
             <Text style={styles.centeredTextRight}>Category</Text>
           </View>
-          <FlatList
-            data={productFilter}
-            renderItem={({ item, index }) => (
-              <View>
-                <ListItem
-                  {...item}
-                  navigation={props.navigation}
-                  index={index}
-                  delete={deleteProduct}
-                />
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-          />
+              <FlatList
+                data={productFilter}
+                style={{marginBottom:245}}
+                renderItem={({ item, index }) => (
+                  <View >
+                    <ListItem
+                      {...item}
+                      navigation={props.navigation}
+                      index={index}
+                      delete={deleteProduct}
+                    />
+                  </View>
+                )}
+                keyExtractor={(item) => item.id}
+              />
         </View>
       )}
     </View>
