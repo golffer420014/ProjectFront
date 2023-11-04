@@ -45,11 +45,7 @@ router.get(`/`, async (req, res) => {
         }
 
         const productList = await Product.find(filter)//ค้นหาข้อมูล
-            .populate('category').populate({
-                path: 'reviews', // ใช้ชื่อที่ตรงกับที่คุณกำหนดไว้ใน Schema
-                model: 'Review' // ชื่อ model ที่ต้องการ populate
-                // คุณสามารถเพิ่มเงื่อนไขในการ populate เช่น select เพื่อเลือก fields ที่ต้องการ
-            })
+            .populate('category')
         //exmaple .select -> Product.find().select('name iages ratting')
 
         res.send(productList)
