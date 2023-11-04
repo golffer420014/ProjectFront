@@ -79,7 +79,7 @@ const Main = () => {
           component={AdminNavigator}
           options={{
             tabBarIcon: ({ color }) => (
-              <AntDesign name="setting" color={color} size={30} />
+              <Ionicons name="settings-sharp" color={color} size={30} />
             ),
             headerShown: false,
           }}

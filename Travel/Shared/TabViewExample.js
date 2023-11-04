@@ -21,7 +21,7 @@ function TabViewExample(props) {
     function Review() {
         return (
             <View style={{ flex: 1, backgroundColor: '#ffff', padding: 20, color: 'gainsboro' }}>
-                <Text style={{ fontSize: 18 }}>{props.numReviews}</Text>
+                <Text style={{ fontSize: 18 }}>Review</Text>
             </View>
         );
     }
@@ -34,15 +34,17 @@ function TabViewExample(props) {
             </View>
         );
     }
-
+    const tabRef = React.useRef();
   return (
     <Tab.Navigator
-          tabBarOptions={{
-              activeTintColor: 'black', // Set the color of the active tab here
-              indicatorStyle: { backgroundColor: '#f36d72' },
+          screenOptions={{
+              tabBarActiveTintColor: 'black', // Set the color of the active tab here
+              tabBarIndicatorStyle: { backgroundColor: '#f36d72' },
+              lazy: true,
           }}
+          ref={tabRef}
     >
-          <Tab.Screen name="Description" component={Description} />
+          <Tab.Screen name="Description" component={Description}/>
           <Tab.Screen name="Review" component={Review} />
           <Tab.Screen name="Location" component={Location} />
     </Tab.Navigator>

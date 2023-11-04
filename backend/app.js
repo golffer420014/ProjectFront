@@ -29,6 +29,7 @@ const usersRouter = require('./routers/users');
 const orderRouter = require('./routers/order');
 const communityRouter = require('./routers/community')
 const eventRouter = require('./routers/event')
+const reviewRouter = require('./routers/review')
 
 const api = process.env.API_URL; 
  
@@ -44,6 +45,8 @@ app.use(`${api}/order`, orderRouter)
 app.use(`${api}/community`, communityRouter) 
 // http://localhost:5000/api/v1/event 
 app.use(`${api}/event`, eventRouter) 
+// http://localhost:5000/api/v1/review 
+app.use(`${api}/review`, reviewRouter) 
 
 
 // http://localhost:5000/api/v1/imageProducts 

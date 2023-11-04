@@ -97,11 +97,20 @@ const SingleProduct = (props) => {
                         </Text>
 
                     </View>
-                    <Text style={[tailwind`pt-1 mb-5`, { fontSize: wp(5) }]}>
+                    <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
+                        <Text style={[tailwind`pt-1 mb-5`, { fontSize: wp(5) }]}>
                         <FontAwesome name="map-marker" color={'#f36d72'} size={wp(5)} />
                         {' '}
                         {item.location}
+
                     </Text>
+                    
+                    </View>
+                    <TouchableOpacity>
+                        <View style={styles.checkout}>
+                            <FontAwesome name="flag-checkered" color={'white'} size={wp(5)} />
+                        </View>
+                    </TouchableOpacity>
 
                     {/* <View
                         style={tailwind`pt-5`}
@@ -185,5 +194,14 @@ const styles = StyleSheet.create({
     availability: {
         flexDirection: 'row',
         marginBottom: 10,
+    },
+    checkout:{
+        backgroundColor: "#f47a7e",
+        padding:5,
+        borderRadius:50,
+        position:'absolute',
+        zIndex:999,
+        top:-45,
+        right:10
     }
 })

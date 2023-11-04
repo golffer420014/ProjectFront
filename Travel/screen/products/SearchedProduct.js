@@ -1,12 +1,22 @@
 import { StyleSheet, View, Dimensions } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Content , Left , Body , ListItem , Thumbnail , Text } from 'native-base'
+import axios from 'axios';
+import baseURL from '../../assests/common/baseUrl';
 
 let windowWidth = Dimensions.get('window').width
 
 
 const SearchedProduct = (props) => {
     const { productsFiltered } = props;
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        axios.get`${baseURL}review`
+        return () => {
+            setUser()
+        };
+    }, []);
 
     console.log('this is', JSON.stringify('productsFiltered',productsFiltered, null, 2))
 

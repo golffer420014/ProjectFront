@@ -102,87 +102,93 @@ const ProductForm = (props) => {
       location == "" ||
       latitude == "" ||
       longitude == "" ||
-      rating == ""
+      rating == "" ||
+      provine == "" ||
+      category == "" ||
+      image == null
     ) {
       setErr('มีบางช่องยังว่างอยู่ !!')
-    }
+    }else{
+      let formData = new FormData();
 
-    let formData = new FormData();
+      const newImageUri = "file:///" + image.split("file:/").join("");
 
-    const newImageUri = "file:///" + image.split("file:/").join("");
+      formData.append("image", {
+        uri: newImageUri,
+        type: mime.getType(newImageUri),
+        name: newImageUri.split("/").pop()
+      });
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("location", location);
+      formData.append("latitude", latitude);
+      formData.append("longitude", longitude);
+      formData.append("rating", rating);
+      formData.append("category", category);
+      formData.append("provine", provine);
 
-    formData.append("image", {
-      uri: newImageUri,
-      type: mime.getType(newImageUri),
-      name: newImageUri.split("/").pop()
-    });
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("location", location);
-    formData.append("latitude", latitude);
-    formData.append("longitude", longitude);
-    formData.append("rating", rating);
-    formData.append("category", category);
-    formData.append("provine", provine);
-
-    const config = {
-      Headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`
+      const config = {
+        Headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`
+        }
       }
+      if (item !== null) {
+        axios
+          .put(`${baseURL}products/${props.route.params.item.id}`, formData, config)
+          .then((res) => {
+            if (res.status == 200 || res.status == 201) {
+              Toast.show({
+                topOffset: 60,
+                type: "success",
+                text1: "Product successfuly updated",
+                text2: ""
+              });
+              setTimeout(() => {
+                props.navigation.navigate("Products");
+              }, 500)
+            }
+          })
+          .catch((error) => {
+            Toast.show({
+              topOffset: 60,
+              type: "error",
+              text1: "Updated error",
+              text2: "Please try again"
+            })
+          })
+      } else {
+        axios
+          .post(`${baseURL}products`, formData, config)
+          .then((res) => {
+            if (res.status == 200 || res.status == 201) {
+              Toast.show({
+                topOffset: 60,
+                type: "success",
+                text1: "New Product added",
+                text2: ""
+              });
+              setTimeout(() => {
+                props.navigation.navigate("Products");
+              }, 500)
+            }
+          })
+          .catch((error) => {
+            Toast.show({
+              topOffset: 60,
+              type: "error",
+              text1: "Add product error",
+              text2: "Please try again"
+            })
+          })
+      } 
+
     }
 
+    
 
-    if (item !== null) {
-      axios
-        .put(`${baseURL}products/${props.route.params.item.id}`, formData, config)
-        .then((res) => {
-          if (res.status == 200 || res.status == 201) {
-            Toast.show({
-              topOffset: 60,
-              type: "success",
-              text1: "Product successfuly updated",
-              text2: ""
-            });
-            setTimeout(() => {
-              props.navigation.navigate("Products");
-            }, 500)
-          }
-        })
-        .catch((error) => {
-          Toast.show({
-            topOffset: 60,
-            type: "error",
-            text1: "Updated error",
-            text2: "Please try again"
-          })
-        })
-    } else {
-      axios
-        .post(`${baseURL}products`, formData, config)
-        .then((res) => {
-          if (res.status == 200 || res.status == 201) {
-            Toast.show({
-              topOffset: 60,
-              type: "success",
-              text1: "New Product added",
-              text2: ""
-            });
-            setTimeout(() => {
-              props.navigation.navigate("Products");
-            }, 500)
-          }
-        })
-        .catch((error) => {
-          Toast.show({
-            topOffset: 60,
-            type: "error",
-            text1: "Add product error",
-            text2: "Please try again"
-          })
-        })
-    } 
 
+    
   }
 
   
@@ -316,7 +322,7 @@ const ProductForm = (props) => {
               placeholderIconColor="#007aff"
               onValueChange={(e) => [setprovine(e)]}
             >
-              {data.RECORDS.map((c) => {
+                {data.RECORDS.slice(1).map((c) => {
                 return <Picker.Item key={c.id} label={c.name_th} value={c.name_th} />
               })}
             </Picker>

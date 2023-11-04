@@ -35,11 +35,11 @@ const productSchema = mongoose.Schema({
     longitude: {
         type: String,
     },
-
-    // isFeatured: {
-    //     type: Boolean,
-    //     default: false
-    // },
+    // reviews: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Review',
+    //     // required: true
+    // }],
     dateCreated: {
         type: Date,
         default: Date.now
