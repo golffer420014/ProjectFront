@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 
-// http://localhost:5000/api/v1/community
+// http://localhost:3000/api/v1/community
 
 //TimeLine
 router.get(`/timelinePosts`, async (req, res) => {

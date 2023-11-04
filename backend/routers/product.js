@@ -31,12 +31,12 @@ const storage = multer.diskStorage({
 
 const uploadOptions = multer({ storage: storage })
 
-// http://localhost:5000/api/v1/product
+// http://localhost:3000/api/v1/product
 // list
 router.get(`/`, async (req, res) => {
     // สามารถค้นหา product ตาม หมวดหมู่ ได้มากกว่า 1 หมวดหมู่
     // ตัวอย่างการใช้งาน ค้นหา product ที่อยู่หมวดหมู่ วัด , ทะเล // เช็ค ID ได้จาก category
-    // http://localhost:5000/api/v1/product?category=6513de3a038cc48872286293,6513de41038cc48872286295
+    // http://localhost:3000/api/v1/product?category=6513de3a038cc48872286293,6513de41038cc48872286295
     try {
         let filter = {};
         if (req.query.category) {

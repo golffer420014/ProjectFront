@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
 
 const uploadOptions = multer({ storage: storage })
 
-// http://localhost:5000/api/v1/category 
+// http://localhost:3000/api/v1/category 
 // list
 router.get(`/`, async (req, res) => { 
     try {

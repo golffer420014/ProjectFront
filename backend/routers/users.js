@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// http://localhost:5000/api/v1/user
+// http://localhost:3000/api/v1/user
 router.get(`/`, async (req, res) => {
     try {
         const userList = await User.find()//ค้นหาข้อมูล

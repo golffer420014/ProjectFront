@@ -7,7 +7,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 
-// http://localhost:5000/api/v1/community
+// http://localhost:3000/api/v1/community
 
 
 

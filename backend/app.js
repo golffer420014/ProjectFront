@@ -33,23 +33,23 @@ const reviewRouter = require('./routers/review')
 
 const api = process.env.API_URL; 
  
-// http://localhost:5000/api/v1/product
+// http://localhost:3000/api/v1/product
 app.use(`${api}/products`, productRouter)
-// http://localhost:5000/api/v1/category
+// http://localhost:3000/api/v1/category
 app.use(`${api}/category`, categoryRouter)
-// http://localhost:5000/api/v1/users
+// http://localhost:3000/api/v1/users
 app.use(`${api}/users`, usersRouter)
-// http://localhost:5000/api/v1/order
+// http://localhost:3000/api/v1/order
 app.use(`${api}/order`, orderRouter)
-// http://localhost:5000/api/v1/community 
+// http://localhost:3000/api/v1/community 
 app.use(`${api}/community`, communityRouter) 
-// http://localhost:5000/api/v1/event 
+// http://localhost:3000/api/v1/event 
 app.use(`${api}/event`, eventRouter) 
-// http://localhost:5000/api/v1/review 
+// http://localhost:3000/api/v1/review 
 app.use(`${api}/review`, reviewRouter) 
 
 
-// http://localhost:5000/api/v1/imageProducts 
+// http://localhost:3000/api/v1/imageProducts 
 // app.use(`${api}/imageProducts`, imageProductsRouter)
 
 mongoose.connect(process.env.CONNECTION_STRING,{

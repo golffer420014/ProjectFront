@@ -3,7 +3,7 @@ const { OrderItem } = require('../models/order-item')
 const express = require('express');
 const router = express.Router();
 
-// http://localhost:5000/api/v1/order
+// http://localhost:3000/api/v1/order
 //list
 router.get(`/`, async (req, res) => {
     try {

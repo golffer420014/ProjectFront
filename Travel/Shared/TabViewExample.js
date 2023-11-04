@@ -105,20 +105,7 @@ function TabViewExample(props) {
     );
 }
 const styles = StyleSheet.create({
-    // reviewTop: {
-    //     flexDirection: 'row',
-    //     alignItems: 'center'
-    // },
-    // container:{
-    //     padding:10,
-    //     borderWidth:1
-    // },
-    // star:{
-    //     flexDirection:'row',
-    //     borderWidth: 1,
-    //     position:'absolute',
-    //     right:10
-    // }
+
     reviewContainer: {
         flexDirection: 'row',
         padding: 10,
