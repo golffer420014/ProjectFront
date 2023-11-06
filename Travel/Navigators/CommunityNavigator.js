@@ -21,6 +21,7 @@ function MyStack() {
                 component={Feed}
                 options={{
                     headerShown: false,
+                    cardStyle: { backgroundColor: '#FFFFFF' },
                 }}
             />
             
@@ -28,6 +29,7 @@ function MyStack() {
                 name="Post Feed"
                 component={PostFeed}
                 options={() => ({
+                    cardStyle: { backgroundColor: '#FFFFFF' },
                     headerShown: true,
                     headerTitleAlign: 'center',
                     headerBackImage: () => (

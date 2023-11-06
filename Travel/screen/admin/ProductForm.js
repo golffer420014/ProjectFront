@@ -97,14 +97,14 @@ const ProductForm = (props) => {
 
   const addProduct = () => {
     if (
-      name == "" ||
-      description == "" ||
-      location == "" ||
-      latitude == "" ||
-      longitude == "" ||
-      rating == "" ||
-      provine == "" ||
-      category == "" ||
+      // name == "" ||
+      // description == "" ||
+      // location == "" ||
+      // latitude == "" ||
+      // longitude == "" ||
+      // rating == "" ||
+      // provine == "" ||
+      // category == "" ||
       image == null
     ) {
       setErr('มีบางช่องยังว่างอยู่ !!')

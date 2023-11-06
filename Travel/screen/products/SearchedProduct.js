@@ -1,24 +1,16 @@
 import { StyleSheet, View, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Content , Left , Body , ListItem , Thumbnail , Text } from 'native-base'
-import axios from 'axios';
-import baseURL from '../../assests/common/baseUrl';
 
-let windowWidth = Dimensions.get('window').width
+
+let windowWidth = Dimensions.get('window')
 
 
 const SearchedProduct = (props) => {
     const { productsFiltered } = props;
-    const [user, setUser] = useState();
 
-    useEffect(() => {
-        axios.get`${baseURL}review`
-        return () => {
-            setUser()
-        };
-    }, []);
 
-    console.log('this is', JSON.stringify('productsFiltered',productsFiltered, null, 2))
+
 
     return (
         // <Content style={{ width: windowWidth }}>
@@ -29,7 +21,7 @@ const SearchedProduct = (props) => {
                         onPress={() => {
                             props.navigation.navigate("Product Detail", { item: item })
                         }}
-                        key={item._id.$oid}
+                        key={item._id}
                         avatar
                     >
                         <Left>

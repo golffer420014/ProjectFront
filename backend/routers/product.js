@@ -69,6 +69,7 @@ router.get(`/:id`, async (req, res) => {
 })
 
 
+
 //create
 router.post(`/`, uploadOptions.single('image'), async (req, res) => {
     const category = await Category.findById(req.body.category);

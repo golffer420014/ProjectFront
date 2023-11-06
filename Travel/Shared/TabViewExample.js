@@ -1,18 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import axios from 'axios';
 import baseURL from '../assests/common/baseUrl';
+import AuthGlobal from '../context/store/AuthGlobal';
 
 //icon 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import EasyButton from './StyledComponents/EasyButton';
+import InputFormProduct from './Form/InputFormProduct';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Tab = createMaterialTopTabNavigator();
 
 function TabViewExample(props) {
-
+    const context = useContext(AuthGlobal)
+    const [modalVisible, setModalVisible] = useState(false)
+    const [desc, setDesc] = useState()
+    const [point, setPoint] = useState(0)
     const [reviews, setReviews] = useState([])
+    const [authReview, setAuthReview] = useState()
+    // console.log(JSON.stringify(context, null, 2))
+    const navigation = useNavigation()
 
     useEffect(() => {
         axios
@@ -24,13 +34,14 @@ function TabViewExample(props) {
             .catch((err) => {
                 console.log('review call error')
             })
-        return () => {
 
-        };
+        if (context.stateUser.isAuthenticated == true) {
+            setAuthReview(true)
+        }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    
-    // console.log(JSON.stringify(reviews, null, 2))
-    // console.log(JSON.stringify(props.id, null, 2))
+
 
     function Description() {
         return (
@@ -44,7 +55,25 @@ function TabViewExample(props) {
 
     function Review() {
         return (
-            <ScrollView style={{  backgroundColor: '#ffff'}}>
+            <ScrollView style={{ backgroundColor: '#ffff' }}>
+
+                {authReview == true ? (
+                        <View style={{alignItems:'center'}}>
+                    <TouchableOpacity
+                            onPress={() => navigation.navigate('Product Review' , {item:props})}
+                    >
+                            <View style={{ padding: 5, backgroundColor:'#f47a7e' ,borderRadius:50,marginTop:8}}>
+                                <FontAwesome name="plus" size={20} color='white' />
+                            </View>
+                    </TouchableOpacity>
+                        </View>
+
+                ) :
+                    null
+                }
+
+                
+
                 <View>
                     {reviews.map((item) => (
                         item.productId && item.productId.id === props.id && (
@@ -106,12 +135,25 @@ function TabViewExample(props) {
 }
 const styles = StyleSheet.create({
 
+    postReview: {
+        width: '60%',
+        marginTop: 20,
+        marginLeft: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#dfdfdf',
+    },
+
     reviewContainer: {
         flexDirection: 'row',
         padding: 10,
         backgroundColor: '#fff',
         borderRadius: 20,
-        margin: 10,
+        margin: 5,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
@@ -130,7 +172,7 @@ const styles = StyleSheet.create({
     },
     userName: {
         fontSize: 16,
-        color:'black'
+        color: 'black'
     },
     starsContainer: {
         flexDirection: 'row',
@@ -148,6 +190,32 @@ const styles = StyleSheet.create({
     userReview: {
         color: '#333',
         marginTop: 5,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#f36d72",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        width: 350,
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold"
     },
 
 })

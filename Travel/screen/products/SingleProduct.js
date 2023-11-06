@@ -19,9 +19,7 @@ import TabViewExample from '../../Shared/TabViewExample';
 
 const SingleProduct = (props) => {
 
-    const [item, setItem] = useState(props.route.params.item);
-    const [availability, setAvailability] = useState('');
-    const [availabilityText, setAvailabilityText] = useState("")
+    const item = (props.route.params.item);
 
     const navigation = useNavigation()
 
@@ -30,7 +28,7 @@ const SingleProduct = (props) => {
 
 
     return (
-        <View style={[tailwind`flex-1` ]}>
+        <View style={[tailwind`flex-1`]}>
             {/* header */}
             <Image
                 style={{ width: 'auto', height: hp(55), resizeMode: 'stretch' }}

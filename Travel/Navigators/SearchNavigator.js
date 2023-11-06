@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 
 import ProductContainer from '../screen/products/ProductContainer';
 import SingleProduct from '../screen/products/SingleProduct';
+import ProductReview from '../screen/products/ProductReview';
 
 
 const Stack = createStackNavigator()
@@ -15,6 +16,7 @@ function MyStack() {
         component={ProductContainer}
         options={{
           headerShown: false,
+          cardStyle: { backgroundColor: '#FFFFFF' },
         }}
       />
       <Stack.Screen
@@ -22,6 +24,15 @@ function MyStack() {
         component={SingleProduct}
         options={{
           headerShown: false,
+          cardStyle: { backgroundColor: '#FFFFFF' },
+        }}
+      />
+      <Stack.Screen
+        name='Product Review'
+        component={ProductReview}
+        options={{
+          headerShown: false,
+          cardStyle: { backgroundColor: '#FFFFFF' },
         }}
       />
       

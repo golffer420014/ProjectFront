@@ -52,7 +52,7 @@ const ProductContainer = (props) => {
                 .then(res => {
                     setProduct(res.data)
                     setProductsFiltered(res.data)
-                    console.log(JSON.stringify(res.data,null,2))
+                    // console.log(JSON.stringify(res.data,null,2))
 
                     //category
                     setProductsCtg(res.data)

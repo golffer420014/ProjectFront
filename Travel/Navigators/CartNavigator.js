@@ -13,7 +13,8 @@ function MyStack() {
                 name="Cart"
                 component={Cart}
                 options={{
-                    headerShown: false
+                    headerShown: false,
+                    cardStyle: { backgroundColor: '#FFFFFF' },
                 }}
             />
             {/* <Stack.Screen

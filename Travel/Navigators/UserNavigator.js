@@ -34,6 +34,7 @@ function MyStack() {
                         component={UserProfile}
                         options={{
                             headerShown: false,
+                            cardStyle: { backgroundColor: '#FFFFFF' },
                         }}
                     />
                     <Stack.Screen
@@ -41,6 +42,7 @@ function MyStack() {
                         component={UserEditPassowrd}
                         options={{
                             headerShown: false,
+                            cardStyle: { backgroundColor: '#FFFFFF' },
                         }}
                     />
                 </Stack.Navigator>
@@ -51,6 +53,7 @@ function MyStack() {
                         component={Login}
                         options={{
                             headerShown: false,
+                            cardStyle: { backgroundColor: '#FFFFFF' },
                         }}
                     />
 
@@ -59,6 +62,7 @@ function MyStack() {
                         component={UserForgetPassword}
                         options={{
                             headerShown: false,
+                            cardStyle: { backgroundColor: '#FFFFFF' },
                         }}
                     />
 
@@ -67,6 +71,7 @@ function MyStack() {
                         component={Register}
                         options={{
                             headerShown: false,
+                            cardStyle: { backgroundColor: '#FFFFFF' },
                         }}
                     />
                     <Stack.Screen
@@ -74,6 +79,7 @@ function MyStack() {
                         component={RegisterDetail}
                         options={{
                             headerShown: false,
+                            cardStyle: { backgroundColor: '#FFFFFF' },
                         }}
                     />
                 </Stack.Navigator>

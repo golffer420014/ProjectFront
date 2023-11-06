@@ -17,15 +17,44 @@ function MyStack() {
                 name="Products"
                 component={Products}
                 options={{
-                    headerShown: false
+                    headerShown: false,
+                    cardStyle: { backgroundColor: '#FFFFFF' },
                 }}
             />
-            <Stack.Screen name="Categories" component={Categories} />
-            <Stack.Screen name="Orders" component={Orders} />
-            <Stack.Screen name="ProductForm" component={ProductForm} 
-                options={{ title: 'Product Form' }}
-            /> 
-            <Stack.Screen name="Event" component={Event} />
+            <Stack.Screen
+                name="Categories"
+                component={Categories}
+                options={{
+                    headerShown: false,
+                    cardStyle: { backgroundColor: '#FFFFFF' },
+                }}
+            />
+            <Stack.Screen
+                name="Orders"
+                component={Orders}
+                options={{
+                    headerShown: false,
+                    cardStyle: { backgroundColor: '#FFFFFF' },
+                }}
+            />
+            <Stack.Screen
+                name="ProductForm"
+                component={ProductForm}
+                options={{
+                    title: 'Product Form',
+                    headerShown: false,
+                    cardStyle: { backgroundColor: '#FFFFFF' },
+                }}
+            />
+            <Stack.Screen
+                name="Event"
+                component={Event}
+                options={{
+                    headerShown: false,
+                    cardStyle: { backgroundColor: '#FFFFFF' },
+                }}
+
+            />
         </Stack.Navigator>
     )
 }

@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#dfdfdf',
     },
+    
 });
 
 export default InputFormProduct;
