@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
             uploadError = null;
         }
         // cb = callback
-        cb(uploadError, 'C:/Users/golfy/Desktop/App/backend/public/uploads')
+        cb(uploadError, 'public/uploads')
     },
     filename: function (req, file, cb) {
         //ทุกพื้นที่ว่างจะถูกเติมด้วย - เช่น 'golf suriya' จะเป็น 'golf-suriya'
@@ -74,19 +74,22 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
     const category = await Category.findById(req.body.category);
     if (!category) return res.status(400).send('Invalid Category');
 
-    const baseAndroid = `http://10.0.2.2:3000/public/uploads/`;
-    let imagePath;
+    const file = req.file;
+    if(!file) return res.status(400).send('No image request')
 
-    // ตรวจสอบว่าไฟล์ถูกอัปโหลดหรือไม่
-    if (req.file) {
-        const fileName = req.file.filename; // ชื่อไฟล์จากการอัปโหลด
-        imagePath = `${baseAndroid}${fileName}`; // เส้นทางสำหรับรูปภาพที่อัปโหลด
-    } else if (req.body.image) {
-        // ถ้าไม่มีไฟล์อัปโหลด, ใช้ URL ที่ได้รับจาก body (ตรวจสอบให้แน่ใจว่ามันเป็นเส้นทางที่ถูกต้อง)
-        imagePath = `${req.body.image}`; // หรืออาจจะเป็น req.body.image โดยตรงถ้ามันเป็น URL สมบูรณ์
-    } else {
-        return res.status(400).send('No image provided'); // หรือจัดการแบบอื่นถ้าไม่มีรูปภาพ
-    }
+    const fileName = file.filename
+    const baseAndroid = `${req.protocol}://${req.get('host')}/public/uploads/`;
+
+    // // ตรวจสอบว่าไฟล์ถูกอัปโหลดหรือไม่
+    // if (req.file) {
+    //     const fileName = req.file.filename; // ชื่อไฟล์จากการอัปโหลด
+    //     imagePath = `${baseAndroid}${fileName}`; // เส้นทางสำหรับรูปภาพที่อัปโหลด
+    // } else if (req.body.image) {
+    //     // ถ้าไม่มีไฟล์อัปโหลด, ใช้ URL ที่ได้รับจาก body (ตรวจสอบให้แน่ใจว่ามันเป็นเส้นทางที่ถูกต้อง)
+    //     imagePath = `${req.body.image}`; // หรืออาจจะเป็น req.body.image โดยตรงถ้ามันเป็น URL สมบูรณ์
+    // } else {
+    //     return res.status(400).send('No image provided'); // หรือจัดการแบบอื่นถ้าไม่มีรูปภาพ
+    // }
 
     let product = new Product({
         name: req.body.name,
@@ -98,7 +101,7 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
         provine: req.body.provine,
         category: req.body.category,
         province: req.body.province, // แก้ไขตามที่ถูกต้อง
-        image: imagePath, // เส้นทางรูปภาพจากข้างต้น
+        image: `${baseAndroid}${fileName}`, // เส้นทางรูปภาพจากข้างต้น
     });
 
     try {
