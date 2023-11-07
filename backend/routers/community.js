@@ -93,9 +93,9 @@ try {
         const updatedPost = await Community.findByIdAndUpdate(
             req.params.id,
             {
-                image: req.body.image,
-                desc: req.body.desc , 
-                province: req.body.province
+                image: req.body.image || post.image,
+                desc: req.body.desc || post.desc, 
+                province: req.body.province || post.province
             },
             { new: true }
         );

@@ -76,10 +76,10 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
     if (!category) return res.status(400).send('Invalid Category');
 
     const file = req.file;
-    if(!file) return res.status(400).send('No image request')
+    // if(!file) return res.status(400).send('No image request')
 
     const fileName = file.filename
-    const baseAndroid = `${req.protocol}://${req.get('host')}/public/uploads/`;
+    const localhost = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
     // // ตรวจสอบว่าไฟล์ถูกอัปโหลดหรือไม่
     // if (req.file) {
@@ -102,7 +102,7 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
         provine: req.body.provine,
         category: req.body.category,
         province: req.body.province, // แก้ไขตามที่ถูกต้อง
-        image: `${baseAndroid}${fileName}`, // เส้นทางรูปภาพจากข้างต้น
+        image: `${localhost}${fileName}`|| req.body.image, // เส้นทางรูปภาพจากข้างต้น
     });
 
     try {
@@ -151,15 +151,15 @@ router.put('/:id', uploadOptions.single('image'), async (req, res) => {
         req.params.id,
         {
             
-            image: imagepath,
-            name: req.body.name,
-            description: req.body.description,
-            category: req.body.category,
-            location: req.body.location,
-            rating: req.body.rating,
-            provine: req.body.provine,
-            latitude: req.body.latitude,
-            longitude: req.body.longitude,
+            image: imagepath || product.image,
+            name: req.body.name || product.name,
+            description: req.body.description || product.description,
+            category: req.body.category || product.category,
+            location: req.body.location || product.location,
+            rating: req.body.rating || product.rating,
+            provine: req.body.provine || product.provine,
+            latitude: req.body.latitude || product.latitude,
+            longitude: req.body.longitude || product.longitude,
         },
         { new: true }
     );
