@@ -26,18 +26,18 @@ const Banner = () => {
             <View style={styles.container}>
                 <View style={styles.swiper}>
                     <Swiper
-                        style={{ height: width / 2.5 }}
-                        // showButtons={false}
-                        // autoplay={true}
-                        // autoplayTimeout={3}
-                        activeDotColor="#f36d72"
-                        dotStyle={{ width: 0, height: 0 }}
-                        activeDotStyle={{ width: 0, height: 0 }}
+                        style={{ height: width /2 }}
+                        showButtons={false}
+                        autoplayTimeout={3}
+                        autoplay={true}
+                        activeDotColor="white"
+                        dotStyle={{ width: 10, height: 10,  }}
+                        activeDotStyle={{ width: 10, height: 10 }}
                     >
                         {bannerData.map((item,index) => {
                             return (
                                 <Image
-                                    key={index} // ควรใช้ key ที่ไม่ซ้ำกัน
+                                    key={item.id} // ควรใช้ key ที่ไม่ซ้ำกัน
                                     style={styles.imageBanner}
                                     resizeMode="stretch"
                                     source={{
@@ -47,7 +47,7 @@ const Banner = () => {
                             );
                         })}
                     </Swiper>
-                    <View style={{ height: 10 }}></View>
+                    {/* <View style={{ height: 10 }}></View> */}
                 </View>
             </View>
         </ScrollView>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     swiper: {
         width: width,
         alignItems: "center",
-        marginTop: 10,
+        padding:10
     },
     imageBanner: {
         flex: 1,

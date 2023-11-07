@@ -34,6 +34,10 @@ const Main = () => {
         keyboardHidesTabBar: true,
         showLabel: false,
         activeTintColor: "#f47a7e",
+        style: {
+          height: 400, // Add this line to set the height to 100
+          // Add any additional styling you need for the tab bar here
+        },
       }}
     >
     

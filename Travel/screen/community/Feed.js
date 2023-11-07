@@ -138,7 +138,7 @@ const Feed = (props) => {
             </TouchableOpacity>
 
             <ScrollView>
-                {dataFeed.map((item, index) => {
+                {dataFeed.reverse().map((item, index) => {
                     return (
                         <View style={styles.mainPostView}>
 

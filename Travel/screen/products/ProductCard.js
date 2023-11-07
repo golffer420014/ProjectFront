@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     container: {
         width: 185,
         height: 200,
-        borderRadius: 20,
+        borderRadius: 10,
         backgroundColor: 'white',
         marginLeft:10,
     },
@@ -85,13 +85,10 @@ const styles = StyleSheet.create({
         width:'auto',
         alignItems:'stretch',
         overflow: "hidden" ,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-
+        borderRadius: 10,
     },
     image: {
-        borderRadius:10,
-        resizeMode: 'cover'
+        resizeMode: 'stretch'
     },
     details:{
         paddingHorizontal:10,

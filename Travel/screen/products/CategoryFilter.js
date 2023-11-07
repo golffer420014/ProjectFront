@@ -18,7 +18,7 @@ const CategoryFilter = (props) => {
 
 
   return (
-    <View style={{ height: 180 , marginBottom:10 }}>
+    <View style={{ height: 180,top:10 }}>
       <View style={styles.pickerContainer}>
         <Item picker >
           <Picker
@@ -45,7 +45,7 @@ const CategoryFilter = (props) => {
       <ScrollView
         bounces={true}
         horizontal={true}
-        style={{ backgroundColor: '#ffffff', borderTopLeftRadius: 30, borderTopRightRadius: 30 }}
+        style={{ backgroundColor: '#ffffff', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
       >
         <ListItem style={{ marginBottom: 0, padding: 0, borderRadius: 0 }}>
           <TouchableOpacity

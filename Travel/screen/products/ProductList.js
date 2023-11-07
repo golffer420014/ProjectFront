@@ -27,7 +27,7 @@ const ProductList = (props) => {
             >
 
                 <View style={{
-                    backgroundColor: '#dfdfdf',
+                    // backgroundColor: '#dfdfdf',
                     marginBottom:10
                 }}
                 >

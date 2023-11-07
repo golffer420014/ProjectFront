@@ -137,7 +137,7 @@ const ProductContainer = (props) => {
     return (
         <>
             {loading == false ? (
-                <Container >
+                <Container style={{backgroundColor:'white'}}>
 
                     <Header searchBar rounded style={{ backgroundColor: '#dcdcdc' }}>
                         <Item style={{ 
@@ -187,11 +187,14 @@ const ProductContainer = (props) => {
 
                                 {productsCtg.length > 0 ? (
 
-                                        <View style={[styles.listProduct]}>
+                                        <LinearGradient
+                                            colors={['#ff9a9e', '#fcb69f']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
+                                            style={styles.listContainer}
+                                        >
                                             {
                                                 shuffleArray([...productsCtg]).map((item) => {
                                                     return (
-                                                        <View style={{ width: '50%'  }} key={item.id}>
+                                                        <View style={{ width: '50%' ,height:null  }} key={item.id}>
                                                             <ProductList
                                                                 navigation={props.navigation}
                                                                 item={item}
@@ -200,7 +203,7 @@ const ProductContainer = (props) => {
                                                     );
                                                 })
                                             }
-                                        </View>
+                                        </LinearGradient>
 
 
 
@@ -265,9 +268,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
-        height: height / 1.5,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
+        height: null ,
+        paddingTop:10,
+        borderTopLeftRadius:10,
+        borderTopRightRadius: 10,
     },
     center: {
         justifyContent: 'center',
