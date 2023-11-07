@@ -157,6 +157,7 @@ router.put('/:id', uploadOptions.single('image'), async (req, res) => {
             category: req.body.category || product.category,
             location: req.body.location || product.location,
             rating: req.body.rating || product.rating,
+            image: req.body.image || product.image,
             provine: req.body.provine || product.provine,
             latitude: req.body.latitude || product.latitude,
             longitude: req.body.longitude || product.longitude,
