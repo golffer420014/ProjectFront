@@ -4,6 +4,7 @@ import Input from '../../Shared/Form/Input';
 import { Calendar } from 'react-native-calendars';
 import Modal from 'react-native-modal';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+import mime from "mime";
 
 // icon
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -31,25 +32,30 @@ const RegisterDetail = ({ route, navigation }) => {
 
 
     const register = () => {
+        const formData = new FormData();
+        formData.append('fname', fname);
+        formData.append('lname', lname);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('address', address);
+        formData.append('birth', selectedDate);
+        formData.append('gender', selectedGender);
+        formData.append('isAdmin', false);
 
-        let user = {
-            fname: fname,
-            lname: lname,
-            email: email,
-            password: password,
-            address: address,
-            birth: selectedDate,
-            gender: selectedGender,
-            image:image,
-            isAdmin: false,
-        }
+        const newImageUri = "file:///" + image.split("file:/").join("");
+
+        formData.append("image", {
+            uri: newImageUri,
+            type: mime.getType(newImageUri),
+            name: newImageUri.split("/").pop()
+        });
 
 
-       
-
-        axios
-            .post(`${baseURL}users/register`, user)
-
+        axios.post(`${baseURL}users/register`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then((res) => {
                 if (res.status === 200) {
                     Toast.show({
@@ -60,7 +66,7 @@ const RegisterDetail = ({ route, navigation }) => {
                     });
                     setTimeout(() => {
                         navigation.navigate("Login")
-                    }, 500)
+                    }, 500);
                 }
             })
             .catch((err) => {
@@ -70,9 +76,9 @@ const RegisterDetail = ({ route, navigation }) => {
                     text1: "Something went wrong",
                     text2: "Please try again",
                 });
-            })
-
+            });
     }
+
 
     const hideCalendar = () => {
         setCalendarVisible(false);
@@ -141,6 +147,9 @@ const RegisterDetail = ({ route, navigation }) => {
                       name={"fname"}
                       id={"fname"}
                       onChangeText={(text) => setFname(text)}
+
+                      onSubmitEditing={() => register()}
+                      returnKeyType="next"
                   />
                   <View style={styles.iconUser}>
                       <FontAwesome name='user' size={25} color='#f36d72' />
@@ -154,6 +163,8 @@ const RegisterDetail = ({ route, navigation }) => {
                       name={"lname"}
                       id={"lname"}
                       onChangeText={(text) => setLname(text)}
+                      onSubmitEditing={() => register()}
+                      returnKeyType="next"
                   />
                   <View style={styles.iconUser}>
                       <FontAwesome name='user' size={25} color='#f36d72' />
@@ -167,6 +178,8 @@ const RegisterDetail = ({ route, navigation }) => {
                       name={"adress"}
                       id={"adress"}
                       onChangeText={(text) => setAddress(text)}
+                      onSubmitEditing={() => register()}
+                      returnKeyType="next"
                   />
                   <View style={styles.iconUser}>
                       <FontAwesome name='address-card' size={18} color='#f36d72' />

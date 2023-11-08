@@ -18,6 +18,7 @@ import { Calendar } from 'react-native-calendars';
 import Modal from 'react-native-modal';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
+import mime from 'mime'
 
 import axios from "axios"
 import baseURL from '../../assests/common/baseUrl';
@@ -36,7 +37,7 @@ var { height, width } = Dimensions.get("window")
 
 const UserProfile = ({ props, navigation }) => {
   const context = useContext(AuthGlobal)
-  const [userProfile, setUserProfile] = useState()
+  const [userProfile, setUserProfile] = useState(null)
   const [editProfile, setEditProfile] = useState(false)
   const [editPassword, setEditPassword] = useState(false)
   const [loading, setLoading] = useState()
@@ -51,7 +52,7 @@ const UserProfile = ({ props, navigation }) => {
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
 
-  // console.log('LOG login =', JSON.stringify(userProfile, null, 2))
+
 
 
 
@@ -121,26 +122,46 @@ const UserProfile = ({ props, navigation }) => {
       }
     });
   };
+ 
 
-  const handleEdit = (id) => {
-    let formData = {
-      image: image,
-      fname: fname,
-      lname: lname,
-      address: address,
-      email: email,
-      birth: selectedDate,
-      gender: selectedGender
-    };
+  const handleEdit = () => {
+
+    const formData = new FormData();
+    formData.append('fname', fname);
+    formData.append('lname', lname);
+    formData.append('address', address);
+    formData.append('birth', selectedDate);
+    formData.append('gender', selectedGender);
+
+    if(image){
+      const newImageUri = "file:///" + image.split("file:/").join("");
+
+      formData.append("image", {
+        uri: newImageUri,
+        type: mime.getType(newImageUri),
+        name: newImageUri.split("/").pop()
+      });
+    }
+
+    // let formData = {
+    //   image: image,
+    //   fname: fname,
+    //   lname: lname,
+    //   address: address,
+    //   email: email,
+    //   birth: selectedDate,
+    //   gender: selectedGender
+    // };
+    
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${token}`
       }
     }
     axios
-      .put(`${baseURL}users/${id}`, JSON.stringify(formData), config)
+      .put(`${baseURL}users/${userProfile.id}`, formData, config)
       .then((res) => {
         setUserProfile(res.data)
         if (res.status == 200 || res.status == 201) {
@@ -247,6 +268,9 @@ const UserProfile = ({ props, navigation }) => {
                 name={"fname"}
                 id={"fname"}
                 onChangeText={(text) => setFname(text)}
+
+                onSubmitEditing={() => handleEdit()}
+                returnKeyType="next"
               />
               <View style={styles.iconUserEdit}>
                 <FontAwesome name='user' size={25} color='#f36d72' />
@@ -260,6 +284,8 @@ const UserProfile = ({ props, navigation }) => {
                 name={"lname"}
                 id={"lname"}
                 onChangeText={(text) => setLname(text)}
+                onSubmitEditing={() => handleEdit()}
+                returnKeyType="next"
               />
               <View style={styles.iconUserEdit}>
                 <FontAwesome name='user' size={25} color='#f36d72' />
@@ -273,6 +299,8 @@ const UserProfile = ({ props, navigation }) => {
                 name={"address"}
                 id={"address"}
                 onChangeText={(text) => setAddress(text)}
+                onSubmitEditing={() => handleEdit()}
+                returnKeyType="next"
               />
               <View style={styles.iconUserEdit}>
                 <FontAwesome name='address-card' size={20} color='#f36d72' />
@@ -280,7 +308,7 @@ const UserProfile = ({ props, navigation }) => {
             </View>
 
             {/* Email */}
-            <View style={[styles.input, { marginTop: 5 }]}>
+            {/* <View style={[styles.input, { marginTop: 5 }]}>
               <Text style={{ color: 'black', position: 'relative', left: -133 }}>Email</Text>
               <Input
                 placeholder={"Email"}
@@ -291,7 +319,7 @@ const UserProfile = ({ props, navigation }) => {
               <View style={styles.iconUserEdit}>
                 <FontAwesome name='address-card' size={20} color='#f36d72' />
               </View>
-            </View>
+            </View> */}
 
             {/* Birth */}
             <View style={styles.input}>
@@ -338,7 +366,7 @@ const UserProfile = ({ props, navigation }) => {
 
             <TouchableOpacity
               onPress={() =>
-                userProfile && handleEdit(userProfile.id)
+                userProfile && handleEdit()
               }
             >
               <View style={styles.btnLogin}>

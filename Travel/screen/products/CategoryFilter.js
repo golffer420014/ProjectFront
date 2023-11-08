@@ -70,9 +70,7 @@ const CategoryFilter = (props) => {
               props.active == -1 ? styles.active : styles.inactive
               ]} >All</Text>
             </View>
-            {/* <Text style={[styles.all, { margin: 5 },
-              props.active == -1 ? styles.active : styles.inactive
-              ]}>All</Text> */}
+            
           </TouchableOpacity>
           {props.categories.map((item) => (
             <TouchableOpacity

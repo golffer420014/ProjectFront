@@ -14,7 +14,8 @@ import axios from "axios"
 import baseURL from "../../assests/common/baseUrl"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
-
+import mime from 'mime'
+import Toast from 'react-native-toast-message';
 // icon
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
@@ -70,21 +71,47 @@ const Categories = (props) => {
   }, [])
 
   const addCategory = () => {
-    const category = {
-      name: categoryName,
-      icon:selectedImage
-    };
+    const formData = new FormData();
+    formData.append('name', categoryName);
+
+    if (selectedImage) {
+      const newImageUri = "file:///" + selectedImage.split("file:/").join("");
+
+      formData.append("image", {
+        uri: newImageUri,
+        type: mime.getType(newImageUri),
+        name: newImageUri.split("/").pop()
+      });
+    }
 
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
       }
     };
 
     axios
-      .post(`${baseURL}category`, category, config)
-      .then((res) => setCategories([...categories, res.data]))
-      .catch((error) => alert("Error add categories"));
+      .post(`${baseURL}category`, formData, config)
+      .then((res) => {
+        Toast.show({
+          topOffset: 60,
+          type: "success",
+          text1: "Create Category Success",
+          text2: ""
+        });
+        setCategories([...categories, res.data])
+        setSelectedImage()
+      })
+      .catch((error) => {
+        Toast.show({
+          topOffset: 60,
+          type: "error",
+          text1: "Can't Create Cantegory",
+          text2: ""
+        });
+        console.log(error)
+      });
 
     setCategoryName("");
   }
@@ -152,14 +179,14 @@ const Categories = (props) => {
                 }}
               />
             ) : <View style={{ padding: 10, backgroundColor: '#f36d72', borderRadius: 60 }}>
-                <FontAwesome6 name='images' size={20} color='white' />
+              <FontAwesome6 name='images' size={20} color='white' />
             </View>}
 
           </View>
         </TouchableOpacity>
         <View style={{ width: width / 2 }}>
           <TextInput
-          placeholder="หมวดหมู่"
+            placeholder="หมวดหมู่"
             value={categoryName}
             style={[styles.input, { paddingLeft: 20 }]}
             onChangeText={(text) => setCategoryName(text)}
@@ -169,7 +196,7 @@ const Categories = (props) => {
         <View>
           <EasyButton
             medium
-            style={{ backgroundColor:'#f36d72',borderRadius:10}}
+            style={{ backgroundColor: '#f36d72', borderRadius: 10 }}
             onPress={() => addCategory()}
           >
             <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>

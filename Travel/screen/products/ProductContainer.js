@@ -188,7 +188,7 @@ const ProductContainer = (props) => {
                                 {productsCtg.length > 0 ? (
 
                                         <LinearGradient
-                                            colors={['#ff9a9e', '#fcb69f']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
+                                            colors={['#fcb69f','#ff9a9e' ]} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
                                             style={styles.listContainer}
                                         >
                                             {

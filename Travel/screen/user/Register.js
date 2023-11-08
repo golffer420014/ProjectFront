@@ -61,6 +61,8 @@ const Register = (props) => {
         
     }
 
+    
+
     return (
         <ScrollView
             style={{ backgroundColor: 'white' }}
@@ -68,7 +70,6 @@ const Register = (props) => {
             <View style={styles.container}>
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
-
                 >
                     <View style={{ padding: 10, paddingHorizontal: 15, backgroundColor: '#f36d72', borderRadius: 50, position: 'absolute', top: -25, left: -190 }}>
                         <FontAwesome name='angle-left' size={20} color='white' />
@@ -84,6 +85,9 @@ const Register = (props) => {
                         name={"email"}
                         id={"email"}
                         onChangeText={(text) => setEmail(text.toLowerCase())}
+                        
+                        onSubmitEditing={() => handleNext()}
+                        returnKeyType="next"
                     />
                     <View style={styles.iconUser}>
                         <FontAwesome name='user' size={25} color='#f36d72' />
@@ -102,6 +106,8 @@ const Register = (props) => {
                                 id={"password"}
                                 secureTextEntry={true}
                                 onChangeText={(text) => setPassword(text)}
+                                onSubmitEditing={() => handleNext()}
+                                returnKeyType="next"
                             />
                             <TouchableOpacity
                                 onPress={() => setPassShow(true)}
@@ -123,6 +129,8 @@ const Register = (props) => {
                                 id={"ConPassword"}
                                 secureTextEntry={true}
                                 onChangeText={(text) => setConPassword(text)}
+                                onSubmitEditing={() => handleNext()}
+                                returnKeyType="next"
                             />
                             <TouchableOpacity
                                 onPress={() => setPassShow(true)}
@@ -146,6 +154,8 @@ const Register = (props) => {
                                 id={"password"}
                                 // secureTextEntry={true}
                                 onChangeText={(text) => setPassword(text)}
+                                onSubmitEditing={() => handleNext()}
+                                returnKeyType="next"
                             />
                             <TouchableOpacity
                                 onPress={() => setPassShow(false)}
@@ -167,6 +177,8 @@ const Register = (props) => {
                                 id={"ConPassword"}
                                 // secureTextEntry={true}
                                 onChangeText={(text) => setConPassword(text)}
+                                onSubmitEditing={() => handleNext()}
+                                returnKeyType="next"
                             />
                             <TouchableOpacity
                                 onPress={() => setPassShow(false)}

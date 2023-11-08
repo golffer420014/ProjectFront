@@ -110,6 +110,8 @@ const UserEditPassowrd = (props) => {
                               id={"password"}
                               secureTextEntry={true}
                               onChangeText={(text) => setPassword(text)}
+                              onSubmitEditing={() => handleConfirm()}
+                              returnKeyType="next"
                           />
                           <TouchableOpacity
                               onPress={() => setPassShow(true)}
@@ -131,6 +133,8 @@ const UserEditPassowrd = (props) => {
                               id={"ConPassword"}
                               secureTextEntry={true}
                               onChangeText={(text) => setConPassword(text)}
+                              onSubmitEditing={() => handleConfirm()}
+                              returnKeyType="next"
                           />
                           <TouchableOpacity
                               onPress={() => setPassShow(true)}
@@ -154,6 +158,8 @@ const UserEditPassowrd = (props) => {
                               id={"password"}
                               // secureTextEntry={true}
                               onChangeText={(text) => setPassword(text)}
+                              onSubmitEditing={() => handleConfirm()}
+                              returnKeyType="next"
                           />
                           <TouchableOpacity
                               onPress={() => setPassShow(false)}
@@ -175,6 +181,9 @@ const UserEditPassowrd = (props) => {
                               id={"ConPassword"}
                               // secureTextEntry={true}
                               onChangeText={(text) => setConPassword(text)}
+
+                              onSubmitEditing={() => handleConfirm()}
+                              returnKeyType="next"
                           />
                           <TouchableOpacity
                               onPress={() => setPassShow(false)}

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, Keyboard, Image, TouchableOpacity,ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Button, TextInput, Image, TouchableOpacity,ScrollView } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
 
 //screen
@@ -104,6 +104,8 @@ const Login = (props) => {
                         id={"email"}
                         value={email}
                         onChangeText={(text) => setEmail(text.toLowerCase())}
+                        onSubmitEditing={() => handleSubmit()}
+                        returnKeyType="next"
                     />
                     <View style={styles.iconUser}>
                         <FontAwesome name='user' size={25} color='#f36d72' />
@@ -120,6 +122,8 @@ const Login = (props) => {
                             secureTextEntry={true}
                             value={password}
                             onChangeText={(text) => setPassowrd(text.toLowerCase())}
+                            onSubmitEditing={() => handleSubmit()}
+                            returnKeyType="next"
                         />
                         <View style={styles.iconPassword}>
                             <FontAwesome name='lock' size={25} color='gray' />
@@ -149,6 +153,9 @@ const Login = (props) => {
                             // secureTextEntry={true}
                             value={password}
                             onChangeText={(text) => setPassowrd(text.toLowerCase())}
+                            onSubmitEditing={() => handleSubmit()}
+                            returnKeyType="next"
+                            
                         />
                         <View style={styles.iconPassword}>
                             <FontAwesome name='lock' size={25} color='#f36d72' />

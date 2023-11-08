@@ -97,14 +97,14 @@ const ProductForm = (props) => {
 
   const addProduct = () => {
     if (
-      // name == "" ||
-      // description == "" ||
-      // location == "" ||
-      // latitude == "" ||
-      // longitude == "" ||
-      // rating == "" ||
-      // provine == "" ||
-      // category == "" ||
+      name == "" ||
+      description == "" ||
+      location == "" ||
+      latitude == "" ||
+      longitude == "" ||
+      rating == "" ||
+      provine == "" ||
+      category == "" ||
       image == null
     ) {
       setErr('มีบางช่องยังว่างอยู่ !!')
@@ -174,12 +174,13 @@ const ProductForm = (props) => {
             }
           })
           .catch((error) => {
-            Toast.show({
-              topOffset: 60,
-              type: "error",
-              text1: "Add product error",
-              text2: "Please try again"
-            })
+            console.log('error create',error)
+            // Toast.show({
+            //   topOffset: 60,
+            //   type: "error",
+            //   text1: "Add product error",
+            //   text2: "Please try again"
+            // })
           })
       } 
 
