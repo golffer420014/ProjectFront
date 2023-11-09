@@ -16,6 +16,7 @@ import baseURL from "../../assests/common/baseUrl"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import FormContainer from "../../Shared/Form/FormContainer"
+import mime from 'mime'
 
 // icon
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -68,27 +69,35 @@ const Event = () => {
     const [event, setEvent] = useState([]);
 
     useEffect(() => {
+        // ฟังก์ชันที่เรียก API เพื่อดึงข้อมูล
+        const fetchEvents = () => {
+            axios
+                .get(`${baseURL}event`)
+                .then((res) => setEvent(res.data))
+                .catch((error) => alert("Error to get events"));
+        };
+
+        // รับ token จาก AsyncStorage
         AsyncStorage.getItem("jwt")
             .then((res) => {
                 setToken(res);
+                fetchEvents(); // เรียกใช้เมื่อได้ token แล้ว
             })
             .catch((error) => console.log(error));
 
-        axios
-            .get(`${baseURL}event`)
-            .then((res) => setEvent(res.data))
-            .catch((error) => alert("Error to get categories"))
-
-        return () => {
-            setEvent();
-            setToken();
-        }
-    }, [])
-
+        // ตั้งค่าให้รีเฟรชข้อมูลเมื่อมีการเพิ่มรายการอีเวนต์
+    }, [event]);
     const addEvent = () => {
-        const eventToAdd = {
-            image: selectedImage
-        };
+        const formData = new FormData();
+        if (selectedImage) {
+            const newImageUri = "file:///" + selectedImage.split("file:/").join("");
+
+            formData.append("image", {
+                uri: newImageUri,
+                type: mime.getType(newImageUri),
+                name: newImageUri.split("/").pop()
+            });
+        }
 
         const config = {
             headers: {
@@ -97,14 +106,16 @@ const Event = () => {
         };
 
         axios
-            .post(`${baseURL}event`, eventToAdd, config)
+            .post(`${baseURL}event`, formData, config)
             .then((res) => {
-                // รับรายการอีเวนต์เก่าและเพิ่มอีเวนต์ใหม่ลงไป
-                setEvent([...event, res.data]);
+                // อัปเดตรายการอีเวนต์โดยไม่ต้องรีเฟรชหน้า
+                setEvent(prevEvents => [...prevEvents, res.data]);
+                console.log(res.data);
             })
             .catch((error) => console.log(error));
 
-        setSelectedImage();
+        // รีเซ็ต selectedImage หลังจากเพิ่มรายการ
+        setSelectedImage(null);
     }
 
     const deleteEvent = (id) => {

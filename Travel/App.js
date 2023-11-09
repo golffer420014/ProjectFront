@@ -19,7 +19,7 @@ import Main from './Navigators/Main';
 
 //screen
 import { StatusBar } from '@gluestack-ui/themed'
-import TestApi from './TestApi';
+import TestApi from './Shared/TopTapProduct';
 import UserEditPassowrd from './screen/user/UserEditPassowrd';
 
 // ไม่สนการแจ้งเตือน
@@ -42,6 +42,8 @@ const App = () => {
         </NavigationContainer>
       </Provider>
     </Auth>
+
+    // <TestApi/>
 
 
   )

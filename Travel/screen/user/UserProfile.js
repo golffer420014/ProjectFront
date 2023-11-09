@@ -143,15 +143,6 @@ const UserProfile = ({ props, navigation }) => {
       });
     }
 
-    // let formData = {
-    //   image: image,
-    //   fname: fname,
-    //   lname: lname,
-    //   address: address,
-    //   email: email,
-    //   birth: selectedDate,
-    //   gender: selectedGender
-    // };
     
 
     const config = {

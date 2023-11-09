@@ -5,6 +5,8 @@ import { Left, Right, Container, H1 } from 'native-base';
 // import EasyButton from '../../Shared/StyledComponents/EasyButton'
 // import TrafficLight from '../../Shared/StyledComponents/TrafficLight'
 
+import TestApi from '../../Shared/TopTapProduct'
+
 //redux
 import { connect } from 'react-redux'
 import * as actions from '../../Redux/Actions/cartActions';
@@ -15,7 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import TabViewExample from '../../Shared/TabViewExample';
+import TopTapProduct from '../../Shared/TopTapProduct';
 
 const SingleProduct = (props) => {
 
@@ -36,9 +38,9 @@ const SingleProduct = (props) => {
                     uri: item.image ?
                         item.image : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png'
                 }}
-            /> 
+            />
 
-            <SafeAreaView style={ 
+            <SafeAreaView style={
                 tailwind
                     `flex-row 
                     justify-between 
@@ -46,7 +48,7 @@ const SingleProduct = (props) => {
                     w-full 
                     absolute
                     `}>
-                    
+
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
                     style={[
@@ -85,24 +87,24 @@ const SingleProduct = (props) => {
                             `
                          flex-1 
                          text-neutral-700`,
-                        { fontSize: wp(7) , color:'black' , fontWeight:'bold' }]
+                            { fontSize: wp(7), color: 'black', fontWeight: 'bold' }]
                         }>
                             {item.name}
                         </Text>
-                        <Text style={[tailwind`pt-2`,{ fontSize: wp(5) }]}>
+                        <Text style={[tailwind`pt-2`, { fontSize: wp(5) }]}>
                             {item.rating}{' '}
                             <AntDesign name="star" color={'#f36d72'} size={wp(5)} />
                         </Text>
 
                     </View>
-                    <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={[tailwind`pt-1 mb-5`, { fontSize: wp(5) }]}>
-                        <FontAwesome name="map-marker" color={'#f36d72'} size={wp(5)} />
-                        {' '}
-                        {item.location}
+                            <FontAwesome name="map-marker" color={'#f36d72'} size={wp(5)} />
+                            {' '}
+                            {item.location}
 
-                    </Text>
-                    
+                        </Text>
+
                     </View>
                     <TouchableOpacity>
                         <View style={styles.checkout}>
@@ -110,26 +112,17 @@ const SingleProduct = (props) => {
                         </View>
                     </TouchableOpacity>
 
-                    {/* <View
-                        style={tailwind`pt-5`}
-                    >
-                        <Text style={{ fontSize: wp(5), color: 'black', fontWeight: 'bold' }}>
-                            Description
-                        </Text>
-                        <Text style={{ color: 'gray', fontSize:15 }}>
-                            {item.description}
-                        </Text>
-
-                    </View> */}
 
 
 
                 </View>
-                <TabViewExample {...item} />
+
+
+                <TopTapProduct {...item} />
 
 
             </View>
-            
+
 
         </View>
     )
@@ -157,7 +150,7 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 380,
-        resizeMode:"stretch"
+        resizeMode: "stretch"
     },
     contentContainer: {
         marginTop: 20,
@@ -193,13 +186,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 10,
     },
-    checkout:{
+    checkout: {
         backgroundColor: "#f47a7e",
-        padding:5,
-        borderRadius:50,
-        position:'absolute',
-        zIndex:999,
-        top:-45,
-        right:10
+        padding: 5,
+        borderRadius: 50,
+        position: 'absolute',
+        zIndex: 999,
+        top: -45,
+        right: 10
     }
 })
