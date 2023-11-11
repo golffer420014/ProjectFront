@@ -31,18 +31,34 @@ const Feed = (props) => {
 
     // console.log('feed', JSON.stringify(dataFeed, null, 2))
 
+    const [selectedPostId, setSelectedPostId] = useState(null);
 
+    console.log(selectedPostId)
+
+
+    const fetchPosts = () => {
+        axios
+            .get(`${baseURL}community`)
+            .then((res) => {
+                const reversedData = [...res.data].reverse();
+                setDataFeed(reversedData);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
 
     useFocusEffect(
         useCallback(() => {
-            axios
-                .get(`${baseURL}community`)
-                .then((res) => {
-                    const reversedData = [...res.data].reverse();
-                    setDataFeed(reversedData);
-                    setLoading(false)
-                    setModalVisible(false)
-                })
+            fetchPosts();
+
+            return () => {
+                setLoading(true);
+                setDataFeed([]); // กำหนดค่าเริ่มต้นให้กับ dataFeed
+            };
 
         }, [])
     )
@@ -78,49 +94,39 @@ const Feed = (props) => {
 
 
     const deletePost = (id) => {
+        console.log(JSON.stringify(id, null, 2))
         const config = {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
             }
         }
-        console.log(id)
 
-        // axios
-        //     .delete(`${baseURL}community/${id}`, config)
+        axios
+            .delete(`${baseURL}community/${selectedPostId}`, config)
 
-        //     .then((res) => {
-        //         if (res.status === 200) {
-        //             Toast.show({
-        //                 topOffset: 60,
-        //                 type: "success",
-        //                 text1: "Delete Succeeded",
-        //                 text2: "Please Login into your account",
-        //             });
-        //             setTimeout(() => {
-        //                 const newFeed = dataFeed.filter((item) => item.id !== id);
-        //                 setDataFeed(newFeed);
-        //             }, 500)
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         Toast.show({
-        //             topOffset: 60,
-        //             type: "error",
-        //             text1: "Something went wrong",
-        //             text2: "Please try again",
-        //         });
-        //     })
+            .then((res) => {
+                if (res.status === 200) {
+                    Toast.show({
+                        topOffset: 60,
+                        type: "success",
+                        text1: "Delete Succeeded",
+                        text2: "Please Login into your account",
+                    });
+                    fetchPosts();
+                }
+            })
+            .catch((err) => {
+                Toast.show({
+                    topOffset: 60,
+                    type: "error",
+                    text1: "Something went wrong",
+                    text2: "Please try again",
+                });
+            })
 
     }
 
-    const reverseDataFeed = () => {
-        // สร้างสำเนาของอะเรย์โดยใช้ slice() หรือ spread operator
-        // แล้วค่อยเรียก reverse() บนสำเนา
-        const reversedData = [...dataFeed].reverse();
-        // ตั้งค่า state ด้วยอะเรย์ที่ได้ reverse แล้ว
-        setDataFeed(reversedData);
-    };
 
 
     if (loading == true) {
@@ -164,9 +170,10 @@ const Feed = (props) => {
                                 {context.stateUser.user.userId != item.userId.id ? (
                                     null
                                 ) :
-                                    <TouchableOpacity
-                                        onPress={() => setModalVisible(true)}
-                                    >
+                                    <TouchableOpacity onPress={() => {
+                                        setSelectedPostId(item.id); // ตั้งค่า id ของโพสต์ที่เลือก
+                                        setModalVisible(true); // แสดง modal
+                                    }}>
                                         <View style={{ top:-10 }}>
                                             <Entypo name="dots-three-horizontal" size={20} color='black' />
                                         </View>
@@ -256,7 +263,13 @@ const Feed = (props) => {
                                         <EasyButton
                                             medium
                                             danger
-                                            onPress={() => [deletePost(item.id), setModalVisible(false)]}
+                                            onPress={() => {
+                                                
+                                                deletePost()
+                                                // ปิด modal
+                                                setModalVisible(false)
+                                            }}
+
 
                                         >
                                             <Text style={styles.textStyle}>Delete</Text>
