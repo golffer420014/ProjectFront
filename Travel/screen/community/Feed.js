@@ -7,6 +7,8 @@ import { Image } from 'react-native'
 
 //icon
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import Entypo from 'react-native-vector-icons/Entypo'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 //auth
 import AuthGlobal from '../../context/store/AuthGlobal';
@@ -36,7 +38,8 @@ const Feed = (props) => {
             axios
                 .get(`${baseURL}community`)
                 .then((res) => {
-                    setDataFeed(res.data)
+                    const reversedData = [...res.data].reverse();
+                    setDataFeed(reversedData);
                     setLoading(false)
                     setModalVisible(false)
                 })
@@ -81,36 +84,43 @@ const Feed = (props) => {
                 Authorization: `Bearer ${token}`
             }
         }
+        console.log(id)
 
-        axios
-            .delete(`${baseURL}community/${id}`, config)
+        // axios
+        //     .delete(`${baseURL}community/${id}`, config)
 
-            .then((res) => {
-                if (res.status === 200) {
-                    Toast.show({
-                        topOffset: 60,
-                        type: "success",
-                        text1: "Delete Succeeded",
-                        text2: "Please Login into your account",
-                    });
-                    setTimeout(() => {
-                        const newFeed = dataFeed.filter((item) => item.id !== id);
-                        setDataFeed(newFeed);
-                    }, 500)
-                }
-            })
-            .catch((err) => {
-                Toast.show({
-                    topOffset: 60,
-                    type: "error",
-                    text1: "Something went wrong",
-                    text2: "Please try again",
-                });
-            })
-    
+        //     .then((res) => {
+        //         if (res.status === 200) {
+        //             Toast.show({
+        //                 topOffset: 60,
+        //                 type: "success",
+        //                 text1: "Delete Succeeded",
+        //                 text2: "Please Login into your account",
+        //             });
+        //             setTimeout(() => {
+        //                 const newFeed = dataFeed.filter((item) => item.id !== id);
+        //                 setDataFeed(newFeed);
+        //             }, 500)
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         Toast.show({
+        //             topOffset: 60,
+        //             type: "error",
+        //             text1: "Something went wrong",
+        //             text2: "Please try again",
+        //         });
+        //     })
+
     }
 
-    
+    const reverseDataFeed = () => {
+        // สร้างสำเนาของอะเรย์โดยใช้ slice() หรือ spread operator
+        // แล้วค่อยเรียก reverse() บนสำเนา
+        const reversedData = [...dataFeed].reverse();
+        // ตั้งค่า state ด้วยอะเรย์ที่ได้ reverse แล้ว
+        setDataFeed(reversedData);
+    };
 
 
     if (loading == true) {
@@ -127,7 +137,7 @@ const Feed = (props) => {
     }
 
     return (
-        <View style={styles.mainView}>
+        <View style={styles.container}>
             <Text style={styles.Heading}>Community</Text>
             <TouchableOpacity onPress={() => postCommu()}>
                 <View style={styles.textInputView} >
@@ -138,123 +148,124 @@ const Feed = (props) => {
             </TouchableOpacity>
 
             <ScrollView>
-                {dataFeed.reverse().map((item, index) => {
+                {dataFeed.map((item, index) => {
                     return (
-                        <View style={styles.mainPostView}>
-
-                            <View style={styles.postView}>
-                                <View style={styles.postBox}>
-                                    <View style={styles.imageView}>
-                                        <Image
-                                            source={{ uri: item.userId.image }}
-                                            style={styles.image}
-                                        />
-                                        <View style={styles.titleView}>
-                                            <Text style={styles.postName}>{item.userId.fname} {item.userId.lname}</Text>
-                                            <Text>{item.province}</Text>
-                                        </View>
+                        <View style={styles.itemWrapper}>
+                            <View style={styles.header}>
+                                <View style={{flexDirection:'row'}}>
+                                    <Image
+                                        source={{ uri: item.userId.image }}
+                                        style={{ width: 35, height: 35, borderRadius: 50 ,top:-9 }}
+                                    />
+                                    <View style={{ marginLeft: 10 }}>
+                                        <Text style={styles.itemName}>{item.userId.fname} {item.userId.lname}</Text>
                                     </View>
-                                    {context.stateUser.user.userId != item.userId.id ? (
-                                        null
-                                    ) :
-                                        <TouchableOpacity
-                                            onPress={() => setModalVisible(true)}
-                                        >
-                                            <View style={{}}>
-                                                <AntDesign name="edit" size={20} color='black' />
-                                            </View>
-                                        </TouchableOpacity>
-                                    }
-
-                                    <Modal
-                                        animationType='fade'
-                                        transparent={true}
-                                        visible={modalVisible}
-                                        onRequestClose={() => {
-                                            setModalVisible(false)
-                                        }}
-                                    >
-                                        <View style={styles.centeredView}>
-                                            <View style={styles.modalView}>
-                                                <TouchableHighlight
-                                                    underlayColor="#E8E8E8"
-                                                    onPress={() => {
-                                                        setModalVisible(false)
-                                                    }}
-                                                    style={{
-                                                        alignSelf: 'flex-end',
-                                                        position: 'absolute',
-                                                        top: 5,
-                                                        right: 10,
-                                                    }}
-                                                >
-                                                    <AntDesign name='close' size={20} />
-                                                </TouchableHighlight>
-                                                <EasyButton
-                                                    medium
-                                                    secondary
-                                                    onPress={() => {
-                                                        // กรองเฉพาะข้อมูลที่มี userId ตรงกับ userId ของ user จาก context
-                                                        const filteredData = dataFeed.filter(
-                                                            (item) => item.userId.id === context.stateUser.user.userId
-                                                        );
-
-                                                        // เช็คว่ามีข้อมูลหลังจากกรองหรือไม่ ถ้ามีก็ส่ง item แรกที่ผ่านการกรอง
-                                                        if (filteredData.length > 0) {
-                                                            props.navigation.navigate("Post Feed", {
-                                                                item: filteredData[0],
-                                                            });
-                                                        } else {
-                                                            console.log('No matching data found');
-                                                        }
-
-                                                        // ปิด modal
-                                                        setModalVisible(false);
-                                                    }}
-                                                >
-                                                    <Text style={styles.textStyle}>Edit</Text>
-                                                </EasyButton>
-                                                <EasyButton
-                                                    medium
-                                                    danger
-                                                    onPress={() => [deletePost(item.id), setModalVisible(false)]}
-
-                                                >
-                                                    <Text style={styles.textStyle}>Delete</Text>
-                                                </EasyButton>
-
-                                            </View>
-                                        </View>
-
-                                    </Modal>
-
-
                                 </View>
-                                {item.desc ? (
-                                    <View style={styles.desc}>
-                                        <Text style={{ color: 'black', fontSize: 15 }}>{item.desc}</Text>
-                                    </View>
+                                {context.stateUser.user.userId != item.userId.id ? (
+                                    null
                                 ) :
-                                    <View style={{height:10}}>
-                                    </View>
+                                    <TouchableOpacity
+                                        onPress={() => setModalVisible(true)}
+                                    >
+                                        <View style={{ top:-10 }}>
+                                            <Entypo name="dots-three-horizontal" size={20} color='black' />
+                                        </View>
+                                    </TouchableOpacity>
                                 }
-                                <View>
-                                </View>
-
+                            </View>
+                            <View style={{paddingHorizontal:10 ,top:-15 }}>
                                 <Image
                                     source={{ uri: item.image }}
-                                    style={styles.coverImage}
+                                    style={{ height: 300, width: '100%', borderRadius: 10 }}
+                                    resizeMode='stretch'
                                 />
-                                
 
                             </View>
-                            <View style={{
-                                height: 20,
-                                width: '100%',
-                                backgroundColor: '#dfdfdf',
-                            }}>
+
+                            <View style={styles.descWrapper}>
+                               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                                    <View style={styles.like}>
+                                        <FontAwesome name="heart-o" size={20} color='black' />
+                                    </View>
+                                    <View style={{flexDirection:'row'}}>
+                                        <FontAwesome name="map-marker" size={20} color='black' />
+                                        <Text style={[styles.itemName]}>{'  '}</Text>
+                                        <Text style={[styles.itemName]}>{item.province}</Text>
+                                    </View>
+                                </View>
+                                {item.desc ? (
+                                    <View style={{ marginTop: 5 }}>
+                                        <Text style={[styles.itemName]}>{item.desc}</Text>
+                                    </View>
+                                ) :
+                                null
+                                }
 
                             </View>
+
+
+                            {/* modal */}
+                            <Modal
+                                animationType='fade'
+                                transparent={true}
+                                visible={modalVisible}
+                                onRequestClose={() => {
+                                    setModalVisible(false)
+                                }}
+                            >
+                                <View style={styles.centeredView}>
+                                    <View style={styles.modalView}>
+                                        <TouchableHighlight
+                                            underlayColor="#E8E8E8"
+                                            onPress={() => {
+                                                setModalVisible(false)
+                                            }}
+                                            style={{
+                                                alignSelf: 'flex-end',
+                                                position: 'absolute',
+                                                top: 5,
+                                                right: 10,
+                                            }}
+                                        >
+                                            <AntDesign name='close' size={20} />
+                                        </TouchableHighlight>
+                                        <EasyButton
+                                            medium
+                                            secondary
+                                            onPress={() => {
+                                                // กรองเฉพาะข้อมูลที่มี userId ตรงกับ userId ของ user จาก context
+                                                const filteredData = dataFeed.filter(
+                                                    (item) => item.userId.id === context.stateUser.user.userId
+                                                );
+
+                                                // เช็คว่ามีข้อมูลหลังจากกรองหรือไม่ ถ้ามีก็ส่ง item แรกที่ผ่านการกรอง
+                                                if (filteredData.length > 0) {
+                                                    props.navigation.navigate("Post Feed", {
+                                                        item: filteredData[0],
+                                                    });
+                                                } else {
+                                                    console.log('No matching data found');
+                                                }
+
+                                                // ปิด modal
+                                                setModalVisible(false);
+                                            }}
+                                        >
+                                            <Text style={styles.textStyle}>Edit</Text>
+                                        </EasyButton>
+                                        <EasyButton
+                                            medium
+                                            danger
+                                            onPress={() => [deletePost(item.id), setModalVisible(false)]}
+
+                                        >
+                                            <Text style={styles.textStyle}>Delete</Text>
+                                        </EasyButton>
+
+                                    </View>
+                                </View>
+
+                            </Modal>
                         </View>
                     )
                 })}
@@ -267,88 +278,35 @@ const Feed = (props) => {
 export default Feed
 
 const styles = StyleSheet.create({
-    mainView: {
-        flex: 1,
-        backgroundColor: '#ffff',
-        marginBottom:-5
-    },
-    Heading: {
-        fontSize: 32,
-        marginTop: 10,
-        marginLeft: 15,
-        fontWeight: 'bold',
-        color: 'black'
-    },
-    textInputView: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent:'center',
-        paddingHorizontal:5,
-    },
-
-    textInput: {
-        height: 40,
+    container: {
         width: '100%',
-        backgroundColor: '#F0F0F0',
-        borderRadius: 20,
-        padding: 10,
-        paddingLeft: 20,
-        marginVertical: 10,
-    },
-    mainPostView: {
-        width: '100%',
-        // backgroundColor:'gray',
-        paddingVertical:5,
-    },
-    postBox: {
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingRight: 20,
-
-    },
-    postView: {
-        width: '100%',
-        alignItems: "center",
-    },
-    image: {
-        backgroundColor: 'rgba(0,0,0,0.06)',
-        width: 50,
-        height: 50,
-        borderRadius: 50,
-    },
-    imageView: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    postName: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: 'black'
-    },
-
-    titleView: {
-        marginLeft: 15
-    },
-    desc: {
         justifyContent: 'center',
-        width: '100%',
-        padding: 10,
-        marginVertical: 3,
-        borderWidth: 1.5,
-        borderColor: '#dfdfdf',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        top: 5,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        marginBottom:20
     },
-    coverImage: {
-        width: '100%',
-        height: 200,
-        backgroundColor: 'rgba(0,0,0,0.06)',
+    itemWrapper: {
+        borderRadius:10,
+        width: 400,
+        marginVertical:5,
+        borderWidth: 3,
+        borderColor:'#dfdfdf'
+    },
+    header:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems: 'center',
+        margin:15,
+        marginTop:25
+    },
+    itemName:{
+        color:'black',
+        fontWeight:'500',
+        fontSize:15
+    },
+    descWrapper:{
+        paddingHorizontal:15,
+        paddingBottom:10
     },
     centeredView: {
         flex: 1,

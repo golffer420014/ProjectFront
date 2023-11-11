@@ -18,7 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import InputFormProduct from '../../Shared/Form/InputFormProduct';
 
 const ProductReview = (props) => {
-    // console.log('props =', JSON.stringify(props, null, 2))
+    console.log('props =', JSON.stringify(props, null, 2))
     // console.log(token)
     const [password, setDesc] = useState("");
     const [conPassword, setConPassword] = useState("");
@@ -90,19 +90,13 @@ const ProductReview = (props) => {
         let stars = [];
         for (let i = 1; i <= 5; i++) {
             stars.push(
-                // <TouchableOpacity key={i} onPress={() => handleStarPress(i)}>
-                //     <View style={{flexDirection:'row'}}>
-                //         {<FontAwesome name='star' size={20} color={i <= point ? '#f36d72' : 'gray'} />}
-                //         <Text>{'  '}</Text>
-                //     </View>
-                // </TouchableOpacity>
                 <TouchableOpacity key={i} onPress={() => handleStarPress(i)}>
-                    <FontAwesome
-                        name={i <= point ? (point >= i && point < i + 0.5 ? 'star-half-empty' : 'star') : 'star'}
-                        size={20}
-                        color={i <= point ? '#f36d72' : '#b1b1b1'}
-                    />
+                    <View style={{flexDirection:'row'}}>
+                        {<FontAwesome name='star' size={20} color={i <= point ? '#f36d72' : 'gray'} />}
+                        <Text>{'  '}</Text>
+                    </View>
                 </TouchableOpacity>
+                
             );
         }
         return stars;
@@ -136,6 +130,9 @@ const ProductReview = (props) => {
 
                     <View style={{ flexDirection: 'row' }}>
                     {renderStars()}
+                    </View>
+                    <View>
+                        <Text style={{ fontSize: 20 , color:'black' }}>{point} / 5</Text>
                     </View>
 
                 </View>

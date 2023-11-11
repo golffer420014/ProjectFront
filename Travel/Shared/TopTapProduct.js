@@ -26,7 +26,7 @@ const ReviewRoute = ({ reviews, authReview, navigation, props }) => (
     {authReview == true ? (
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Product Review', { item: props })}
+          onPress={() => navigation.navigate('Product Review', { idProduct: props.id })}
         >
           <View style={{ padding: 5, backgroundColor: '#f47a7e', borderRadius: 50, marginTop: 8 }}>
             <FontAwesome name="plus" size={20} color='white' />

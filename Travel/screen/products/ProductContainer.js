@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { Container, Item, Header, Icon, Input } from 'native-base'
-import { StyleSheet, View, Text, ScrollView, Dimensions, ActivityIndicator, Keyboard } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, Dimensions, ActivityIndicator, Keyboard, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 
 // base
@@ -15,11 +15,11 @@ import CategoryFilter from './CategoryFilter';
 
 //icons
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useFocusEffect } from '@react-navigation/native';
 
 
 var { height } = Dimensions.get('window')
-let windowWidth = Dimensions.get('window').width
 
 
 const ProductContainer = (props) => {
@@ -27,6 +27,7 @@ const ProductContainer = (props) => {
     const [products, setProduct] = useState([]);
     const [productsFiltered, setProductsFiltered] = useState([]);
     const [focus, setFocus] = useState();
+    const [visibleItemCount, setVisibleItemCount] = useState(6);
 
     //category
     const [productsCtg, setProductsCtg] = useState([])
@@ -85,6 +86,7 @@ const ProductContainer = (props) => {
                 setActive()
                 setInitialState()
                 setLoading(true)
+                setVisibleItemCount(6)
 
 
             }
@@ -192,17 +194,22 @@ const ProductContainer = (props) => {
                                             style={styles.listContainer}
                                         >
                                             {
-                                                shuffleArray([...productsCtg]).map((item) => {
+                                                productsCtg.slice(0, visibleItemCount).map((item) => {
                                                     return (
-                                                        <View style={{ width: '50%' ,height:null  }} key={item.id}>
-                                                            <ProductList
-                                                                navigation={props.navigation}
-                                                                item={item}
-                                                            />
+                                                        <View style={{ width: '50%', height: null }} key={item.id}>
+                                                            <ProductList navigation={props.navigation} item={item} />
                                                         </View>
                                                     );
                                                 })
+
                                             }
+                                            <View style={styles.plusItem}>
+                                                <TouchableOpacity onPress={() => setVisibleItemCount(prevCount => prevCount + 6)}>
+                                                        <View style={{padding:10,borderRadius:50,backgroundColor:'white'}}>
+                                                        <FontAwesome name="plus" color={"#f36d72"} size={30} />
+                                                        </View>
+                                                </TouchableOpacity>
+                                            </View>
                                         </LinearGradient>
 
 
@@ -252,6 +259,12 @@ const ProductContainer = (props) => {
 export default ProductContainer
 
 const styles = StyleSheet.create({
+    plusItem: {
+        width: '100%',
+        padding: 10,
+        justifyContent: 'center', // จัดกลางแนวตั้ง
+        alignItems: 'center' // จัดกลางแนวนอน
+    },
     input: {
         borderWidth: 1, // Add a border
         borderColor: 'gray', // Border color
@@ -268,7 +281,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
-        height: null ,
         paddingTop:10,
         borderTopLeftRadius:10,
         borderTopRightRadius: 10,
