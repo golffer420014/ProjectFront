@@ -51,30 +51,30 @@ const Feed = (props) => {
     useFocusEffect(
         useCallback(() => {
 
-            
+
             fetchPosts();
 
-            
-                AsyncStorage.getItem("jwt")
-                    .then((res) => {
-                        setToken(res)
-                        axios
-                            .get(`${baseURL}users/${context.stateUser.user.userId}`, {
-                                headers: { Authorization: `Bearer ${res}` },
-                            })
-                            .then((user) => {
-                                setUserProfile(user.data);
-                            })
-                    })
-                    .catch((error) => console.log(error));
-            
+
+            AsyncStorage.getItem("jwt")
+                .then((res) => {
+                    setToken(res)
+                    axios
+                        .get(`${baseURL}users/${context.stateUser.user.userId}`, {
+                            headers: { Authorization: `Bearer ${res}` },
+                        })
+                        .then((user) => {
+                            setUserProfile(user.data);
+                        })
+                })
+                .catch((error) => console.log(error));
+
 
             return () => {
                 setLoading(true);
                 setDataFeed([]);
             };
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
     )
 
@@ -96,7 +96,7 @@ const Feed = (props) => {
                     })
             })
             .catch((error) => console.log(error));
-        
+
     }
 
 
@@ -142,7 +142,7 @@ const Feed = (props) => {
         // ตรวจสอบว่าโพสต์ถูก 'like' โดยผู้ใช้ปัจจุบันหรือไม่
         const isLiked = post.likes.includes(userid);
 
-        
+
 
         const config = {
             headers: {
@@ -210,7 +210,7 @@ const Feed = (props) => {
     return (
         <View style={styles.container}>
 
-            <View style={{ alignItems: 'center', justifyContent: 'center' ,padding:10 }}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', padding: 10 }}>
                 <Text style={styles.Heading}>Community</Text>
                 {context.stateUser.isAuthenticated == true ? (
                     <TouchableOpacity onPress={() => postCommu()}>
@@ -224,7 +224,7 @@ const Feed = (props) => {
             </View>
 
 
-            <ScrollView style={{height:null}}>
+            <ScrollView style={{ height: null }}>
                 {dataFeed.map((item, index) => {
                     return (
                         <View style={styles.itemWrapper}>
@@ -260,18 +260,18 @@ const Feed = (props) => {
                                             resizeMode='stretch'
                                         />
                                     </View>
-                                ):
-                                <TouchableOpacity
-                                    onPress={(() => likePost(item.id))}
-                                >
-                                    <Image
-                                        source={{ uri: item.image }}
-                                        style={{ height: 300, width: '100%', borderRadius: 10 }}
-                                        resizeMode='stretch'
-                                    />
-                                </TouchableOpacity>
+                                ) :
+                                    <TouchableOpacity
+                                        onPress={(() => likePost(item.id))}
+                                    >
+                                        <Image
+                                            source={{ uri: item.image }}
+                                            style={{ height: 300, width: '100%', borderRadius: 10 }}
+                                            resizeMode='stretch'
+                                        />
+                                    </TouchableOpacity>
                                 }
-                                
+
 
                             </View>
 
@@ -288,26 +288,18 @@ const Feed = (props) => {
                                         )}
 
                                     </View>
-                                    {
-                                        item.province == undefined ? (
-                                            null
-                                        ) : (
-                                                <View style = {{ flexDirection: 'row' }}>
-                                    <FontAwesome name="map-marker" size={20} color='black' />
-                                    <Text style={[styles.itemName]}>{'  '}</Text>
-                                    <Text style={[styles.itemName]}>{item.province}</Text>
-                                </View>
-                                        )
-                                    }
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <FontAwesome name="map-marker" size={20} color='black' />
+                                        <Text style={[styles.itemName]}>{'  '}</Text>
+                                        <Text style={[styles.itemName]}>{item.province}</Text>
+                                    </View>
 
                                 </View>
-                                {item.desc && item.desc == null || undefined ? (
+                                
                                     <View style={{ marginTop: 5 }}>
                                         <Text style={[styles.itemName]}>{item.desc}</Text>
                                     </View>
-                                ) :
-                                    null
-                                }
+                                
 
                             </View>
 
@@ -453,10 +445,10 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginBottom: -10
     },
-    like:{
-        flexDirection:'row',
-        width:35,
-        justifyContent:'space-between',
-        alignItems:'center'
+    like: {
+        flexDirection: 'row',
+        width: 35,
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
 })

@@ -34,7 +34,7 @@ const PostFeed = (props) => {
 
   const navigate = useNavigation()
 
-  // console.log('edit', JSON.stringify(props.route.params.item, null, 2))
+  console.log('edit', JSON.stringify(desc, null, 2))
 
   useEffect(() => {
     if (props.route.params?.item) {
@@ -79,7 +79,7 @@ const PostFeed = (props) => {
       }
     });
   };
-  const PostBtn = () => {
+  const PostBtn = async () => {
 
     if ((imagePost == null || imagePost === '') && (desc == null || desc === '')) {
       Toast.show({
@@ -88,30 +88,26 @@ const PostFeed = (props) => {
         text1: "Please fill form or image",
         text2: "Please try again",
       });
-    } else if (props.route.params.item ) {
+    } else if (props.route.params.item) {
       const formData = new FormData();
 
       formData.append("userId", id);
-      formData.append("desc", desc);
-      formData.append("province", province);
+      formData.append("desc", desc || '');
+      formData.append("province", province || '');
 
-      if (image) {
-        const newImageUri = "file:///" + image.split("file:/").join("");
+
+      if (imagePost) {
+        const newImageUri = "file:///" + imagePost.split("file:/").join("");
 
         formData.append("image", {
           uri: newImageUri,
           type: mime.getType(newImageUri),
           name: newImageUri.split("/").pop()
-        });
+        } || imagePost);
       }
-      // let post = {
-      //   userId: id,
-      //   image: imagePost,
-      //   desc: desc,
-      //   province: province
-      // }
+ 
 
-      
+
 
       const config = {
         headers: {
@@ -120,7 +116,7 @@ const PostFeed = (props) => {
         }
       }
 
-      axios
+      await axios
         .put(`${baseURL}community/${props.route.params.item.id}`, formData, config)
 
         .then((res) => {
@@ -148,11 +144,12 @@ const PostFeed = (props) => {
       const formData = new FormData();
 
       formData.append("userId", id);
-      formData.append("desc", desc);
-      formData.append("province", province);
+      formData.append("desc", desc || '');
+      formData.append("province", province || '');
 
-      if(image) {
-        const newImageUri = "file:///" + image.split("file:/").join("");
+
+      if (imagePost) {
+        const newImageUri = "file:///" + imagePost.split("file:/").join("");
 
         formData.append("image", {
           uri: newImageUri,
@@ -174,7 +171,7 @@ const PostFeed = (props) => {
         }
       }
 
-      axios
+      await axios
         .post(`${baseURL}community`, formData, config)
 
         .then((res) => {
@@ -191,6 +188,7 @@ const PostFeed = (props) => {
           }
         })
         .catch((err) => {
+          console.log(err)
           Toast.show({
             topOffset: 60,
             type: "error",
