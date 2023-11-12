@@ -30,10 +30,9 @@ const Banner = () => {
                 dotColor="#f36d72"
                 inactiveDotColor="#90A4AE"
                 dotStyle={{
-                    width: 12, // Your desired inactive dot width
-                    height: 12, // Your desired inactive dot height
+                    width: 10, // Your desired inactive dot width
+                    height: 10, // Your desired inactive dot height
                 }}
-                
                 circleLoop
             />
         </View>
@@ -43,6 +42,7 @@ const Banner = () => {
 const styles = StyleSheet.create({
     container: {
         paddingTop:7,
+        borderRadius:10
     },
     
 });

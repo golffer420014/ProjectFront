@@ -28,12 +28,9 @@ const Feed = (props) => {
     const [userProfile, setUserProfile] = useState()
     const [loading, setLoading] = useState(true)
     const [modalVisible, setModalVisible] = useState(false)
-
-    // console.log('feed', JSON.stringify(dataFeed, null, 2))
-
     const [selectedPostId, setSelectedPostId] = useState(null);
+    // console.log(JSON.stringify(dataFeed,null,2))
 
-    console.log(selectedPostId)
 
 
     const fetchPosts = () => {
@@ -53,48 +50,57 @@ const Feed = (props) => {
 
     useFocusEffect(
         useCallback(() => {
+
+            
             fetchPosts();
+
+            
+                AsyncStorage.getItem("jwt")
+                    .then((res) => {
+                        setToken(res)
+                        axios
+                            .get(`${baseURL}users/${context.stateUser.user.userId}`, {
+                                headers: { Authorization: `Bearer ${res}` },
+                            })
+                            .then((user) => {
+                                setUserProfile(user.data);
+                            })
+                    })
+                    .catch((error) => console.log(error));
+            
 
             return () => {
                 setLoading(true);
-                setDataFeed([]); // กำหนดค่าเริ่มต้นให้กับ dataFeed
+                setDataFeed([]);
             };
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
     )
 
 
 
     const postCommu = () => {
-        if (
-            context.stateUser.isAuthenticated === false ||
-            context.stateUser.isAuthenticated === null
-        ) {
-            alert('you must be login first')
-        }
-        else {
-            AsyncStorage.getItem("jwt")
-                .then((res) => {
-                    setToken(res)
-                    axios
-                        .get(`${baseURL}users/${context.stateUser.user.userId}`, {
-                            headers: { Authorization: `Bearer ${res}` },
-                        })
-                        .then((user) => {
-                            setUserProfile(user.data);
-                            props.navigation.navigate('Post Feed', {
-                                userProfile: user.data,
-                                token: res,
-                            });
-                        })
-                })
-                .catch((error) => console.log(error));
-        }
+        AsyncStorage.getItem("jwt")
+            .then((res) => {
+                setToken(res)
+                axios
+                    .get(`${baseURL}users/${context.stateUser.user.userId}`, {
+                        headers: { Authorization: `Bearer ${res}` },
+                    })
+                    .then((user) => {
+                        props.navigation.navigate('Post Feed', {
+                            userProfile: user.data,
+                            token: res,
+                        });
+                    })
+            })
+            .catch((error) => console.log(error));
+        
     }
 
 
-    const deletePost = (id) => {
-        console.log(JSON.stringify(id, null, 2))
+    const deletePost = () => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -127,6 +133,65 @@ const Feed = (props) => {
 
     }
 
+    const likePost = (postId) => {
+        const userid = context.stateUser.user.userId;
+
+        // ค้นหาโพสต์ที่ต้องการ 'like' หรือ 'dislike'
+        const post = dataFeed.find((post) => post.id === postId);
+
+        // ตรวจสอบว่าโพสต์ถูก 'like' โดยผู้ใช้ปัจจุบันหรือไม่
+        const isLiked = post.likes.includes(userid);
+
+        
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        const body = {
+            likes: userid
+        };
+
+        // ถ้าโพสต์ยังไม่ถูก 'like', ส่งคำขอ 'like'
+        if (!isLiked) {
+            axios
+                .put(`${baseURL}community/likePost/${postId}`, body, config)
+                .then((response) => {
+                    if (response.status === 200) {
+                        console.log(response.data);
+                        // อัปเดต dataFeed ด้วยข้อมูลใหม่
+                        setDataFeed(dataFeed.map((item) =>
+                            item.id === postId ? { ...item, likes: [...item.likes, userid] } : item
+                        ));
+                    }
+                })
+                .catch((error) => {
+                    console.log("Error liking post: ", error.response?.data);
+                });
+        } else {
+            // ถ้าโพสต์ถูก 'like' แล้ว, ส่งคำขอ 'dislike'
+            axios
+                .put(`${baseURL}community/DislikePost/${postId}`, body, config)
+                .then((response) => {
+                    if (response.status === 200) {
+                        console.log(response.data);
+                        // อัปเดต dataFeed โดยลบ userId ออกจาก array ของ likes
+                        setDataFeed(dataFeed.map((item) =>
+                            item.id === postId ? { ...item, likes: item.likes.filter((id) => id !== userid) } : item
+                        ));
+                    }
+                })
+                .catch((error) => {
+                    console.log("Error disliking post: ", error.response?.data);
+                });
+        }
+    };
+
+
+
 
 
     if (loading == true) {
@@ -144,24 +209,30 @@ const Feed = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.Heading}>Community</Text>
-            <TouchableOpacity onPress={() => postCommu()}>
-                <View style={styles.textInputView} >
-                    <Text style={styles.textInput}>
-                        What you thing?
-                    </Text>
-                </View>
-            </TouchableOpacity>
 
-            <ScrollView>
+            <View style={{ alignItems: 'center', justifyContent: 'center' ,padding:10 }}>
+                <Text style={styles.Heading}>Community</Text>
+                {context.stateUser.isAuthenticated == true ? (
+                    <TouchableOpacity onPress={() => postCommu()}>
+                        <View style={{ backgroundColor: '#f47a7e', padding: 5, borderRadius: 50 }} >
+                            <FontAwesome name="plus" size={20} color='white' />
+                        </View>
+                    </TouchableOpacity>
+                ) :
+                    null
+                }
+            </View>
+
+
+            <ScrollView style={{height:null}}>
                 {dataFeed.map((item, index) => {
                     return (
                         <View style={styles.itemWrapper}>
                             <View style={styles.header}>
-                                <View style={{flexDirection:'row'}}>
+                                <View style={{ flexDirection: 'row' }}>
                                     <Image
                                         source={{ uri: item.userId.image }}
-                                        style={{ width: 35, height: 35, borderRadius: 50 ,top:-9 }}
+                                        style={{ width: 35, height: 35, borderRadius: 50, top: -9 }}
                                     />
                                     <View style={{ marginLeft: 10 }}>
                                         <Text style={styles.itemName}>{item.userId.fname} {item.userId.lname}</Text>
@@ -174,38 +245,68 @@ const Feed = (props) => {
                                         setSelectedPostId(item.id); // ตั้งค่า id ของโพสต์ที่เลือก
                                         setModalVisible(true); // แสดง modal
                                     }}>
-                                        <View style={{ top:-10 }}>
+                                        <View style={{ top: -10 }}>
                                             <Entypo name="dots-three-horizontal" size={20} color='black' />
                                         </View>
                                     </TouchableOpacity>
                                 }
                             </View>
-                            <View style={{paddingHorizontal:10 ,top:-15 }}>
-                                <Image
-                                    source={{ uri: item.image }}
-                                    style={{ height: 300, width: '100%', borderRadius: 10 }}
-                                    resizeMode='stretch'
-                                />
+                            <View style={{ paddingHorizontal: 10, top: -15 }}>
+                                {!token ? (
+                                    <View>
+                                        <Image
+                                            source={{ uri: item.image }}
+                                            style={{ height: 300, width: '100%', borderRadius: 10 }}
+                                            resizeMode='stretch'
+                                        />
+                                    </View>
+                                ):
+                                <TouchableOpacity
+                                    onPress={(() => likePost(item.id))}
+                                >
+                                    <Image
+                                        source={{ uri: item.image }}
+                                        style={{ height: 300, width: '100%', borderRadius: 10 }}
+                                        resizeMode='stretch'
+                                    />
+                                </TouchableOpacity>
+                                }
+                                
 
                             </View>
 
                             <View style={styles.descWrapper}>
-                               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <View style={styles.like}>
-                                        <FontAwesome name="heart-o" size={20} color='black' />
+                                        <FontAwesome
+                                            name={item.likes.includes(context.stateUser.user.userId) ? "heart" : "heart-o"}
+                                            size={20}
+                                            color={item.likes.includes(context.stateUser.user.userId) ? "red" : "black"}
+                                        />
+                                        {item.likes && item.likes.length > 0 && (
+                                            <Text style={{ color: 'black', fontSize: 17 }}>{item.likes.length}</Text>
+                                        )}
+
                                     </View>
-                                    <View style={{flexDirection:'row'}}>
-                                        <FontAwesome name="map-marker" size={20} color='black' />
-                                        <Text style={[styles.itemName]}>{'  '}</Text>
-                                        <Text style={[styles.itemName]}>{item.province}</Text>
-                                    </View>
+                                    {
+                                        item.province == undefined ? (
+                                            null
+                                        ) : (
+                                                <View style = {{ flexDirection: 'row' }}>
+                                    <FontAwesome name="map-marker" size={20} color='black' />
+                                    <Text style={[styles.itemName]}>{'  '}</Text>
+                                    <Text style={[styles.itemName]}>{item.province}</Text>
                                 </View>
-                                {item.desc ? (
+                                        )
+                                    }
+
+                                </View>
+                                {item.desc && item.desc == null || undefined ? (
                                     <View style={{ marginTop: 5 }}>
                                         <Text style={[styles.itemName]}>{item.desc}</Text>
                                     </View>
                                 ) :
-                                null
+                                    null
                                 }
 
                             </View>
@@ -264,7 +365,7 @@ const Feed = (props) => {
                                             medium
                                             danger
                                             onPress={() => {
-                                                
+
                                                 deletePost()
                                                 // ปิด modal
                                                 setModalVisible(false)
@@ -296,30 +397,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        marginBottom:20
+        marginBottom: 50
     },
     itemWrapper: {
-        borderRadius:10,
+        borderRadius: 10,
         width: 400,
-        marginVertical:5,
+        marginVertical: 5,
         borderWidth: 3,
-        borderColor:'#dfdfdf'
+        borderColor: '#dfdfdf'
     },
-    header:{
-        flexDirection:'row',
-        justifyContent:'space-between',
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        margin:15,
-        marginTop:25
+        margin: 15,
+        marginTop: 25
     },
-    itemName:{
-        color:'black',
-        fontWeight:'500',
-        fontSize:15
+    itemName: {
+        color: 'black',
+        fontWeight: '500',
+        fontSize: 15
     },
-    descWrapper:{
-        paddingHorizontal:15,
-        paddingBottom:10
+    descWrapper: {
+        paddingHorizontal: 15,
+        paddingBottom: 10
     },
     centeredView: {
         flex: 1,
@@ -345,5 +446,17 @@ const styles = StyleSheet.create({
     textStyle: {
         color: "white",
         fontWeight: "bold"
+    },
+    Heading: {
+        color: 'black',
+        padding: 10,
+        fontSize: 30,
+        marginBottom: -10
+    },
+    like:{
+        flexDirection:'row',
+        width:35,
+        justifyContent:'space-between',
+        alignItems:'center'
     },
 })

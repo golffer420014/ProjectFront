@@ -7,6 +7,7 @@ import { Item, Picker } from 'native-base'
 import axios from 'axios';
 import baseURL from '../../assests/common/baseUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import mime from 'mime'
 
 // noti
 import Toast from 'react-native-toast-message';
@@ -33,7 +34,7 @@ const PostFeed = (props) => {
 
   const navigate = useNavigation()
 
-  console.log('edit', JSON.stringify(props.route.params.item, null, 2))
+  // console.log('edit', JSON.stringify(props.route.params.item, null, 2))
 
   useEffect(() => {
     if (props.route.params?.item) {
@@ -88,21 +89,39 @@ const PostFeed = (props) => {
         text2: "Please try again",
       });
     } else if (props.route.params.item ) {
-      let put = {
-        image: imagePost,
-        desc: desc,
-        province: province
+      const formData = new FormData();
+
+      formData.append("userId", id);
+      formData.append("desc", desc);
+      formData.append("province", province);
+
+      if (image) {
+        const newImageUri = "file:///" + image.split("file:/").join("");
+
+        formData.append("image", {
+          uri: newImageUri,
+          type: mime.getType(newImageUri),
+          name: newImageUri.split("/").pop()
+        });
       }
+      // let post = {
+      //   userId: id,
+      //   image: imagePost,
+      //   desc: desc,
+      //   province: province
+      // }
+
+      
 
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`
         }
       }
 
       axios
-        .put(`${baseURL}community/${props.route.params.item.id}`, put, config)
+        .put(`${baseURL}community/${props.route.params.item.id}`, formData, config)
 
         .then((res) => {
           if (res.status === 200) {
@@ -126,22 +145,37 @@ const PostFeed = (props) => {
           });
         })
     } else {
-      let post = {
-        userId: id,
-        image: imagePost,
-        desc: desc,
-        province: province
+      const formData = new FormData();
+
+      formData.append("userId", id);
+      formData.append("desc", desc);
+      formData.append("province", province);
+
+      if(image) {
+        const newImageUri = "file:///" + image.split("file:/").join("");
+
+        formData.append("image", {
+          uri: newImageUri,
+          type: mime.getType(newImageUri),
+          name: newImageUri.split("/").pop()
+        });
       }
+      // let post = {
+      //   userId: id,
+      //   image: imagePost,
+      //   desc: desc,
+      //   province: province
+      // }
 
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`
         }
       }
 
       axios
-        .post(`${baseURL}community`, post, config)
+        .post(`${baseURL}community`, formData, config)
 
         .then((res) => {
           if (res.status === 200) {
