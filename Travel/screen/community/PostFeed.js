@@ -34,7 +34,7 @@ const PostFeed = (props) => {
 
   const navigate = useNavigation()
 
-  console.log('edit', JSON.stringify(desc, null, 2))
+  // console.log('edit', JSON.stringify(desc, null, 2))
 
   useEffect(() => {
     if (props.route.params?.item) {
@@ -56,7 +56,8 @@ const PostFeed = (props) => {
       setImage(image);
       setId(id);
     }
-  }, [props.route.params?.userProfile, props.route.params?.item]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const openImagePicker = () => {
     const options = {
@@ -81,7 +82,7 @@ const PostFeed = (props) => {
   };
   const PostBtn = async () => {
 
-    if ((imagePost == null || imagePost === '') && (desc == null || desc === '')) {
+    if((desc == null || desc === '')) {
       Toast.show({
         topOffset: 60,
         type: "error",
@@ -92,23 +93,21 @@ const PostFeed = (props) => {
       const formData = new FormData();
 
       formData.append("userId", id);
-      formData.append("desc", desc || '');
-      formData.append("province", province || '');
-
+      formData.append("desc", desc);
+      formData.append("province", province);
 
       if (imagePost) {
+        // มีรูปภาพใหม่ให้ส่ง
         const newImageUri = "file:///" + imagePost.split("file:/").join("");
 
         formData.append("image", {
           uri: newImageUri,
           type: mime.getType(newImageUri),
           name: newImageUri.split("/").pop()
-        } || imagePost);
+        });
       }
- 
 
-
-
+      // รหัสส่วนที่เหลือของการส่งคำขอ PUT อยู่ที่นี่
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -118,14 +117,13 @@ const PostFeed = (props) => {
 
       await axios
         .put(`${baseURL}community/${props.route.params.item.id}`, formData, config)
-
         .then((res) => {
-          if (res.status === 200) {
+          if (res.status === 200 || res.status == 201) {
             Toast.show({
               topOffset: 60,
               type: "success",
               text1: "Updated Succeeded",
-              text2: "Please Login into your account",
+              text2: "",
             });
             setTimeout(() => {
               navigate.goBack()
@@ -133,17 +131,17 @@ const PostFeed = (props) => {
           }
         })
         .catch((err) => {
+          console.log(err)
           Toast.show({
             topOffset: 60,
             type: "error",
-            text1: "Something went wrong",
+            text1: "Cannot be update",
             text2: "Please try again",
           });
         })
     } else {
       const formData = new FormData();
 
-      formData.append("userId", id);
       formData.append("desc", desc || '');
       formData.append("province", province || '');
 
@@ -157,12 +155,7 @@ const PostFeed = (props) => {
           name: newImageUri.split("/").pop()
         });
       }
-      // let post = {
-      //   userId: id,
-      //   image: imagePost,
-      //   desc: desc,
-      //   province: province
-      // }
+
 
       const config = {
         headers: {
@@ -194,7 +187,7 @@ const PostFeed = (props) => {
             type: "error",
             text1: "Something went wrong",
             text2: "Please try again",
-          });
+          })
         })
     }
 

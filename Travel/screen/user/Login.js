@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput, Image, TouchableOpacity,ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Button, TextInput, Image, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
 
 //screen
@@ -155,7 +155,7 @@ const Login = (props) => {
                             onChangeText={(text) => setPassowrd(text.toLowerCase())}
                             onSubmitEditing={() => handleSubmit()}
                             returnKeyType="next"
-                            
+
                         />
                         <View style={styles.iconPassword}>
                             <FontAwesome name='lock' size={25} color='#f36d72' />
@@ -180,18 +180,18 @@ const Login = (props) => {
                     onPress={() => handleSubmit()}
                 >
                     <View style={styles.btnLogin}>
-                        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Sign in</Text>
+                        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>Sign in</Text>
                     </View>
                 </TouchableOpacity>
 
-                <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                    <Text>Don't have an account? </Text>
+                <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center' }}>
+                    <Text style={{ fontSize: 17 }}>Don't have an account? </Text>
                     <TouchableOpacity
                         onPress={
                             () => props.navigation.navigate('Register')
                         }
                     >
-                        <Text style={{ color: '#f36d72' }}>
+                        <Text style={{ color: '#f36d72', fontSize: 15, fontWeight: 'bold' }}>
                             Sign Up
                         </Text>
                     </TouchableOpacity>
@@ -227,8 +227,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
-        paddingBottom:55,
-        paddingTop:30
+        paddingBottom: 55,
+        paddingTop: 30
     },
     buttonGroup: {
         width: "80%",
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
         top: -3,
         fontSize: 15,
         color: 'black',
-        borderRadius:50
+        borderRadius: 50
     },
     input: {
         width: '100%',

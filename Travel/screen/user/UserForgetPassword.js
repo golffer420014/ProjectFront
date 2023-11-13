@@ -33,9 +33,9 @@ const UserForgetPassword = () => {
 
     const navigation = useNavigation()
 
-    const handleCheckUser = () =>{
+    const handleCheckUser = () => {
         // const [email, setEmail] = useState(null)
-        if (email === null || email === "" ) {
+        if (email === null || email === "") {
             Toast.show({
                 topOffset: 60,
                 type: "error",
@@ -43,7 +43,7 @@ const UserForgetPassword = () => {
                 text2: "Please try again",
             });
 
-        }else{
+        } else {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ const UserForgetPassword = () => {
     }
     return (
         <ScrollView
-        style={{backgroundColor:'white'}}
+            style={{ backgroundColor: 'white' }}
         >
             <View style={styles.container}>
                 <TouchableOpacity
@@ -152,6 +152,7 @@ const UserForgetPassword = () => {
                         placeholder={"travel@gmail.com OR hello123"}
                         name={"email"}
                         id={"email"}
+                        onSubmitEditing={() => handleCheckUser()}
                         onChangeText={(text) => setEmail(text.toLowerCase())}
                     />
                     <View style={styles.iconUser}>
@@ -159,106 +160,114 @@ const UserForgetPassword = () => {
                     </View>
                 </View>
 
-                
-                 {checkUser == true ? (
-                        <View style={styles.containerPassword}>
-                            {passShow == false ? (
+
+                {checkUser == true ? (
+                    <View style={styles.containerPassword}>
+                        {passShow == false ? (
+                            <View style={[styles.input, { marginTop: 5 }]}>
                                 <View style={[styles.input, { marginTop: 5 }]}>
-                                    <View style={[styles.input, { marginTop: 5 }]}>
-                                        <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Password</Text>
-                                        <Input
-                                            placeholder={"Password"}
-                                            name={"password"}
-                                            id={"password"}
-                                            secureTextEntry={true}
-                                            onChangeText={(text) => setPassword(text)}
-                                        />
-                                        <TouchableOpacity
-                                            onPress={() => setPassShow(true)}
-                                        >
-                                            <View style={styles.iconEye}>
-                                                <Entypo name='eye-with-line' size={22} color='gray' />
-                                            </View>
-                                        </TouchableOpacity>
-                                        <View style={styles.iconPassowrd}>
+                                    <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Password</Text>
+                                    <Input
+                                        placeholder={"Password"}
+                                        name={"password"}
+                                        id={"password"}
+                                        secureTextEntry={true}
+                                        onSubmitEditing={() => handleConfirm()}
+
+                                        onChangeText={(text) => setPassword(text)}
+                                    />
+                                    <TouchableOpacity
+                                        onPress={() => setPassShow(true)}
+                                    >
+                                        <View style={styles.iconEye}>
+                                            <Entypo name='eye-with-line' size={22} color='gray' />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.iconPassowrd}>
                                         <FontAwesome name='lock' size={25} color='gray' />
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.input, { marginTop: 5 }]}>
-                                        <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -115 }}>New Password</Text>
-                                        <Input
-                                            placeholder={"Confirm Password"}
-                                            name={"ConPassword"}
-                                            id={"ConPassword"}
-                                            secureTextEntry={true}
-                                            onChangeText={(text) => setConPassword(text)}
-                                        />
-                                        <TouchableOpacity
-                                            onPress={() => setPassShow(true)}
-                                        >
-                                            <View style={styles.iconEye}>
-                                                <Entypo name='eye-with-line' size={22} color='gray' />
-                                            </View>
-                                        </TouchableOpacity>
-                                        <View style={styles.iconPassowrd}>
-                                            <FontAwesome name='lock' size={25} color='gray' />
-                                        </View>
                                     </View>
                                 </View>
-                            ) :
+
                                 <View style={[styles.input, { marginTop: 5 }]}>
-                                    <View style={[styles.input, { marginTop: 5 }]}>
-                                        <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Password</Text>
-                                        <Input
-                                            placeholder={"Password"}
-                                            name={"password"}
-                                            id={"password"}
-                                            // secureTextEntry={true}
-                                            onChangeText={(text) => setPassword(text)}
-                                        />
-                                        <TouchableOpacity
-                                            onPress={() => setPassShow(false)}
-                                        >
-                                            <View style={styles.iconEye}>
-                                                <Entypo name='eye' size={22} color='#f36d72' />
-                                            </View>
-                                        </TouchableOpacity>
-                                        <View style={styles.iconPassowrd}>
-                                            <FontAwesome name='lock' size={25} color='#f36d72' />
-                                        </View>
-                                    </View>
+                                    <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -115 }}>New Password</Text>
+                                    <Input
+                                        placeholder={"Confirm Password"}
+                                        name={"ConPassword"}
+                                        id={"ConPassword"}
+                                        secureTextEntry={true}
+                                        onSubmitEditing={() => handleConfirm()}
 
-                                    <View style={[styles.input, { marginTop: 5 }]}>
-                                        <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -115 }}>New Password</Text>
-                                        <Input
-                                            placeholder={"Confirm Password"}
-                                            name={"ConPassword"}
-                                            id={"ConPassword"}
-                                            // secureTextEntry={true}
-                                            onChangeText={(text) => setConPassword(text)}
-                                        />
-                                        <TouchableOpacity
-                                            onPress={() => setPassShow(false)}
-                                        >
-                                            <View style={styles.iconEye}>
-                                                <Entypo name='eye' size={22} color='#f36d72' />
-                                            </View>
-                                        </TouchableOpacity>
-                                        <View style={styles.iconPassowrd}>
-                                            <FontAwesome name='lock' size={25} color='#f36d72' />
+                                        onChangeText={(text) => setConPassword(text)}
+                                    />
+                                    <TouchableOpacity
+                                        onPress={() => setPassShow(true)}
+                                    >
+                                        <View style={styles.iconEye}>
+                                            <Entypo name='eye-with-line' size={22} color='gray' />
                                         </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.iconPassowrd}>
+                                        <FontAwesome name='lock' size={25} color='gray' />
                                     </View>
                                 </View>
-                            }
+                            </View>
+                        ) :
+                            <View style={[styles.input, { marginTop: 5 }]}>
+                                <View style={[styles.input, { marginTop: 5 }]}>
+                                    <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Password</Text>
+                                    <Input
+                                        placeholder={"Password"}
+                                        name={"password"}
+                                        id={"password"}
+                                        // secureTextEntry={true}
+                                        onChangeText={(text) => setPassword(text)}
+                                        onSubmitEditing={() => handleConfirm()}
 
-                        </View>
-                 ) :
-                 null
-                 }
+                                    />
+                                    <TouchableOpacity
+                                        onPress={() => setPassShow(false)}
+                                    >
+                                        <View style={styles.iconEye}>
+                                            <Entypo name='eye' size={22} color='#f36d72' />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.iconPassowrd}>
+                                        <FontAwesome name='lock' size={25} color='#f36d72' />
+                                    </View>
+                                </View>
+
+                                <View style={[styles.input, { marginTop: 5 }]}>
+                                    <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -115 }}>New Password</Text>
+                                    <Input
+                                        placeholder={"Confirm Password"}
+                                        name={"ConPassword"}
+                                        id={"ConPassword"}
+                                        onSubmitEditing={() => handleConfirm()}
+
+                                        // secureTextEntry={true}
+                                        onChangeText={(text) => setConPassword(text)}
+                                    />
+                                    <TouchableOpacity
+                                        onPress={() => setPassShow(false)}
+                                    >
+                                        <View style={styles.iconEye}>
+                                            <Entypo name='eye' size={22} color='#f36d72' />
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.iconPassowrd}>
+                                        <FontAwesome name='lock' size={25} color='#f36d72' />
+                                    </View>
+                                </View>
+                            </View>
+                        }
+
+                    </View>
+                ) :
+                    null
+                }
 
 
-                
+
 
                 {checkUser == false ? (
                     <TouchableOpacity
@@ -268,14 +277,14 @@ const UserForgetPassword = () => {
                             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Auth</Text>
                         </View>
                     </TouchableOpacity>
-                ) : 
+                ) :
                     <TouchableOpacity
-                    onPress = { () => handleConfirm() }
+                        onPress={() => handleConfirm()}
                     >
-                    <View style = {styles.btnLogin}>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Confirm</Text>
-            </View>
-        </TouchableOpacity>
+                        <View style={styles.btnLogin}>
+                            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Confirm</Text>
+                        </View>
+                    </TouchableOpacity>
                 }
 
 
@@ -300,7 +309,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingTop: 40
     },
-    containerPassword:{
+    containerPassword: {
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
