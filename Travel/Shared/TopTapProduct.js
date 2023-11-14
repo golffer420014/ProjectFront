@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, ScrollView, Dimensions,StyleSheet, Image,TouchableOpacity } from 'react-native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { View, Text, ScrollView, Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import AuthGlobal from '../context/store/AuthGlobal';
 import axios from 'axios';
 import baseURL from '../assests/common/baseUrl';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
@@ -19,8 +21,8 @@ const DescriptionRoute = (props) => (
 );
 
 // คอมโพเนนต์สำหรับ Review
-const ReviewRoute = ({ reviews, authReview, navigation, props }) => (
-  
+const ReviewRoute = ({ reviews, authReview, navigation, props, context, deleteComment }) => (
+
   <ScrollView style={{ backgroundColor: '#ffff' }}>
 
     {authReview == true ? (
@@ -42,7 +44,7 @@ const ReviewRoute = ({ reviews, authReview, navigation, props }) => (
 
     <View>
       {reviews.map((item) => (
-        item.productId && item.productId.id === props.id &&  
+        item.productId && item.productId.id === props.id &&
         (
           <View key={item.id} style={styles.reviewContainer}>
 
@@ -64,11 +66,24 @@ const ReviewRoute = ({ reviews, authReview, navigation, props }) => (
                 )}
               </View>
 
-              <Text style={styles.userReview}>{item.desc}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                <Text style={styles.userReview}>{item.desc}</Text>
+                {context.stateUser.user.userId == item.userId.id ? (
+                  <TouchableOpacity
+                  onPress={() => deleteComment(item.id)}
+                  >
+                    <View style={{ paddingRight: 5 }}>
+                      <FontAwesome name="trash" size={15} color='black' />
+                    </View>
+                  </TouchableOpacity>
+
+                ) :
+                  null
+                }
+
+              </View>
             </View>
-
           </View>
-
         )
       ))}
     </View>
@@ -83,8 +98,11 @@ const LocationRoute = () => (
 );
 
 
+
+
 const TopTapProduct = (props) => {
-  
+
+
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'description', title: 'Description' },
@@ -92,14 +110,13 @@ const TopTapProduct = (props) => {
     { key: 'location', title: 'Location' },
   ]);
   const navigation = useNavigation();
-
   const renderScene = ({ route }) => {
     switch (route.key) {
       case 'description':
         return <DescriptionRoute description={props.description} />;
       case 'review':
         // Pass the reviews state and navigation object as props
-        return <ReviewRoute props={props} reviews={reviews} authReview={authReview} navigation={navigation} />;
+        return <ReviewRoute deleteComment={deleteComment} context={context} props={props} reviews={reviews} authReview={authReview} navigation={navigation} />;
       case 'location':
         return <LocationRoute location={props.location} />;
       default:
@@ -111,24 +128,53 @@ const TopTapProduct = (props) => {
   const context = useContext(AuthGlobal)
   const [reviews, setReviews] = useState([])
   const [authReview, setAuthReview] = useState()
+  const [token, setToken] = useState()
 
-  useEffect(() => {
+  useFocusEffect(
+    useCallback(() => {
+      // Fetch the latest reviews when the screen comes into focus
+      if (context.stateUser.isAuthenticated == true) {
+        setAuthReview(true)
+      }
+      AsyncStorage.getItem('jwt')
+        .then(res => setToken(res))
+      axios
+        .get(`${baseURL}review`)
+        .then((res) => {
+          const reversedReviews = res.data.reverse();
+          setReviews(reversedReviews);
+          // console.log(res.data);
+        })
+        .catch((err) => {
+          console.log('review call error');
+        });
+    }, []) // Empty dependency array means this effect runs only once when the component mounts
+  );
+
+  // console.log(context.stateUser.user.userId)
+  // console.log(reviews)
+
+  const deleteComment = (id) => {
+    console.log(id);
     axios
-      .get(`${baseURL}review`)
-      .then(res => {
-        setReviews(res.data)
-
+      .delete(`${baseURL}review/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
       })
-      .catch((err) => {
-        console.log('review call error')
+      .then((res) => {
+        const updatedReviews = reviews.filter((item) => item.id !== id); // Use `reviews` instead of `review`
+        setReviews(updatedReviews);
+        Toast.show({
+          topOffset: 60,
+          type: "success",
+          text1: `Delete Succeeded`,
+          // text2: "Please Login into your account",
+        });
       })
+      .catch((err) => console.log(err));
+  }
 
-    if (context.stateUser.isAuthenticated == true) {
-      setAuthReview(true)
-    }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
 
   return (
     <TabView
@@ -140,8 +186,8 @@ const TopTapProduct = (props) => {
         <TabBar
           {...props}
           indicatorStyle={{ backgroundColor: '#f47a7e' }}
-          style={{ backgroundColor: 'white'}}
-          labelStyle={{ color: 'gray',fontWeight:'500'  }}
+          style={{ backgroundColor: 'white' }}
+          labelStyle={{ color: 'gray', fontWeight: '500' }}
           activeColor={'#f47a7e'}
         />
       )}

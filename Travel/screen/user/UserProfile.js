@@ -118,7 +118,6 @@ const UserProfile = ({ props, navigation }) => {
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
         setImage(imageUri)
-
       }
     });
   };

@@ -16,70 +16,84 @@ import axios from 'axios';
 import baseURL from '../../assests/common/baseUrl';
 import { useNavigation } from '@react-navigation/native';
 import InputFormProduct from '../../Shared/Form/InputFormProduct';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProductReview = (props) => {
-    console.log('props =', JSON.stringify(props, null, 2))
     // console.log(token)
-    const [password, setDesc] = useState("");
+    const [desc, setDesc] = useState("");
     const [conPassword, setConPassword] = useState("");
     const [point, setPoint] = useState(0)
     const navigation = useNavigation()
     const context = useContext(AuthGlobal);
+    const [token ,setToken] = useState()
+    console.log(JSON.stringify(props.route.params.idProduct,null,2))
 
-    console.log(JSON.stringify(point,null,2))
 
+    const [user, setUser] = useState()
 
-    const handleConfirm = (props) => {
+    useEffect(() =>{
 
-        if (password === "" || conPassword === "") {
-            Toast.show({
-                topOffset: 60,
-                type: "error",
-                text1: "Please fill your form",
-                text2: "Please try again",
-            });
-        } else if (password !== conPassword) {
-            Toast.show({
-                topOffset: 60,
-                type: "error",
-                text1: "Password not correct",
-                text2: "Please try again",
-            });
-        } else {
-            let formData = {
-                password: password
-            };
+        AsyncStorage.getItem('jwt')
+        .then(res =>{
+            setToken(res)
+        })
 
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
+        // axios
+        //     .get(`${baseURL}users/${context.stateUser.user.userId}`)
+        //     .then(res =>{
+        //         console.log(JSON.stringify(res.data,null,2))
+        //         setUser(res.data)
+        //     })
+    },[])
+
+    const handleConfirm = () => {
+
+        
+            if(desc == '' && point == 0){
+                Toast.show({
+                    topOffset: 60,
+                    type: "error",
+                    text1: "Please fill in form",
+                    text2: "try again"
+                })
+            }else{
+                let formData = {
+                    userId: `${context.stateUser.user.userId}`,
+                    productId: `${props.route.params.idProduct}`,
+                    rating: point,
+                    desc: desc
+                };
+
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
                 }
-            }
-            axios
-                .put(`${baseURL}users/password/${id}`, JSON.stringify(formData), config)
-                .then((res) => {
-                    if (res.status == 200 || res.status == 201) {
+                axios
+                    .post(`${baseURL}review`, formData, config)
+                    .then((res) => {
+                        if (res.status == 200 || res.status == 201) {
+                            Toast.show({
+                                topOffset: 60,
+                                type: "success",
+                                text1: "updated successfuly ",
+                                text2: ""
+                            });
+                            setTimeout(() => {
+                                navigation.goBack()
+                            }, 500)
+                        }
+                    })
+                    .catch((error) => {
                         Toast.show({
                             topOffset: 60,
-                            type: "success",
-                            text1: "updated successfuly ",
-                            text2: ""
-                        });
-                        setTimeout(() => {
-                            navigation.goBack()
-                        }, 500)
-                    }
-                })
-                .catch((error) => {
-                    Toast.show({
-                        topOffset: 60,
-                        type: "error",
-                        text1: "Updated error",
-                        text2: "Please try again"
+                            type: "error",
+                            text1: "Updated error",
+                            text2: "Please try again"
+                        })
                     })
-                })
-        }
+            }
 
     }
 
@@ -115,18 +129,15 @@ const ProductReview = (props) => {
                     </View>
                 </TouchableOpacity>
 
-                <Text style={{ fontWeight: 'bold', color: 'black', fontSize: 22, marginVertical: 20 }}>Review</Text>
+                <Text style={{ fontWeight: 'bold', color: 'black', fontSize: 22, marginTop: 20 }}>Review</Text>
 
                 <View style={[styles.input, { marginTop: 5 }]}>
-                    <View style={[styles.input, { marginTop: 5 }]}>
-                        <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Fname + Lname</Text>
                         <InputFormProduct
                             placeholder={"แสดงความคิดเห็นของคุณ"}
                             name={"desc"}
                             id={"desc"}
                             onChangeText={(text) => setDesc(text)}
                         />
-                    </View>
 
                     <View style={{ flexDirection: 'row' }}>
                     {renderStars()}
@@ -141,6 +152,7 @@ const ProductReview = (props) => {
 
                 <TouchableOpacity
                     onPress={() => handleConfirm()}
+                    style={{top:-15}}
                 >
                     <View style={styles.btnLogin}>
                         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Confirm</Text>
