@@ -90,7 +90,7 @@ const PostFeed = (props) => {
       Toast.show({
         topOffset: 60,
         type: "error",
-        text1: "Please fill form or image",
+        text1: "เลือกนูปภาพ",
         text2: "Please try again",
       });
     } else if (props.route.params.item) {
@@ -182,8 +182,8 @@ const PostFeed = (props) => {
             Toast.show({
               topOffset: 60,
               type: "success",
-              text1: "Post Succeeded",
-              text2: "Please Login into your account",
+              text1: "โพสสำเร็จ",
+              text2: "",
             });
             setTimeout(() => {
               navigate.goBack()
