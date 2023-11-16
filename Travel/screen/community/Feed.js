@@ -25,7 +25,6 @@ const Feed = (props) => {
 
     const [dataFeed, setDataFeed] = useState([])
     const [token, setToken] = useState()
-    const [userProfile, setUserProfile] = useState()
     const [loading, setLoading] = useState(true)
     const [modalVisible, setModalVisible] = useState(false)
     const [selectedPostId, setSelectedPostId] = useState(null);
@@ -55,18 +54,7 @@ const Feed = (props) => {
             fetchPosts();
 
 
-            AsyncStorage.getItem("jwt")
-                .then((res) => {
-                    setToken(res)
-                    axios
-                        .get(`${baseURL}users/${context.stateUser.user.userId}`, {
-                            headers: { Authorization: `Bearer ${res}` },
-                        })
-                        .then((user) => {
-                            setUserProfile(user.data);
-                        })
-                })
-                .catch((error) => console.log(error));
+            
 
 
             return () => {
@@ -252,7 +240,7 @@ const Feed = (props) => {
                                 }
                             </View>
                             <View style={{ paddingHorizontal: 10, top: -15 }}>
-                                {!token ? (
+                                {!context.stateUser.isAuthenticated ? (
                                     <View>
                                         <Image
                                             source={{ uri: item.image }}

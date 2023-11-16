@@ -43,7 +43,6 @@ const UserProfile = ({ props, navigation }) => {
   const [loading, setLoading] = useState()
 
   const [token, setToken] = useState()
-  const [email, setEmail] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [address, setAddress] = useState("");

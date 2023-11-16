@@ -1,9 +1,8 @@
 import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Modal, TouchableHighlight } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import LinearGradient from 'react-native-linear-gradient';
-import { Item, Picker } from 'native-base'
-
+import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
 import baseURL from '../../assests/common/baseUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,42 +21,47 @@ import allProvince from '../../data/from.json'
 import { useNavigation } from '@react-navigation/native';
 
 const PostFeed = (props) => {
+  
+
+  const navigate = useNavigation()
+
+
+  useFocusEffect(
+    useCallback(() => {
+      // ตรวจสอบ props.route.params และทำงานตามต้องการ
+      if (props.route.params?.item) {
+        AsyncStorage.getItem('jwt').then(res => setToken(res));
+        console.log(props.route.params.item.userId.id)
+        setUserID(props.route.params.item.userId.id);
+        setFname(props.route.params.item.userId.fname);
+        setLname(props.route.params.item.userId.lname);
+        setImage(props.route.params.item.userId.image);
+        setDesc(props.route.params.item.desc);
+        setProvince(props.route.params.item.province);
+        setImagePost(props.route.params.item.image);
+        setId(props.route.params.item.id);
+      } else {
+        AsyncStorage.getItem('jwt').then(res => setToken(res));
+        const { fname, lname, image ,id} = props.route.params.userProfile;
+        setFname(fname);
+        setLname(lname);
+        setImage(image);
+        setUserID(id);
+      }
+    }, [props.route.params]) // สร้าง dependencies ให้ useEffect
+  );
+
   const [token, setToken] = useState()
   const [id, setId] = useState()
   const [fname, setFname] = useState();
   const [lname, setLname] = useState();
-  const [image, setImage] = useState();
-  const [imagePost, setImagePost] = useState();
+  const [image, setImage] = useState("");
+  const [userID, setUserID] = useState();
+  const [imagePost, setImagePost] = useState("");
   const [province, setProvince] = useState()
   const [modalVisible, setModalVisible] = useState(false)
   const [desc, setDesc] = useState()
 
-  const navigate = useNavigation()
-
-  // console.log('edit', JSON.stringify(desc, null, 2))
-
-  useEffect(() => {
-    if (props.route.params?.item) {
-      AsyncStorage.getItem('jwt')
-        .then(res => setToken(res))
-      setFname(props.route.params.item.userId.fname);
-      setLname(props.route.params.item.userId.lname);
-      setImage(props.route.params.item.userId.image);
-      setDesc(props.route.params.item.desc)
-      setProvince(props.route.params.item.province)
-      setImagePost(props.route.params.item.image)
-      setId(props.route.params.item.id);
-    } else {
-      AsyncStorage.getItem('jwt')
-        .then(res => setToken(res))
-      const { fname, lname, image, id } = props.route.params.userProfile;
-      setFname(fname);
-      setLname(lname);
-      setImage(image);
-      setId(id);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const openImagePicker = () => {
     const options = {
@@ -82,7 +86,7 @@ const PostFeed = (props) => {
   };
   const PostBtn = async () => {
 
-    if((desc == null || desc === '')) {
+    if(imagePost === '') {
       Toast.show({
         topOffset: 60,
         type: "error",
@@ -90,9 +94,11 @@ const PostFeed = (props) => {
         text2: "Please try again",
       });
     } else if (props.route.params.item) {
+      
       const formData = new FormData();
+      console.log('edit')
 
-      formData.append("userId", id);
+      formData.append("userId", userID);
       formData.append("desc", desc);
       formData.append("province", province);
 
@@ -116,7 +122,7 @@ const PostFeed = (props) => {
       }
 
       await axios
-        .put(`${baseURL}community/${props.route.params.item.id}`, formData, config)
+        .put(`${baseURL}community/${id}`, formData, config)
         .then((res) => {
           if (res.status === 200 || res.status == 201) {
             Toast.show({
@@ -135,7 +141,7 @@ const PostFeed = (props) => {
           Toast.show({
             topOffset: 60,
             type: "error",
-            text1: "Cannot be update",
+            text1: "เลือกนูปภาพอีกครั้ง",
             text2: "Please try again",
           });
         })
@@ -144,6 +150,8 @@ const PostFeed = (props) => {
 
       formData.append("desc", desc || '');
       formData.append("province", province || '');
+      formData.append("userId", userID);
+
 
 
       if (imagePost) {
@@ -155,6 +163,8 @@ const PostFeed = (props) => {
           name: newImageUri.split("/").pop()
         });
       }
+      console.log(formData)
+
 
 
       const config = {
@@ -289,19 +299,24 @@ const PostFeed = (props) => {
           </TouchableOpacity>
         </LinearGradient>
 
-        {imagePost ? (
+        <Image
+          source={{ uri: imagePost }}
+          style={styles.imagePost}
+        />
+
+        {/* {imagePost ? (
           <View>
-            <TouchableOpacity onPress={() => setImagePost(null)} style={[styles.postBtn, { zIndex: 1 }]}>
+            <TouchableOpacity onPress={() => setImagePost("")} style={[styles.postBtn, { zIndex: 1 }]}>
               <AntDesign name='close' color='white' size={20} />
             </TouchableOpacity>
             <Image
-              source={{ uri: imagePost ? imagePost : '' }}
+              source={{ uri: imagePost  }}
               style={styles.imagePost}
             />
           </View>
         ) :
           null
-        }
+        } */}
       </View>
 
     </ScrollView>

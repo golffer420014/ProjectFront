@@ -21,7 +21,7 @@ function MyStack() {
 
     return (
         <>
-            {context.stateUser.user.isAdmin == true ? (
+            {context.stateUser.isAuthenticated == true ? (
                 <Stack.Navigator>
                     <Stack.Screen
                         name='Feed'
