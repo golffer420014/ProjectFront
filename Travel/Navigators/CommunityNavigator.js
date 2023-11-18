@@ -11,6 +11,7 @@ import PostFeed from '../screen/community/PostFeed';
 
 import { useNavigation } from '@react-navigation/native';
 import AuthGlobal from '../context/store/AuthGlobal';
+import NewPost from '../screen/community/NewPost';
 const Stack = createStackNavigator()
 
 function MyStack() {
@@ -20,51 +21,61 @@ function MyStack() {
 
 
     return (
-        <>
-            {context.stateUser.isAuthenticated == true ? (
-                <Stack.Navigator>
-                    <Stack.Screen
-                        name='Feed'
-                        component={Feed}
-                        options={{
-                            headerShown: false,
-                            cardStyle: { backgroundColor: '#FFFFFF' },
-                        }}
-                    />
+      <>
+        {context.stateUser.isAuthenticated == true ? (
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Feed"
+              component={Feed}
+              options={{
+                headerShown: false,
+                cardStyle: {backgroundColor: '#FFFFFF'},
+              }}
+            />
 
-                    <Stack.Screen
-                        name="Post Feed"
-                        component={PostFeed}
-                        options={() => ({
-                            cardStyle: { backgroundColor: '#FFFFFF' },
-                            headerShown: true,
-                            headerTitleAlign: 'center',
-                            headerBackImage: () => (
-                                <AntDesign name="arrowleft" size={24} color="#ff886a" />
-                            ),
-                            headerBackTitleVisible: false,
-                            // เพิ่มสไตล์เพิ่มเติมตามที่ต้องการ
-                        })}
-                    />
-
-                </Stack.Navigator>
-            ) : (
-                    <Stack.Navigator>
-                        <Stack.Screen
-                            name='Feed'
-                            component={Feed}
-                            options={{
-                                headerShown: false,
-                                cardStyle: { backgroundColor: '#FFFFFF' },
-                            }}
-                        />
-                    </Stack.Navigator>
-            )
-            }
-            
-
-        </>
-    )
+            <Stack.Screen
+              name="Post Feed"
+              component={PostFeed}
+              options={() => ({
+                cardStyle: {backgroundColor: '#FFFFFF'},
+                headerShown: true,
+                headerTitleAlign: 'center',
+                headerBackImage: () => (
+                  <AntDesign name="arrowleft" size={24} color="#ff886a" />
+                ),
+                headerBackTitleVisible: false,
+                // เพิ่มสไตล์เพิ่มเติมตามที่ต้องการ
+              })}
+            />
+            <Stack.Screen
+              name="New Post"
+              component={NewPost}
+              options={() => ({
+                cardStyle: {backgroundColor: '#FFFFFF'},
+                headerShown: true,
+                headerTitleAlign: 'center',
+                headerBackImage: () => (
+                  <AntDesign name="arrowleft" size={24} color="#ff886a" />
+                ),
+                headerBackTitleVisible: false,
+                // เพิ่มสไตล์เพิ่มเติมตามที่ต้องการ
+              })}
+            />
+          </Stack.Navigator>
+        ) : (
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Feed"
+              component={Feed}
+              options={{
+                headerShown: false,
+                cardStyle: {backgroundColor: '#FFFFFF'},
+              }}
+            />
+          </Stack.Navigator>
+        )}
+      </>
+    );
 }
 
 export default function CommunityNavigator() {

@@ -77,7 +77,7 @@ const Feed = (props) => {
                         headers: { Authorization: `Bearer ${res}` },
                     })
                     .then((user) => {
-                        props.navigation.navigate('Post Feed', {
+                        props.navigation.navigate('New Post', {
                             userProfile: user.data,
                             token: res,
                         });
@@ -194,249 +194,261 @@ const Feed = (props) => {
             </View>
         );
     }
+    // console.log(JSON.stringify(dataFeed.image,null,2));
 
     return (
-        <View style={styles.container}>
-
-            <View style={{ alignItems: 'center', justifyContent: 'center', padding: 10 }}>
-                <Text style={styles.Heading}>Community</Text>
-                {context.stateUser.isAuthenticated == true ? (
-                    <TouchableOpacity onPress={() => postCommu()}>
-                        <View style={{ backgroundColor: '#f47a7e', padding: 5, borderRadius: 50 }} >
-                            <FontAwesome name="plus" size={20} color='white' />
-                        </View>
-                    </TouchableOpacity>
-                ) :
-                    null
-                }
-            </View>
-
-
-            <ScrollView style={{ height: null }}>
-                {dataFeed.map((item, index) => {
-                    return (
-                        <View style={styles.itemWrapper}>
-                            <View style={styles.header}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Image
-                                        source={{ uri: item.userId.image }}
-                                        style={{ width: 35, height: 35, borderRadius: 50, top: -9 }}
-                                    />
-                                    <View style={{ marginLeft: 10 }}>
-                                        <Text style={styles.itemName}>{item.userId.fname} {item.userId.lname}</Text>
-                                    </View>
-                                </View>
-                                {context.stateUser.user.userId != item.userId.id ? (
-                                    null
-                                ) :
-                                    <TouchableOpacity onPress={() => {
-                                        setSelectedPostId(item.id); // ตั้งค่า id ของโพสต์ที่เลือก
-                                        setModalVisible(true); // แสดง modal
-                                    }}>
-                                        <View style={{ top: -10 }}>
-                                            <Entypo name="dots-three-horizontal" size={20} color='black' />
-                                        </View>
-                                    </TouchableOpacity>
-                                }
-                            </View>
-                            <View style={{ paddingHorizontal: 10, top: -15 }}>
-                                {!context.stateUser.isAuthenticated ? (
-                                    <View>
-                                        <Image
-                                            source={{ uri: item.image }}
-                                            style={{ height: 300, width: '100%', borderRadius: 10 }}
-                                            resizeMode='stretch'
-                                        />
-                                    </View>
-                                ) :
-                                    <TouchableOpacity
-                                        onPress={(() => likePost(item.id))}
-                                    >
-                                        <Image
-                                            source={{ uri: item.image }}
-                                            style={{ height: 300, width: '100%', borderRadius: 10 }}
-                                            resizeMode='stretch'
-                                        />
-                                    </TouchableOpacity>
-                                }
-
-
-                            </View>
-
-                            <View style={styles.descWrapper}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <View style={styles.like}>
-                                        <FontAwesome
-                                            name={item.likes.includes(context.stateUser.user.userId) ? "heart" : "heart-o"}
-                                            size={20}
-                                            color={item.likes.includes(context.stateUser.user.userId) ? "red" : "black"}
-                                        />
-                                        {item.likes && item.likes.length > 0 && (
-                                            <Text style={{ color: 'black', fontSize: 17 }}>{item.likes.length}</Text>
-                                        )}
-
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <FontAwesome name="map-marker" size={20} color='black' />
-                                        <Text style={[styles.itemName]}>{'  '}</Text>
-                                        <Text style={[styles.itemName]}>{item.province}</Text>
-                                    </View>
-
-                                </View>
-                                
-                                    <View style={{ marginTop: 5 }}>
-                                        <Text style={[styles.itemName]}>{item.desc}</Text>
-                                    </View>
-                                
-
-                            </View>
-
-
-                            {/* modal */}
-                            <Modal
-                                animationType='fade'
-                                transparent={true}
-                                visible={modalVisible}
-                                onRequestClose={() => {
-                                    setModalVisible(false)
-                                }}
-                            >
-                                <View style={styles.centeredView}>
-                                    <View style={styles.modalView}>
-                                        <TouchableHighlight
-                                            underlayColor="#E8E8E8"
-                                            onPress={() => {
-                                                setModalVisible(false)
-                                            }}
-                                            style={{
-                                                alignSelf: 'flex-end',
-                                                position: 'absolute',
-                                                top: 5,
-                                                right: 10,
-                                            }}
-                                        >
-                                            <AntDesign name='close' size={20} />
-                                        </TouchableHighlight>
-                                        <EasyButton
-                                            medium
-                                            secondary
-                                            onPress={() => {
-                                                // กรองเฉพาะข้อมูลที่มี userId ตรงกับ userId ของ user จาก context
-                                                const filteredData = dataFeed.filter(
-                                                    (item) => item.userId.id === context.stateUser.user.userId
-                                                );
-
-                                                // เช็คว่ามีข้อมูลหลังจากกรองหรือไม่ ถ้ามีก็ส่ง item แรกที่ผ่านการกรอง
-                                                if (filteredData.length > 0) {
-                                                    props.navigation.navigate("Post Feed", {
-                                                        item: filteredData[0],
-                                                    });
-                                                } else {
-                                                    console.log('No matching data found');
-                                                }
-
-                                                // ปิด modal
-                                                setModalVisible(false);
-                                            }}
-                                        >
-                                            <Text style={styles.textStyle}>Edit</Text>
-                                        </EasyButton>
-                                        <EasyButton
-                                            medium
-                                            danger
-                                            onPress={() => {
-
-                                                deletePost()
-                                                // ปิด modal
-                                                setModalVisible(false)
-                                            }}
-
-
-                                        >
-                                            <Text style={styles.textStyle}>Delete</Text>
-                                        </EasyButton>
-
-                                    </View>
-                                </View>
-
-                            </Modal>
-                        </View>
-                    )
-                })}
-            </ScrollView>
-
+      <View style={styles.container}>
+        <View
+          style={{alignItems: 'center', justifyContent: 'center', padding: 10}}>
+          
+          {context.stateUser.isAuthenticated == true ? (
+            <TouchableOpacity onPress={() => postCommu()}>
+              <View
+                style={{
+                  backgroundColor: '#f47a7e',
+                  padding: 5,
+                  borderRadius: 50,
+                  width:70,
+                  alignItems:'center'
+                }}>
+                <FontAwesome name="plus" size={25} color="white" />
+              </View>
+            </TouchableOpacity>
+          ) : null}
         </View>
-    )
+
+        <ScrollView style={{height: null}}>
+          {dataFeed.map((item, index) => {
+            return (
+              <View style={styles.itemWrapper}>
+                <View style={styles.header}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Image
+                      source={{uri: item.userId.image}}
+                      style={{width: 35, height: 35, borderRadius: 50, top: -9}}
+                    />
+                    <View style={{marginLeft: 10}}>
+                      <Text style={styles.itemName}>
+                        {item.userId.fname} {item.userId.lname}
+                      </Text>
+                    </View>
+                  </View>
+                  {context.stateUser.user.userId != item.userId.id ? null : (
+                    <TouchableOpacity
+                      onPress={() => {
+                        setSelectedPostId(item.id); // ตั้งค่า id ของโพสต์ที่เลือก
+                        setModalVisible(true); // แสดง modal
+                      }}>
+                      <View style={{top: -10}}>
+                        <Entypo
+                          name="dots-three-horizontal"
+                          size={20}
+                          color="black"
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                </View>
+                <View style={{paddingHorizontal: 10, top: -15}}>
+                  {!context.stateUser.isAuthenticated ? (
+                    <View>
+                      {item.image !== '' && (
+                        <Image
+                          source={{uri: item.image}}
+                          style={{height: 300, width: '100%', borderRadius: 10}}
+                          resizeMode="stretch"
+                        />
+                      )}
+                    </View>
+                  ) : (
+                    <TouchableOpacity onPress={() => likePost(item.id)}>
+                      {item.image !== '' && (
+                        <Image
+                          source={{uri: item.image}}
+                          style={{height: 300, width: '100%', borderRadius: 10}}
+                          resizeMode="stretch"
+                        />
+                      )}
+                    </TouchableOpacity>
+                  )}
+                </View>
+
+                <View style={styles.descWrapper}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View style={styles.like}>
+                      <TouchableOpacity onPress={() => likePost(item.id)}>
+                        <FontAwesome
+                          name={
+                            item.likes.includes(context.stateUser.user.userId)
+                              ? 'heart'
+                              : 'heart-o'
+                          }
+                          size={20}
+                          color={
+                            item.likes.includes(context.stateUser.user.userId)
+                              ? 'red'
+                              : 'black'
+                          }
+                        />
+                      </TouchableOpacity>
+                      {item.likes && item.likes.length > 0 && (
+                        <Text style={{color: 'black', fontSize: 17}}>
+                          {item.likes.length}
+                        </Text>
+                      )}
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <FontAwesome name="map-marker" size={20} color="black" />
+                      <Text style={[styles.itemName]}>{'  '}</Text>
+                      <Text style={[styles.itemName]}>{item.province}</Text>
+                    </View>
+                  </View>
+
+                  <View style={{marginTop: 5}}>
+                    <Text style={[styles.itemName]}>{item.desc}</Text>
+                  </View>
+                </View>
+
+                {/* modal */}
+                <Modal
+                  animationType="fade"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    setModalVisible(false);
+                  }}>
+                  <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                      <TouchableHighlight
+                        underlayColor="#E8E8E8"
+                        onPress={() => {
+                          setModalVisible(false);
+                        }}
+                        style={{
+                          alignSelf: 'flex-end',
+                          position: 'absolute',
+                          top: 5,
+                          right: 10,
+                        }}>
+                        <AntDesign name="close" size={20} />
+                      </TouchableHighlight>
+                      <EasyButton
+                        medium
+                        secondary
+                        onPress={() => {
+                          // กรองเฉพาะข้อมูลที่มี userId ตรงกับ userId ของ user จาก context
+                          const filteredData = dataFeed.filter(
+                            item => item.id === selectedPostId,
+                          );
+
+                          // เช็คว่ามีข้อมูลหลังจากกรองหรือไม่ ถ้ามีก็ส่ง item แรกที่ผ่านการกรอง
+                          if (filteredData.length > 0) {
+                            props.navigation.navigate('New Post', {
+                              item: filteredData[0],
+                            });
+                          } else {
+                            console.log('No matching data found');
+                          }
+
+                          // ปิด modal
+                          setModalVisible(false);
+                        }}>
+                        <Text style={styles.textStyle}>Edit</Text>
+                      </EasyButton>
+                      <EasyButton
+                        medium
+                        danger
+                        onPress={() => {
+                          deletePost();
+                          // ปิด modal
+                          setModalVisible(false);
+                        }}>
+                        <Text style={styles.textStyle}>Delete</Text>
+                      </EasyButton>
+                    </View>
+                  </View>
+                </Modal>
+              </View>
+            );
+          })}
+        </ScrollView>
+      </View>
+    );
 }
 
 export default Feed
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-        marginBottom: 50
+  container: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    marginBottom: 50,
+  },
+  itemWrapper: {
+    borderRadius: 10,
+    width: 400,
+    marginVertical: 5,
+    borderWidth: 3,
+    borderColor: '#fcb69f',
+    // borderColor: '#dfdfdf'
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: 15,
+    marginTop: 25,
+  },
+  itemName: {
+    color: 'black',
+    fontWeight: '500',
+    fontSize: 15,
+  },
+  descWrapper: {
+    paddingHorizontal: 15,
+    paddingBottom: 10,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#f36d72',
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    itemWrapper: {
-        borderRadius: 10,
-        width: 400,
-        marginVertical: 5,
-        borderWidth: 3,
-        borderColor: '#dfdfdf'
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        margin: 15,
-        marginTop: 25
-    },
-    itemName: {
-        color: 'black',
-        fontWeight: '500',
-        fontSize: 15
-    },
-    descWrapper: {
-        paddingHorizontal: 15,
-        paddingBottom: 10
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#f36d72",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold"
-    },
-    Heading: {
-        color: 'black',
-        padding: 10,
-        fontSize: 30,
-        marginBottom: -10
-    },
-    like: {
-        flexDirection: 'row',
-        width: 35,
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-})
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  Heading: {
+    color: 'black',
+    padding: 10,
+    fontSize: 30,
+    marginBottom: -10,
+  },
+  like: {
+    flexDirection: 'row',
+    width: 35,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+});

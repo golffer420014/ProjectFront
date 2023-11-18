@@ -121,7 +121,7 @@ const PostFeed = (props) => {
         }
       }
 
-      await axios
+       axios
         .put(`${baseURL}community/${id}`, formData, config)
         .then((res) => {
           if (res.status === 200 || res.status == 201) {
@@ -294,9 +294,9 @@ const PostFeed = (props) => {
           <TouchableOpacity onPress={openImagePicker} style={styles.imagePicker}>
             <FontAwesome name='camera' color='#f47a7e' size={15} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.imagePicker}>
+          {/* <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.imagePicker}>
             <Entypo name='location' color='#f47a7e' size={15} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </LinearGradient>
 
         <Image
