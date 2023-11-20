@@ -117,131 +117,187 @@ const RegisterDetail = ({ route, navigation }) => {
 
   return (
     <ScrollView>
-          <View style={styles.container}>
-              <TouchableOpacity
-                  onPress={() => navigation.goBack()}
-
-              >
-                  <View style={{ padding: 10,paddingHorizontal:15, backgroundColor: '#f36d72', borderRadius: 50, position: 'absolute', top: -40, left: -190 }}>
-                      <FontAwesome name='angle-left' size={20} color='white' />
-                  </View>
-              </TouchableOpacity>
-
-
-              <Text style={{ fontWeight: 'bold', color: 'black', fontSize: 22, marginBottom: 20 }}>Create Account</Text>
-              
-              {/* image */}
-              <View style={styles.imageContainer}>
-                  <Image style={styles.image} source={{ uri: image }} />
-                  <TouchableOpacity onPress={openImagePicker} style={styles.imagePicker}>
-                      {/* <Text style={{ color:'#f36d72'}}>IMAGE</Text> */}
-                      <FontAwesome name='camera' color='white' />
-                  </TouchableOpacity>
-              </View>
-              
-              {/* fname */}
-              <View style={[styles.input, { marginTop: 5 }]}>
-                  <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>First Name</Text>
-                  <Input
-                      placeholder={"First Name"}
-                      name={"fname"}
-                      id={"fname"}
-                      onChangeText={(text) => setFname(text)}
-
-                      onSubmitEditing={() => register()}
-                      returnKeyType="next"
-                  />
-                  <View style={styles.iconUser}>
-                      <FontAwesome name='user' size={25} color='#f36d72' />
-                  </View>
-              </View>
-              {/* lname */}
-              <View style={[styles.input, { marginTop: 5 }]}>
-                  <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -128 }}>Last Name</Text>
-                  <Input
-                      placeholder={"Last Name"}
-                      name={"lname"}
-                      id={"lname"}
-                      onChangeText={(text) => setLname(text)}
-                      onSubmitEditing={() => register()}
-                      returnKeyType="next"
-                  />
-                  <View style={styles.iconUser}>
-                      <FontAwesome name='user' size={25} color='#f36d72' />
-                  </View>
-              </View>
-              {/* adress */}
-              <View style={[styles.input, { marginTop: 5 }]}>
-                  <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -140 }}>Adress</Text>
-                  <Input
-                      placeholder={"Adress"}
-                      name={"adress"}
-                      id={"adress"}
-                      onChangeText={(text) => setAddress(text)}
-                      onSubmitEditing={() => register()}
-                      returnKeyType="next"
-                  />
-                  <View style={styles.iconUser}>
-                      <FontAwesome name='address-card' size={18} color='#f36d72' />
-                  </View>
-              </View>
-
-              <View style={styles.input}>
-                  <Text style={{ color: 'black', fontWeight: 'bold', position: 'relative', left: -145,marginBottom:10 }}>Birth</Text>
-                  <TouchableOpacity onPress={showCalendar} style={styles.selectButton}>
-                      <View style={styles.inputCalendar}>
-                          <Text style={styles.selectedDate}>{selectedDate}</Text>
-                          <Modal isVisible={isCalendarVisible} onBackdropPress={hideCalendar}>
-                              <View style={styles.modalContent}>
-                                  <Calendar
-                                      onDayPress={handleDayPress}
-                                      markedDates={{ [selectedDate]: { selected: true } }}
-                                  />
-                              </View>
-                          </Modal>
-                          
-                      </View>
-                  </TouchableOpacity>
-                  <View style={styles.iconCalendar}>
-                      <FontAwesome name='birthday-cake' size={25} color='#f36d72' />
-                  </View>
-              </View>
-
-              <View>
-                  <View style={styles.genderBox}>
-                      <TouchableOpacity
-                          style={[
-                              styles.radioButton,
-                              selectedGender === 'Male' && styles.radioButtonSelected,
-                          ]}
-                          onPress={() => setSelectedGender('Male')}
-                      />
-                      <Text style={styles.radioButtonLabel}>Male</Text>
-                      <TouchableOpacity
-                          style={[
-                              styles.radioButton,
-                              selectedGender === 'Female' && styles.radioButtonSelected,
-                          ]}
-                          onPress={() => setSelectedGender('Female')}
-                      />
-                      <Text style={styles.radioButtonLabel}>Female</Text>
-                  </View>
-              </View>
-
-              
-             
-
-              <TouchableOpacity
-                  onPress={() => register()}
-              >
-                  <View style={styles.btnLogin}>
-                      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Register</Text>
-                  </View>
-              </TouchableOpacity>
-
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <View
+            style={{
+              padding: 10,
+              paddingHorizontal: 15,
+              backgroundColor: '#f36d72',
+              borderRadius: 50,
+              position: 'absolute',
+              top: -40,
+              left: -190,
+            }}>
+            <FontAwesome name="angle-left" size={20} color="white" />
           </View>
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontWeight: 'bold',
+            color: 'black',
+            fontSize: 22,
+            marginBottom: 20,
+          }}>
+          Create Account
+        </Text>
+
+        {/* image */}
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{uri: image}} />
+          <TouchableOpacity
+            onPress={openImagePicker}
+            style={styles.imagePicker}>
+            {/* <Text style={{ color:'#f36d72'}}>IMAGE</Text> */}
+            <FontAwesome name="camera" color="white" />
+          </TouchableOpacity>
+        </View>
+
+        {/* fname */}
+        <View style={[styles.input, {marginTop: 5}]}>
+          <Text
+            style={{
+              color: 'black',
+              fontWeight: 'bold',
+              position: 'relative',
+              left: -128,
+            }}>
+            First Name
+          </Text>
+          <Input
+            placeholder={'First Name'}
+            name={'fname'}
+            id={'fname'}
+            onChangeText={text => setFname(text)}
+            onSubmitEditing={() => register()}
+            returnKeyType="next"
+          />
+          <View style={styles.iconUser}>
+            <FontAwesome name="user" size={25} color="#f36d72" />
+          </View>
+        </View>
+        {/* lname */}
+        <View style={[styles.input, {marginTop: 5}]}>
+          <Text
+            style={{
+              color: 'black',
+              fontWeight: 'bold',
+              position: 'relative',
+              left: -128,
+            }}>
+            Last Name
+          </Text>
+          <Input
+            placeholder={'Last Name'}
+            name={'lname'}
+            id={'lname'}
+            onChangeText={text => setLname(text)}
+            onSubmitEditing={() => register()}
+            returnKeyType="next"
+          />
+          <View style={styles.iconUser}>
+            <FontAwesome name="user" size={25} color="#f36d72" />
+          </View>
+        </View>
+        {/* adress */}
+        <View style={[styles.input, {marginTop: 5}]}>
+          <Text
+            style={{
+              color: 'black',
+              fontWeight: 'bold',
+              position: 'relative',
+              left: -140,
+            }}>
+            Adress
+          </Text>
+          <Input
+            placeholder={'Adress'}
+            name={'adress'}
+            id={'adress'}
+            onChangeText={text => setAddress(text)}
+            onSubmitEditing={() => register()}
+            returnKeyType="next"
+          />
+          <View style={styles.iconUser}>
+            <FontAwesome name="address-card" size={18} color="#f36d72" />
+          </View>
+        </View>
+
+        <View style={styles.input}>
+          <Text
+            style={{
+              color: 'black',
+              fontWeight: 'bold',
+              position: 'relative',
+              left: -145,
+              marginBottom: 10,
+            }}>
+            Birth
+          </Text>
+          <TouchableOpacity onPress={showCalendar} style={styles.selectButton}>
+            <View style={styles.inputCalendar}>
+              <Text style={styles.selectedDate}>{selectedDate}</Text>
+              <Modal
+                isVisible={isCalendarVisible}
+                onBackdropPress={hideCalendar}>
+                <View style={styles.modalContent}>
+                  <Calendar
+                    onDayPress={handleDayPress}
+                    theme={{
+                      selectedDayBackgroundColor: 'blue',
+                      selectedDayTextColor: '#ffffff',
+                      todayTextColor: 'red',
+                      arrowColor: '#f36d72',
+                      // ... คุณสามารถเพิ่มการกำหนดค่าอื่นๆ สำหรับ theme ที่นี่
+                    }}
+                    markedDates={{
+                      [selectedDate]: {
+                        selected: true,
+                        selectedColor: '#f36d72',
+                      },
+                    }}
+                  />
+                </View>
+              </Modal>
+            </View>
+          </TouchableOpacity>
+          <View style={styles.iconCalendar}>
+            <FontAwesome name="birthday-cake" size={25} color="#f36d72" />
+          </View>
+        </View>
+
+        <View>
+          <View style={styles.genderBox}>
+            <TouchableOpacity
+              style={[
+                styles.radioButton,
+                selectedGender === 'Male' && styles.radioButtonSelected,
+              ]}
+              onPress={() => setSelectedGender('Male')}
+            />
+            <Text style={styles.radioButtonLabel}>Male</Text>
+            <TouchableOpacity
+              style={[
+                styles.radioButton,
+                selectedGender === 'Female' && styles.radioButtonSelected,
+              ]}
+              onPress={() => setSelectedGender('Female')}
+            />
+            <Text style={styles.radioButtonLabel}>Female</Text>
+          </View>
+        </View>
+
+        <TouchableOpacity onPress={() => register()}>
+          <View style={styles.btnLogin}>
+            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
+              Register
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
-  )
+  );
 }
 
 export default RegisterDetail

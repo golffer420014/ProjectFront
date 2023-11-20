@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, Text, ScrollView, Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
@@ -148,7 +149,7 @@ const TopTapProduct = (props) => {
         .catch((err) => {
           console.log('review call error');
         });
-    }, []) // Empty dependency array means this effect runs only once when the component mounts
+    }, []) 
   );
 
   // console.log(context.stateUser.user.userId)

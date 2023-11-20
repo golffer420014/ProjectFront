@@ -195,105 +195,105 @@ const UserProfile = ({ props, navigation }) => {
   return (
     <>
       <TouchableOpacity
-        onPress={() => navigation.navigate('UserEditPassowrd', { 
-          userId: userProfile ? userProfile.id : '',
-          token:token
-           })}
-      >
+        onPress={() =>
+          navigation.navigate('UserEditPassowrd', {
+            userId: userProfile ? userProfile.id : '',
+            token: token,
+          })
+        }>
         <View style={styles.editPassword}>
-          <MaterialIcons name='key' size={18} color='#f36d72' />
+          <MaterialIcons name="key" size={18} color="#f36d72" />
         </View>
       </TouchableOpacity>
       {editProfile == true ? (
-
-        <TouchableOpacity
-          onPress={() => setEditProfile(false)}
-        >
+        <TouchableOpacity onPress={() => setEditProfile(false)}>
           <View style={styles.editProfile}>
-            <FontAwesome name='close' size={20} color='#f36d72' />
+            <FontAwesome name="close" size={20} color="#f36d72" />
           </View>
         </TouchableOpacity>
-      ) :
-        <TouchableOpacity
-          onPress={() => setEditProfile(true)}
-        >
+      ) : (
+        <TouchableOpacity onPress={() => setEditProfile(true)}>
           <View style={styles.editProfile}>
-            <FontAwesome name='pencil' size={20} color='#f36d72' />
+            <FontAwesome name="pencil" size={20} color="#f36d72" />
           </View>
         </TouchableOpacity>
-      }
+      )}
       {editProfile == true ? (
         <Container style={styles.container}>
           <ScrollView contentContainerStyle={styles.subContainer}>
-
             {/* image */}
             <LinearGradient
               colors={['#ff9a9e', '#fcb69f']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
-              start={{ x: 0, y: 0 }} // จุดเริ่มต้น (บนซ้าย)
-              end={{ x: 1, y: 0 }} // จุดสิ้นสุด (บนขวา)
-              style={styles.backImageContainer}
-            >
-
+              start={{x: 0, y: 0}} // จุดเริ่มต้น (บนซ้าย)
+              end={{x: 1, y: 0}} // จุดสิ้นสุด (บนขวา)
+              style={styles.backImageContainer}>
               <View style={styles.imageContainer}>
                 {image ? (
-                  <Image style={styles.image} source={{ uri: image }} />
-
-                ) :
-                  <Image style={styles.image} source={{ uri: userProfile ? userProfile.image : "" }} />
-
-                }
-                <TouchableOpacity onPress={openImagePicker} style={styles.imagePicker}>
+                  <Image style={styles.image} source={{uri: image}} />
+                ) : (
+                  <Image
+                    style={styles.image}
+                    source={{uri: userProfile ? userProfile.image : ''}}
+                  />
+                )}
+                <TouchableOpacity
+                  onPress={openImagePicker}
+                  style={styles.imagePicker}>
                   {/* <Text style={{ color:'#f36d72'}}>IMAGE</Text> */}
-                  <FontAwesome name='camera' color='white' />
+                  <FontAwesome name="camera" color="white" />
                 </TouchableOpacity>
               </View>
             </LinearGradient>
 
-
             {/* fname */}
-            <View style={[styles.input, { marginTop: 5 }]}>
-              <Text style={{ color: 'black', position: 'relative', left: -128 }}>First Name</Text>
+            <View style={[styles.input, {marginTop: 5}]}>
+              <Text style={{color: 'black', position: 'relative', left: -128}}>
+                First Name
+              </Text>
               <Input
-                placeholder={"First Name"}
-                name={"fname"}
-                id={"fname"}
-                onChangeText={(text) => setFname(text)}
-
+                placeholder={'First Name'}
+                name={'fname'}
+                id={'fname'}
+                onChangeText={text => setFname(text)}
                 onSubmitEditing={() => handleEdit()}
                 returnKeyType="next"
               />
               <View style={styles.iconUserEdit}>
-                <FontAwesome name='user' size={25} color='#f36d72' />
+                <FontAwesome name="user" size={25} color="#f36d72" />
               </View>
             </View>
             {/* lname */}
-            <View style={[styles.input, { marginTop: 5 }]}>
-              <Text style={{ color: 'black', position: 'relative', left: -128 }}>Last Name</Text>
+            <View style={[styles.input, {marginTop: 5}]}>
+              <Text style={{color: 'black', position: 'relative', left: -128}}>
+                Last Name
+              </Text>
               <Input
-                placeholder={"Last Name"}
-                name={"lname"}
-                id={"lname"}
-                onChangeText={(text) => setLname(text)}
+                placeholder={'Last Name'}
+                name={'lname'}
+                id={'lname'}
+                onChangeText={text => setLname(text)}
                 onSubmitEditing={() => handleEdit()}
                 returnKeyType="next"
               />
               <View style={styles.iconUserEdit}>
-                <FontAwesome name='user' size={25} color='#f36d72' />
+                <FontAwesome name="user" size={25} color="#f36d72" />
               </View>
             </View>
             {/* Address */}
-            <View style={[styles.input, { marginTop: 5 }]}>
-              <Text style={{ color: 'black', position: 'relative', left: -133 }}>Address</Text>
+            <View style={[styles.input, {marginTop: 5}]}>
+              <Text style={{color: 'black', position: 'relative', left: -133}}>
+                Address
+              </Text>
               <Input
-                placeholder={"Address"}
-                name={"address"}
-                id={"address"}
-                onChangeText={(text) => setAddress(text)}
+                placeholder={'Address'}
+                name={'address'}
+                id={'address'}
+                onChangeText={text => setAddress(text)}
                 onSubmitEditing={() => handleEdit()}
                 returnKeyType="next"
               />
               <View style={styles.iconUserEdit}>
-                <FontAwesome name='address-card' size={20} color='#f36d72' />
+                <FontAwesome name="address-card" size={20} color="#f36d72" />
               </View>
             </View>
 
@@ -313,23 +313,46 @@ const UserProfile = ({ props, navigation }) => {
 
             {/* Birth */}
             <View style={styles.input}>
-              <Text style={{ color: 'black', position: 'relative', left: -145, marginBottom: 10 }}>Birth</Text>
-              <TouchableOpacity onPress={showCalendar} style={styles.selectButton}>
+              <Text
+                style={{
+                  color: 'black',
+                  position: 'relative',
+                  left: -145,
+                  marginBottom: 10,
+                }}>
+                Birth
+              </Text>
+              <TouchableOpacity
+                onPress={showCalendar}
+                style={styles.selectButton}>
                 <View style={styles.inputCalendar}>
                   <Text style={styles.selectedDate}>{selectedDate}</Text>
-                  <Modal isVisible={isCalendarVisible} onBackdropPress={hideCalendar}>
+                  <Modal
+                    isVisible={isCalendarVisible}
+                    onBackdropPress={hideCalendar}>
                     <View style={styles.modalContent}>
                       <Calendar
                         onDayPress={handleDayPress}
-                        markedDates={{ [selectedDate]: { selected: true } }}
+                        theme={{
+                          selectedDayBackgroundColor: 'blue',
+                          selectedDayTextColor: '#ffffff',
+                          todayTextColor: 'red',
+                          arrowColor: '#f36d72',
+                          // ... คุณสามารถเพิ่มการกำหนดค่าอื่นๆ สำหรับ theme ที่นี่
+                        }}
+                        markedDates={{
+                          [selectedDate]: {
+                            selected: true,
+                            selectedColor: '#f36d72',
+                          },
+                        }}
                       />
                     </View>
                   </Modal>
-
                 </View>
               </TouchableOpacity>
               <View style={styles.iconCalendar}>
-                <FontAwesome name='birthday-cake' size={25} color='#f36d72' />
+                <FontAwesome name="birthday-cake" size={25} color="#f36d72" />
               </View>
             </View>
             {/* Gender */}
@@ -354,101 +377,106 @@ const UserProfile = ({ props, navigation }) => {
               </View>
             </View>
 
-            <TouchableOpacity
-              onPress={() =>
-                userProfile && handleEdit()
-              }
-            >
+            <TouchableOpacity onPress={() => userProfile && handleEdit()}>
               <View style={styles.btnLogin}>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Confirm</Text>
+                <Text
+                  style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                  Confirm
+                </Text>
               </View>
             </TouchableOpacity>
-
-
-
           </ScrollView>
         </Container>
-      ) :
+      ) : (
         <Container style={styles.container}>
           <ScrollView contentContainerStyle={styles.subContainer}>
-
             {/* image */}
             <LinearGradient
               colors={['#ff9a9e', '#fcb69f']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
-              start={{ x: 0, y: 0 }} // จุดเริ่มต้น (บนซ้าย)
-              end={{ x: 1, y: 0 }} // จุดสิ้นสุด (บนขวา)
-              style={styles.backImageContainer}
-            >
-
+              start={{x: 0, y: 0}} // จุดเริ่มต้น (บนซ้าย)
+              end={{x: 1, y: 0}} // จุดสิ้นสุด (บนขวา)
+              style={styles.backImageContainer}>
               <View style={styles.imageContainer}>
-                <Image style={styles.image} source={{ uri: userProfile ? userProfile.image : "" }} />
+                <Image
+                  style={styles.image}
+                  source={{uri: userProfile ? userProfile.image : ''}}
+                />
               </View>
             </LinearGradient>
 
-            <Text style={{ fontSize: 25, color: 'black', marginVertical: 10 }}>
-              {userProfile ? userProfile.fname + ' ' + userProfile.lname : ""}
+            <Text style={{fontSize: 25, color: 'black', marginVertical: 10}}>
+              {userProfile ? userProfile.fname + ' ' + userProfile.lname : ''}
             </Text>
             {/* email */}
             <View style={styles.formDetail}>
-              <Text style={{ color: 'black', fontSize: 15 }}>Email & Username</Text>
+              <Text style={{color: 'black', fontSize: 15}}>
+                Email & Username
+              </Text>
               <View style={styles.detailValue}>
-                <View style={{ position: 'relative', top: 2, marginRight: 10 }}>
-                  <Entypo name='email' size={15} color='#f47a7e' />
+                <View style={{position: 'relative', top: 2, marginRight: 10}}>
+                  <Entypo name="email" size={15} color="#f47a7e" />
                 </View>
-                <Text style={styles.textValue}>{userProfile ? userProfile.email : ""}</Text>
+                <Text style={styles.textValue}>
+                  {userProfile ? userProfile.email : ''}
+                </Text>
               </View>
             </View>
             {/* Address */}
             <View style={styles.formDetail}>
-              <Text style={{ color: 'black', fontSize: 15 }}>Address</Text>
+              <Text style={{color: 'black', fontSize: 15}}>Address</Text>
               <View style={styles.detailValue}>
-                <View style={{ position: 'relative', top: 2, marginRight: 10 }}>
-                  <FontAwesome name='address-card' size={15} color='#f47a7e' />
+                <View style={{position: 'relative', top: 2, marginRight: 10}}>
+                  <FontAwesome name="address-card" size={15} color="#f47a7e" />
                 </View>
-                <Text style={styles.textValue}>{userProfile ? userProfile.address : ""}</Text>
+                <Text style={styles.textValue}>
+                  {userProfile ? userProfile.address : ''}
+                </Text>
               </View>
             </View>
 
             {/* Birth */}
             <View style={styles.formDetail}>
-              <Text style={{ color: 'black', fontSize: 15 }}>Birth</Text>
+              <Text style={{color: 'black', fontSize: 15}}>Birth</Text>
               <View style={styles.detailValue}>
-                <View style={{ position: 'relative', top: 2, marginRight: 10 }}>
-                  <FontAwesome name='birthday-cake' size={15} color='#f47a7e' />
+                <View style={{position: 'relative', top: 2, marginRight: 10}}>
+                  <FontAwesome name="birthday-cake" size={15} color="#f47a7e" />
                 </View>
-                <Text style={styles.textValue}>{userProfile ? userProfile.birth : ""}</Text>
+                <Text style={styles.textValue}>
+                  {userProfile ? userProfile.birth : ''}
+                </Text>
               </View>
             </View>
 
             {/* Gender */}
             <View style={styles.formDetail}>
-              <Text style={{ color: 'black', fontSize: 15 }}>Gender</Text>
+              <Text style={{color: 'black', fontSize: 15}}>Gender</Text>
               <View style={styles.detailValue}>
-                <View style={{ position: 'relative', top: 2, marginRight: 10 }}>
-                  <FontAwesome name='transgender' size={18} color='#f47a7e' />
+                <View style={{position: 'relative', top: 2, marginRight: 10}}>
+                  <FontAwesome name="transgender" size={18} color="#f47a7e" />
                 </View>
-                <Text style={styles.textValue}>{userProfile ? userProfile.gender : ""}</Text>
+                <Text style={styles.textValue}>
+                  {userProfile ? userProfile.gender : ''}
+                </Text>
               </View>
             </View>
 
             <TouchableOpacity
               onPress={() => [
-                AsyncStorage.removeItem("jwt"),
-                logoutUser(context.dispatch)
-              ]}
-            >
+                AsyncStorage.removeItem('jwt'),
+                logoutUser(context.dispatch),
+              ]}>
               <View style={styles.btnLogin}>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Logout</Text>
+                <Text
+                  style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                  Logout
+                </Text>
               </View>
             </TouchableOpacity>
-
-
-
           </ScrollView>
         </Container>
-      }
+      )}
     </>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

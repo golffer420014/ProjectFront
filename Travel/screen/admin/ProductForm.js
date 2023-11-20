@@ -2,7 +2,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions ,ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Item, Picker } from 'native-base'
-import FormContainer from '../../Shared/Form/FormContainer'
 import Input from '../../Shared/Form/InputFormProduct'
 import EasyButton from '../../Shared/StyledComponents/EasyButton'
 import Toast from 'react-native-toast-message'

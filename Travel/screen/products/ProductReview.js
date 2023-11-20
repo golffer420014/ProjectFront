@@ -29,7 +29,6 @@ const ProductReview = (props) => {
     console.log(JSON.stringify(props.route.params.idProduct,null,2))
 
 
-    const [user, setUser] = useState()
 
     useEffect(() =>{
 
@@ -89,7 +88,7 @@ const ProductReview = (props) => {
                         Toast.show({
                             topOffset: 60,
                             type: "error",
-                            text1: "Updated error",
+                            text1: "Please give star",
                             text2: "Please try again"
                         })
                     })

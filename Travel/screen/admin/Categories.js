@@ -25,24 +25,33 @@ var { width } = Dimensions.get("window")
 const Item = (props) => {
   return (
     <View style={styles.item}>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
         <Image
-          source={{ uri: props.item.icon }}
-          style={{ width: 50, height: 50, borderRadius: 10 }}
-          resizeMode="contain"
+          source={{uri: props.item.icon}}
+          style={{width: 100, height: 80, borderRadius: 10}}
+          resizeMode="stretch"
         />
-        <Text style={{ color: 'black', fontSize: 18, marginLeft: 10 }}>{props.item.name}</Text>
+        <Text style={{color: 'black', fontSize: 18, marginLeft: 10}}>
+          {''}
+        </Text>
+        <Text style={{color: 'black', fontSize: 18, marginLeft: 10}}>
+          {props.item.name}
+        </Text>
       </View>
 
       <EasyButton
         large
-        style={{ backgroundColor: 'gray', borderRadius: 10 }}
-        onPress={() => props.delete(props.item._id)}
-      >
-        <Text style={{ color: "white", fontWeight: "bold" }}>Delete</Text>
+        style={{backgroundColor: 'red', borderRadius: 10}}
+        onPress={() => props.delete(props.item._id)}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Delete</Text>
       </EasyButton>
     </View>
-  )
+  );
 }
 
 const Categories = (props) => {

@@ -5,6 +5,10 @@ import SingleProduct from '../screen/products/SingleProduct';
 import ProductReview from '../screen/products/ProductReview';
 
 import { useNavigation } from '@react-navigation/native';
+import CheckIn from '../screen/products/CheckIn';
+
+// icon 
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const Stack = createStackNavigator()
 
@@ -25,35 +29,48 @@ function MyStack() {
   }, []);
 
   return (
-    <Stack.Navigator
-    >
+    <Stack.Navigator>
       <Stack.Screen
-        name='Home'
+        name="Home"
         component={ProductContainer}
         options={{
           headerShown: false,
-          cardStyle: { backgroundColor: '#FFFFFF' },
+          cardStyle: {backgroundColor: '#FFFFFF'},
         }}
       />
       <Stack.Screen
-        name='Product Detail'
+        name="Product Detail"
         component={SingleProduct}
         options={{
           headerShown: false,
-          cardStyle: { backgroundColor: '#FFFFFF' },
+          cardStyle: {backgroundColor: '#FFFFFF'},
         }}
       />
       <Stack.Screen
-        name='Product Review'
+        name="Product Review"
         component={ProductReview}
         options={{
           headerShown: false,
-          cardStyle: { backgroundColor: '#FFFFFF' },
+          cardStyle: {backgroundColor: '#FFFFFF'},
         }}
       />
-      
+
+      <Stack.Screen
+        name="Check In"
+        component={CheckIn}
+        options={() => ({
+          cardStyle: {backgroundColor: '#FFFFFF'},
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerBackImage: () => (
+            <AntDesign name="arrowleft" size={24} color="#ff886a" />
+          ),
+          headerBackTitleVisible: false,
+          // เพิ่มสไตล์เพิ่มเติมตามที่ต้องการ
+        })}
+      />
     </Stack.Navigator>
-  )
+  );
 }
 
 export default function SearchNavigator() {

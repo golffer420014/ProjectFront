@@ -4,17 +4,9 @@ import { ListItem, Badge, Item, Picker } from 'native-base';
 
 import ProductCard from './ProductCard'
 
-import { Text } from 'react-native-svg';
 
-var { width } = Dimensions.get("window");
 
 const ProductList = (props) => {
-
-
-    const data = require('../../data/from.json')
-
-    const [provine, setProvine] = useState()
-
 
     const { item } = props;
     return (

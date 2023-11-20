@@ -42,7 +42,7 @@ function MyStack() {
                 component={ProductForm}
                 options={{
                     title: 'Product Form',
-                    // headerShown: false,
+                    headerShown: false,
                     cardStyle: { backgroundColor: '#FFFFFF' },
                 }}
             />

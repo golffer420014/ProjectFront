@@ -54,6 +54,7 @@ const NewPost = props => {
         return () => {
           setImagePost(null);
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []
     ),
   );
