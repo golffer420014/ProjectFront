@@ -185,7 +185,7 @@ const Login = (props) => {
                 </TouchableOpacity>
 
                 <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 17 }}>Don't have an account? </Text>
+                    <Text style={{ fontSize: 17 ,color:'gray'}}>Don't have an account? </Text>
                     <TouchableOpacity
                         onPress={
                             () => props.navigation.navigate('Register')
