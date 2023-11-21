@@ -63,8 +63,8 @@ const UserEditPassowrd = (props) => {
                         Toast.show({
                             topOffset: 60,
                             type: "success",
-                            text1: "updated successfuly ",
-                            text2: ""
+                            text1: "Updated successfuly ",
+                            text2: "Password is change"
                         });
                         setTimeout(() => {
                             navigation.goBack()

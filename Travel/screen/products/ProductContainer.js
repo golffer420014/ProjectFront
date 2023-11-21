@@ -205,7 +205,7 @@ const ProductContainer = (props) => {
                                             }
                                             <View style={styles.plusItem}>
                                                 <TouchableOpacity onPress={() => setVisibleItemCount(prevCount => prevCount + 6)}>
-                                                        <View style={{padding:10,borderRadius:50,backgroundColor:'white'}}>
+                                                        <View style={{padding:5,borderRadius:50,backgroundColor:'white'}}>
                                                         <FontAwesome name="plus" color={"#f36d72"} size={30} />
                                                         </View>
                                                 </TouchableOpacity>
@@ -291,11 +291,9 @@ const styles = StyleSheet.create({
 
     },
     listProduct: {
-        backgroundColor: '#dfdfdf',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        borderTopRightRadius: 20,
-        borderTopLeftRadius: 20,
         //justifyContent:'center', {} = horizo center
+        
     }
 })

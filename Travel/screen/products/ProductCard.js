@@ -74,11 +74,13 @@ export default connect(null, mapDispatchToProps)(ProductCard)
 
 const styles = StyleSheet.create({
     container: {
-        width: 185,
+        width: 180,
         height: 200,
         borderRadius: 10,
         backgroundColor: 'white',
         marginLeft:10,
+        borderWidth:2,
+        borderColor:'#dfdfdf'
     },
     imageContainer:{
         flex: 1,
@@ -101,9 +103,11 @@ const styles = StyleSheet.create({
         marginBottom:2
     },
     location:{
+        color:'black'
     },
     rating:{
-        fontSize:15
+        fontSize:15,
+        color:'black'
     }
 })
 

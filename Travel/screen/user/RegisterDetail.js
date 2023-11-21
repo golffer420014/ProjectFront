@@ -432,6 +432,7 @@ const styles = StyleSheet.create({
     },
     radioButtonLabel: {
         fontSize: 16,
+        color:'black'
     },
 
 })

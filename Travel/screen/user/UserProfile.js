@@ -157,9 +157,9 @@ const UserProfile = ({ props, navigation }) => {
         if (res.status == 200 || res.status == 201) {
           Toast.show({
             topOffset: 60,
-            type: "success",
-            text1: "User successfuly updated",
-            text2: ""
+            type: 'success',
+            text1: 'User successfuly updated',
+            visibilityTime: 3000,
           });
           setTimeout(() => {
             setEditProfile(false)
@@ -482,56 +482,56 @@ const UserProfile = ({ props, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: -50,
     zIndex: -1,
   },
   subContainer: {
-    alignItems: "center",
-    paddingBottom: 20
+    alignItems: 'center',
+    paddingBottom: 20,
   },
   imageContainer: {
     // elevation: 10
     width: 100,
     height: 100,
-    borderStyle: "solid",
+    borderStyle: 'solid',
     borderWidth: 5,
     padding: 0,
-    justifyContent: "center",
+    justifyContent: 'center',
     borderRadius: 100,
-    borderColor: "#E0E0E0",
+    borderColor: '#E0E0E0',
     position: 'relative',
     top: 55,
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     borderRadius: 100,
-    backgroundColor: 'whitesmoke'
+    backgroundColor: 'whitesmoke',
   },
   backImageContainer: {
     width: width,
     height: 150,
-    justifyContent: "center",
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 30,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    zIndex: -1
+    zIndex: -1,
   },
   imagePicker: {
-    position: "absolute",
+    position: 'absolute',
     right: -5,
     bottom: 0,
-    backgroundColor: "#f36d72",
+    backgroundColor: '#f36d72',
     padding: 8,
     borderRadius: 100,
-    elevation: 20
+    elevation: 20,
   },
 
   formDetail: {
     width: 330,
-    marginBottom: 10
+    marginBottom: 10,
   },
 
   detailValue: {
@@ -544,10 +544,8 @@ const styles = StyleSheet.create({
   },
   textValue: {
     color: 'black',
-    fontSize: 17
+    fontSize: 17,
   },
-
-
 
   btnLogin: {
     backgroundColor: '#f36d72',
@@ -557,7 +555,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // center x
     justifyContent: 'center', //center y
     borderRadius: 10,
-    marginTop: 15
+    marginTop: 15,
   },
   editProfile: {
     position: 'absolute',
@@ -566,7 +564,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'whitesmoke',
     padding: 10,
     borderRadius: 50,
-    width: 37
+    width: 37,
   },
   editPassword: {
     position: 'absolute',
@@ -575,38 +573,37 @@ const styles = StyleSheet.create({
     backgroundColor: 'whitesmoke',
     padding: 10,
     borderRadius: 50,
-    width: 37
+    width: 37,
   },
   input: {
     width: '100%',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   iconUser: {
     position: 'absolute',
     left: 60,
-    bottom: 28
+    bottom: 28,
   },
   iconUserEdit: {
     position: 'absolute',
     left: 60,
-    bottom: 31
+    bottom: 31,
   },
   //calendar
   inputCalendar: {
     width: 330,
     borderWidth: 2,
-    borderColor: "#dfdfdf",
+    borderColor: '#dfdfdf',
     borderRadius: 10,
     paddingLeft: 45,
   },
   iconCalendar: {
     position: 'absolute',
     left: 58,
-    bottom: 17
+    bottom: 17,
   },
   selectButton: {
     borderRadius: 10,
-
   },
   selectedDate: {
     paddingHorizontal: 10,
@@ -616,8 +613,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    color: '#000000'
-
+    color: '#000000',
   },
   modalContent: {
     backgroundColor: 'white',
@@ -630,7 +626,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: 330,
     padding: 10,
-    marginTop: 10
+    marginTop: 10,
   },
   radioButton: {
     width: 20,
@@ -642,16 +638,17 @@ const styles = StyleSheet.create({
   },
   radioButtonSelected: {
     backgroundColor: '#f36d72', // Customize the color of the checked indicator
-    borderColor: '#f36d72',     // Border color for selected
+    borderColor: '#f36d72', // Border color for selected
   },
   radioButtonLabel: {
     fontSize: 16,
+    color: 'black',
   },
   // order: {
   //   marginTop: 20,
   //   alignItems: "center",
   //   marginBottom: 60
   // }
-})
+});
 
 export default UserProfile;

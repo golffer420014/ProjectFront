@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
     item: {
         flexWrap: "wrap",
         margin: 3,
-        width: width / 6
+        width: width / 6,
+        color:'black'
     },
     centeredView: {
         flex: 1,

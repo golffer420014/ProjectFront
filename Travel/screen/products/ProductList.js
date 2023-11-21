@@ -20,7 +20,8 @@ const ProductList = (props) => {
 
                 <View style={{
                     // backgroundColor: '#dfdfdf',
-                    marginBottom:10
+                    marginBottom:10,
+                    marginLeft:-3
                 }}
                 >
                     <ProductCard {...item} />

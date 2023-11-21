@@ -3,19 +3,19 @@ import { TextInput, StyleSheet } from 'react-native'
 
 const Input = (props) => {
     return (
-        <TextInput
-            style={styles.input}
-            placeholder={props.placeholder}
-            name={props.name}
-            id={props.id}
-            value={props.value}
-            autoCorrect={props.autoCorrect}
-            onChangeText={props.onChangeText}
-            onFocus={props.onFocus}
-            secureTextEntry={props.secureTextEntry}
-            keyboardType={props.keyboardType}
-            onSubmitEditing={props.onSubmitEditing}
-        >
+      <TextInput
+        style={styles.input}
+        placeholder={props.placeholder}
+        name={props.name}
+        id={props.id}
+        value={props.value}
+        autoCorrect={props.autoCorrect}
+        onChangeText={props.onChangeText}
+        onFocus={props.onFocus}
+        secureTextEntry={props.secureTextEntry}
+        keyboardType={props.keyboardType}
+        onSubmitEditing={props.onSubmitEditing}
+        placeholderTextColor="gray">
         </TextInput>
     );
 }
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#dfdfdf',
         paddingLeft:45,
+        color:'black'
     },
 });
 

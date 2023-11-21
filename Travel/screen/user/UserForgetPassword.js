@@ -37,10 +37,10 @@ const UserForgetPassword = () => {
         // const [email, setEmail] = useState(null)
         if (email === null || email === "") {
             Toast.show({
-                topOffset: 60,
-                type: "error",
-                text1: "Please fill your form",
-                text2: "Please try again",
+              topOffset: 60,
+              type: 'error',
+            //   text1: 'Please fill your form',
+              text2: 'Please fill your form',
             });
 
         } else {
@@ -55,10 +55,10 @@ const UserForgetPassword = () => {
                     if (res.status == 200 || res.status == 201) {
                         setID(res.data.id);
                         Toast.show({
-                            topOffset: 60,
-                            type: "success",
-                            text1: "Auth successfuly ",
-                            text2: ""
+                          topOffset: 60,
+                          type: 'success',
+                          text1: "Auth successfuly",
+                          text2: 'Auth successfuly',
                         });
                         setTimeout(() => {
                             setCheckUser(true)
@@ -89,10 +89,10 @@ const UserForgetPassword = () => {
             });
         } else if (password !== conPassword) {
             Toast.show({
-                topOffset: 60,
-                type: "error",
-                text1: "Password not correct",
-                text2: "Please try again",
+              topOffset: 60,
+              type: 'error',
+              text1: 'Password not correct',
+              text2: 'Password not correct',
             });
         } else {
             let formData = {

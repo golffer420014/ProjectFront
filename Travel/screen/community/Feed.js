@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
   },
   itemWrapper: {
     borderRadius: 10,
-    width: 400,
+    width: 370,
     marginVertical: 5,
     borderWidth: 3,
     borderColor: '#fcb69f',

@@ -34,7 +34,8 @@ const CategoryFilter = (props) => {
                 value={c.name_th}
                 style={{
                   color: 'black',
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  backgroundColor:'#ffff'
                 }}
               />
             ))}
