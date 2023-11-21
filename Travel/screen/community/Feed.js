@@ -266,7 +266,7 @@ const Feed = (props) => {
                         <Image
                           source={{uri: item.image}}
                           style={{height: 300, width: '100%', borderRadius: 10}}
-                          resizeMode="stretch"
+                          resizeMode="cover"
                         />
                       )}
                     </TouchableOpacity>
