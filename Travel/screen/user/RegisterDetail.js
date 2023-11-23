@@ -1,119 +1,132 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native'
-import React ,{useState,useEffect} from 'react'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import Input from '../../Shared/Form/Input';
-import { Calendar } from 'react-native-calendars';
+import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
-import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
-import mime from "mime";
+import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
+import mime from 'mime';
 
 // icon
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Entypo from 'react-native-vector-icons/Entypo'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 //noti
-import Toast from 'react-native-toast-message'
+import Toast from 'react-native-toast-message';
 
 import axios from 'axios';
 import baseURL from '../../assests/common/baseUrl';
 
-const RegisterDetail = ({ route, navigation }) => {
-    const { email, password } = route.params;
-    const [fname, setFname] = useState("");
-    const[lname,setLname] = useState("");
-    const [address, setAddress] = useState("");
-    const [image, setImage] = useState('https://cdn-icons-png.flaticon.com/128/4140/4140048.png')
-    // function Gender
-    const [selectedGender, setSelectedGender] = useState('');
+const RegisterDetail = ({route, navigation}) => {
+  const {email, password} = route.params;
+  const [fname, setFname] = useState('');
+  const [lname, setLname] = useState('');
+  const [address, setAddress] = useState('');
+  const [image, setImage] = useState(
+    'https://cdn-icons-png.flaticon.com/128/4140/4140048.png',
+  );
+  // function Gender
+  const [selectedGender, setSelectedGender] = useState('');
 
-    // function Form Birth
-    const [isCalendarVisible, setCalendarVisible] = useState(false);
-    const [selectedDate, setSelectedDate] = useState('');
+  // function Form Birth
+  const [isCalendarVisible, setCalendarVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
 
+  const register = () => {
+    if (image == 'https://cdn-icons-png.flaticon.com/128/4140/4140048.png') {
+      Toast.show({
+        topOffset: 60,
+        type: 'error',
+        text1: 'Please select your image',
+        text2: 'try again',
+      });
+    } else {
+      const formData = new FormData();
+      formData.append('fname', fname);
+      formData.append('lname', lname);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('address', address);
+      formData.append('birth', selectedDate);
+      formData.append('gender', selectedGender);
+      formData.append('isAdmin', false);
 
+      const newImageUri = 'file:///' + image.split('file:/').join('');
 
-    const register = () => {
-        const formData = new FormData();
-        formData.append('fname', fname);
-        formData.append('lname', lname);
-        formData.append('email', email);
-        formData.append('password', password);
-        formData.append('address', address);
-        formData.append('birth', selectedDate);
-        formData.append('gender', selectedGender);
-        formData.append('isAdmin', false);
+      formData.append('image', {
+        uri: newImageUri,
+        type: mime.getType(newImageUri),
+        name: newImageUri.split('/').pop(),
+      });
 
-        const newImageUri = "file:///" + image.split("file:/").join("");
-
-        formData.append("image", {
-            uri: newImageUri,
-            type: mime.getType(newImageUri),
-            name: newImageUri.split("/").pop()
-        });
-
-
-        axios.post(`${baseURL}users/register`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
+      axios
+        .post(`${baseURL}users/register`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         })
-            .then((res) => {
-                if (res.status === 200) {
-                    Toast.show({
-                        topOffset: 60,
-                        type: "success",
-                        text1: "Registration Succeeded",
-                        text2: "Please Login into your account",
-                    });
-                    setTimeout(() => {
-                        navigation.navigate("Login")
-                    }, 500);
-                }
-            })
-            .catch((err) => {
-                Toast.show({
-                    topOffset: 60,
-                    type: "error",
-                    text1: "Something went wrong",
-                    text2: "Please try again",
-                });
+        .then(res => {
+          if (res.status === 200) {
+            Toast.show({
+              topOffset: 60,
+              type: 'success',
+              text1: 'Registration Succeeded',
+              text2: 'Please Login into your account',
             });
-    }
-
-
-    const hideCalendar = () => {
-        setCalendarVisible(false);
-    };
-
-    const handleDayPress = (day) => {
-        setSelectedDate(day.dateString);
-        hideCalendar();
-    };
-    const showCalendar = () => {
-        setCalendarVisible(true);
-    };
-
-    const openImagePicker = () => {
-        const options = {
-            mediaType: 'photo',
-            includeBase64: false,
-            maxHeight: 4000,
-            maxWidth: 4000,
-        };
-
-        launchImageLibrary(options, (response) => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('Image picker error: ', response.error);
-            } else {
-                let imageUri = response.uri || response.assets?.[0]?.uri;
-                // setMainImage(imageUri);
-                setImage(imageUri)
-            }
+            setTimeout(() => {
+              navigation.navigate('Login');
+            }, 500);
+          }
+        })
+        .catch(err => {
+          Toast.show({
+            topOffset: 60,
+            type: 'error',
+            text1: 'Something went wrong',
+            text2: 'Please try again',
+          });
         });
+    }
+  };
+
+  const hideCalendar = () => {
+    setCalendarVisible(false);
+  };
+
+  const handleDayPress = day => {
+    setSelectedDate(day.dateString);
+    hideCalendar();
+  };
+  const showCalendar = () => {
+    setCalendarVisible(true);
+  };
+
+  const openImagePicker = () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 4000,
+      maxWidth: 4000,
     };
 
-
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image picker error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        // setMainImage(imageUri);
+        setImage(imageUri);
+      }
+    });
+  };
 
   return (
     <ScrollView>
@@ -298,141 +311,137 @@ const RegisterDetail = ({ route, navigation }) => {
       </View>
     </ScrollView>
   );
-}
+};
 
-export default RegisterDetail
+export default RegisterDetail;
 
 const styles = StyleSheet.create({
+  imageContainer: {
+    width: 100,
+    height: 100,
+    borderStyle: 'solid',
+    borderWidth: 8,
+    padding: 0,
+    justifyContent: 'center',
+    borderRadius: 100,
+    borderColor: '#E0E0E0',
+    // elevation: 10
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 100,
+  },
+  imagePicker: {
+    position: 'absolute',
+    right: 5,
+    bottom: 5,
+    backgroundColor: 'gray',
+    padding: 8,
+    borderRadius: 100,
+    elevation: 20,
+  },
+  container: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    // paddingBottom: 200,
+    paddingVertical: 50,
+  },
+  input: {
+    width: '100%',
+    alignItems: 'center',
+  },
 
-    imageContainer: {
-        width: 100,
-        height: 100,
-        borderStyle: "solid",
-        borderWidth: 8,
-        padding: 0,
-        justifyContent: "center",
-        borderRadius: 100,
-        borderColor: "#E0E0E0",
-        // elevation: 10
-    },
-    image: {
-        width: "100%",
-        height: "100%",
-        borderRadius: 100
-    },
-    imagePicker: {
-        position: "absolute",
-        right: 5,
-        bottom: 5,
-        backgroundColor: "gray",
-        padding: 8,
-        borderRadius: 100,
-        elevation: 20
-    },
-    container: {
-        width: '100%',
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-        // paddingBottom: 200,
-        paddingVertical: 50
-    },
-    input: {
-        width: '100%',
-        alignItems: 'center',
-    },
+  iconUser: {
+    position: 'absolute',
+    left: 60,
+    bottom: 31,
+  },
+  iconEye: {
+    position: 'absolute',
+    right: -140,
+    bottom: 27,
+  },
+  buttonGroup: {
+    width: '80%',
+    margin: 10,
+    alignItems: 'center',
+  },
+  btnLogin: {
+    backgroundColor: '#f36d72',
+    width: 330,
+    height: 44,
+    padding: 10,
+    alignItems: 'center', // center x
+    justifyContent: 'center', //center y
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  //calendar
+  inputCalendar: {
+    width: 330,
+    borderWidth: 2,
+    borderColor: '#dfdfdf',
+    borderRadius: 10,
+    paddingLeft: 45,
+  },
+  iconCalendar: {
+    position: 'absolute',
+    left: 58,
+    bottom: 17,
+  },
+  selectButton: {
+    borderRadius: 10,
+  },
+  selectedDate: {
+    paddingHorizontal: 10,
+    paddingTop: 15,
+    height: 50,
+    fontSize: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
 
-    iconUser: {
-        position: 'absolute',
-        left: 60,
-        bottom: 31
-    },
-    iconEye: {
-        position: 'absolute',
-        right: -140,
-        bottom: 27
-    },
-    buttonGroup: {
-        width: "80%",
-        margin: 10,
-        alignItems: "center",
-    },
-    btnLogin: {
-        backgroundColor: '#f36d72',
-        width: 330,
-        height: 44,
-        padding: 10,
-        alignItems: 'center', // center x
-        justifyContent: 'center', //center y
-        borderRadius: 10,
-        marginTop: 10
-    },
-    //calendar
-    inputCalendar: {
-        width: 330,
-        borderWidth:2,
-        borderColor:"#dfdfdf",
-        borderRadius:10,
-        paddingLeft:45
-    },
-    iconCalendar: {
-        position: 'absolute',
-        left: 58,
-        bottom: 17
-    },
-    selectButton: {
-        borderRadius: 10,
+    color: '#000000',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+  },
 
-    },
-    selectedDate: {
-        paddingHorizontal: 10,
-        paddingTop: 15,
-        height: 50,
-        fontSize: 15,
-        justifyContent: 'center',
-        alignItems: 'center',
-
-        color: '#000000'
-
-    },
-    modalContent: {
-        backgroundColor: 'white',
-        padding: 10,
-        borderRadius: 10,
-    },
-
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderColor: 'red',
-        borderWidth: 1,
-        paddingHorizontal: 10,
-        borderRadius: 10,
-    },
-    // genderbox
-    genderBox: {
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        width:330,
-        padding:10,
-        marginTop:10
-    },
-    radioButton: {
-        width: 20,
-        height: 20,
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: '#B1B1B1',
-        marginHorizontal: 8,
-    },
-    radioButtonSelected: {
-        backgroundColor: '#f36d72', // Customize the color of the checked indicator
-        borderColor: '#f36d72',     // Border color for selected
-    },
-    radioButtonLabel: {
-        fontSize: 16,
-        color:'black'
-    },
-
-})
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: 'red',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+  },
+  // genderbox
+  genderBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    width: 330,
+    padding: 10,
+    marginTop: 10,
+  },
+  radioButton: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#B1B1B1',
+    marginHorizontal: 8,
+  },
+  radioButtonSelected: {
+    backgroundColor: '#f36d72', // Customize the color of the checked indicator
+    borderColor: '#f36d72', // Border color for selected
+  },
+  radioButtonLabel: {
+    fontSize: 16,
+    color: 'black',
+  },
+});

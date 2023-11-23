@@ -7,26 +7,47 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
+import {useNavigation} from '@react-navigation/native';
 
 // icon
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import Input from '../../Shared/Form/Input';
 
+// noti
+import Toast from 'react-native-toast-message';
+
+// api
+import baseURL from '../../assests/common/baseUrl';
+import axios from 'axios';
+
+// image
+import mime from 'mime';
+
+//user
+import AuthGlobal from '../../context/store/AuthGlobal';
+
 const CheckIn = props => {
+  const navigation = useNavigation();
+  const context = useContext(AuthGlobal);
+  const userId = context.stateUser.user.userId;
+  const productId = props.route.params.item.id;
   const [image, setImage] = useState();
   const [desc, setDesc] = useState();
   const [provine, setProvine] = useState();
   const [name, setName] = useState();
   const [location, setLocation] = useState();
+  const [selectedDate, setSelectedDate] = useState('01-01-2023');
 
   // function Form Birth
   const [isCalendarVisible, setCalendarVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('01-01-2023');
+
+  console.log('productid', JSON.stringify(productId, null, 2));
 
   const hideCalendar = () => {
     setCalendarVisible(false);
@@ -70,7 +91,72 @@ const CheckIn = props => {
     });
   };
 
-  const handleConfirm = () => {};
+  const handleConfirm = () => {
+    if (!image) {
+      Toast.show({
+        topOffset: 60,
+        type: 'error',
+        text1: 'Please select image',
+        text2: 'try again',
+      });
+    } else if (!desc) {
+      Toast.show({
+        topOffset: 60,
+        type: 'error',
+        text1: 'Please text in description',
+        text2: 'try again',
+      });
+    } else {
+      const formData = new FormData();
+      formData.append('userId', userId);
+      formData.append('productId', productId);
+      formData.append('image', image);
+      formData.append('desc', desc);
+      formData.append('date', selectedDate);
+      formData.append('productName', name);
+      formData.append('province', provine);
+      // formData.append('location', location);
+
+      const newImageUri = 'file:///' + image.split('file:/').join('');
+
+      formData.append('image', {
+        uri: newImageUri,
+        type: mime.getType(newImageUri),
+        name: newImageUri.split('/').pop(),
+      });
+
+      // console.log(JSON.stringify(formData,null,2))
+      console.log(formData);
+
+      axios
+        .post(`${baseURL}check-in`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(res => {
+          if (res.status === 200) {
+            Toast.show({
+              topOffset: 60,
+              type: 'success',
+              text1: 'Check in Succeeded',
+              text2: 'check your profile',
+            });
+            setTimeout(() => {
+              navigation.goBack();
+            }, 500);
+          }
+        })
+        .catch(err => {
+          Toast.show({
+            topOffset: 60,
+            type: 'error',
+            text1: 'Something went wrong',
+            text2: 'Please try again',
+          });
+        });
+    }
+  };
 
   return (
     <ScrollView>
@@ -101,8 +187,9 @@ const CheckIn = props => {
             placeholder={'แสดงความคิดเห็นของคุณ'}
             name={'description'}
             id={'description'}
+            placeholderTextColor={'black'}
             onChangeText={text => setDesc(text)}
-            // onSubmitEditing={() => handleEdit()}
+            onSubmitEditing={() => handleConfirm()}
             returnKeyType="next"
             style={styles.inputform}
           />
@@ -170,15 +257,15 @@ const CheckIn = props => {
 
         {/* Location */}
         {/* <View style={styles.formDetail}>
-          <Text style={{color: 'black', fontSize: 15,fontWeight:'bold'}}>Location</Text>
+          <Text style={{color: 'black', fontSize: 15, fontWeight: 'bold'}}>
+            Location
+          </Text>
           <View style={styles.detailValue}>
             <Text style={styles.textValue}>{location}</Text>
           </View>
         </View> */}
 
-        <TouchableOpacity
-        // onPress={() => handleConfirm()}
-        >
+        <TouchableOpacity onPress={() => handleConfirm()}>
           <View style={styles.btnLogin}>
             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
               Confirm
@@ -280,6 +367,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderWidth: 3,
     borderColor: '#dfdfdf',
+    color: 'black',
   },
   //   formDetail
   formDetail: {

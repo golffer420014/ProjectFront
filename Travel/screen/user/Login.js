@@ -121,7 +121,7 @@ const Login = (props) => {
                             id={"password"}
                             secureTextEntry={true}
                             value={password}
-                            onChangeText={(text) => setPassowrd(text.toLowerCase())}
+                            onChangeText={(text) => setPassowrd(text)}
                             onSubmitEditing={() => handleSubmit()}
                             returnKeyType="next"
                         />
@@ -152,7 +152,7 @@ const Login = (props) => {
                             id={"password"}
                             // secureTextEntry={true}
                             value={password}
-                            onChangeText={(text) => setPassowrd(text.toLowerCase())}
+                            onChangeText={(text) => setPassowrd(text)}
                             onSubmitEditing={() => handleSubmit()}
                             returnKeyType="next"
 

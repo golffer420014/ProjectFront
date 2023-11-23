@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from 'react';
+import React, {useContext, useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -8,52 +8,48 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
-import { Container } from "native-base"
-import { useFocusEffect } from "@react-navigation/native"
+import {Container} from 'native-base';
+import {useFocusEffect} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
-import { Calendar } from 'react-native-calendars';
+import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
-import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
-import mime from 'mime'
+import mime from 'mime';
 
-import axios from "axios"
+import axios from 'axios';
 import baseURL from '../../assests/common/baseUrl';
 
 // icon
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Entypo from 'react-native-vector-icons/Entypo'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 import AuthGlobal from '../../context/store/AuthGlobal';
-import { logoutUser } from '../../context/actions/Auth.actions';
-import { useEffect } from 'react/cjs/react.development';
+import {logoutUser} from '../../context/actions/Auth.actions';
+import {useEffect} from 'react/cjs/react.development';
 import Input from '../../Shared/Form/Input';
 
-var { height, width } = Dimensions.get("window")
+var {height, width} = Dimensions.get('window');
 
-const UserProfile = ({ props, navigation }) => {
-  const context = useContext(AuthGlobal)
-  const [userProfile, setUserProfile] = useState(null)
-  const [editProfile, setEditProfile] = useState(false)
-  const [editPassword, setEditPassword] = useState(false)
-  const [loading, setLoading] = useState()
+const UserProfile = ({props, navigation}) => {
+  const context = useContext(AuthGlobal);
+  const [userProfile, setUserProfile] = useState(null);
+  const [editProfile, setEditProfile] = useState(false);
+  const [editPassword, setEditPassword] = useState(false);
+  const [loading, setLoading] = useState();
 
-  const [token, setToken] = useState()
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [address, setAddress] = useState("");
-  const [image, setImage] = useState()
+  const [token, setToken] = useState();
+  const [fname, setFname] = useState('');
+  const [lname, setLname] = useState('');
+  const [address, setAddress] = useState('');
+  const [image, setImage] = useState();
   const [selectedGender, setSelectedGender] = useState('');
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
-
-
-
-
 
   useFocusEffect(
     useCallback(() => {
@@ -62,37 +58,36 @@ const UserProfile = ({ props, navigation }) => {
         context.stateUser.isAuthenticated === false ||
         context.stateUser.isAuthenticated === null
       ) {
-        props.navigation.navigate("Login")
+        props.navigation.navigate('Login');
       }
 
-      AsyncStorage.getItem("jwt")
-        .then((res) => {
-          setToken(res)
+      AsyncStorage.getItem('jwt')
+        .then(res => {
+          setToken(res);
           axios
             .get(`${baseURL}users/${context.stateUser.user.userId}`, {
-              headers: { Authorization: `Bearer ${res}` },
+              headers: {Authorization: `Bearer ${res}`},
             })
-            .then((user) => {
-              setUserProfile(user.data)
+            .then(user => {
+              setUserProfile(user.data);
               setLoading(false);
-            })
+            });
         })
-        .catch((error) => console.log(error))
-
-
+        .catch(error => console.log(error));
 
       return () => {
         setUserProfile();
-      }
+      };
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [context.stateUser.isAuthenticated]))
+    }, [context.stateUser.isAuthenticated]),
+  );
 
   const hideCalendar = () => {
     setCalendarVisible(false);
   };
 
-  const handleDayPress = (day) => {
+  const handleDayPress = day => {
     setSelectedDate(day.dateString);
     hideCalendar();
   };
@@ -108,22 +103,19 @@ const UserProfile = ({ props, navigation }) => {
       maxWidth: 4000,
     };
 
-
-    launchImageLibrary(options, (response) => {
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
-        setImage(imageUri)
+        setImage(imageUri);
       }
     });
   };
- 
 
   const handleEdit = () => {
-
     const formData = new FormData();
     formData.append('fname', fname);
     formData.append('lname', lname);
@@ -131,29 +123,26 @@ const UserProfile = ({ props, navigation }) => {
     formData.append('birth', selectedDate);
     formData.append('gender', selectedGender);
 
-    if(image){
-      const newImageUri = "file:///" + image.split("file:/").join("");
+    if (image) {
+      const newImageUri = 'file:///' + image.split('file:/').join('');
 
-      formData.append("image", {
+      formData.append('image', {
         uri: newImageUri,
         type: mime.getType(newImageUri),
-        name: newImageUri.split("/").pop()
+        name: newImageUri.split('/').pop(),
       });
     }
-
-
-    
 
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`
-      }
-    }
+        Authorization: `Bearer ${token}`,
+      },
+    };
     axios
       .put(`${baseURL}users/${userProfile.id}`, formData, config)
-      .then((res) => {
-        setUserProfile(res.data)
+      .then(res => {
+        setUserProfile(res.data);
         if (res.status == 200 || res.status == 201) {
           Toast.show({
             topOffset: 60,
@@ -162,50 +151,37 @@ const UserProfile = ({ props, navigation }) => {
             visibilityTime: 3000,
           });
           setTimeout(() => {
-            setEditProfile(false)
-          }, 500)
+            setEditProfile(false);
+          }, 500);
         }
       })
-      .catch((error) => {
+      .catch(error => {
         Toast.show({
           topOffset: 60,
-          type: "error",
-          text1: "Updated error",
-          text2: "Please try again"
-        })
-      })
-  }
-
-  
+          type: 'error',
+          text1: 'Updated error',
+          text2: 'Please try again',
+        });
+      });
+  };
 
   if (loading) {
     return (
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor:'#ffff'
-      }}>
-        <ActivityIndicator size="large" color="#f36d72" /> 
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#ffff',
+        }}>
+        <ActivityIndicator size="large" color="#f36d72" />
       </View>
     );
   }
 
-
   return (
     <>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('UserEditPassowrd', {
-            userId: userProfile ? userProfile.id : '',
-            token: token,
-          })
-        }>
-        <View style={styles.editPassword}>
-          <MaterialIcons name="key" size={18} color="#f36d72" />
-        </View>
-      </TouchableOpacity>
-      {editProfile == true ? (
+      {/* {editProfile == true ? (
         <TouchableOpacity onPress={() => setEditProfile(false)}>
           <View style={styles.editProfile}>
             <FontAwesome name="close" size={20} color="#f36d72" />
@@ -217,7 +193,7 @@ const UserProfile = ({ props, navigation }) => {
             <FontAwesome name="pencil" size={20} color="#f36d72" />
           </View>
         </TouchableOpacity>
-      )}
+      )} */}
       {editProfile == true ? (
         <Container style={styles.container}>
           <ScrollView contentContainerStyle={styles.subContainer}>
@@ -244,6 +220,28 @@ const UserProfile = ({ props, navigation }) => {
                 </TouchableOpacity>
               </View>
             </LinearGradient>
+
+            {/* icon edit */}
+            <TouchableOpacity onPress={() => setEditProfile(false)}>
+              <View style={styles.editProfile}>
+                <FontAwesome name="pencil" size={20} color="#f36d72" />
+              </View>
+            </TouchableOpacity>
+
+            {/* icon edit password */}
+            <View>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('UserEditPassowrd', {
+                    userId: userProfile ? userProfile.id : '',
+                    token: token,
+                  })
+                }>
+                <View style={styles.editPassword}>
+                  <MaterialIcons name="key" size={18} color="#f36d72" />
+                </View>
+              </TouchableOpacity>
+            </View>
 
             {/* fname */}
             <View style={[styles.input, {marginTop: 5}]}>
@@ -404,7 +402,30 @@ const UserProfile = ({ props, navigation }) => {
               </View>
             </LinearGradient>
 
-            <Text style={{fontSize: 25, color: 'black', marginVertical: 10}}>
+            {/* icon edit  */}
+            <TouchableOpacity onPress={() => setEditProfile(true)}>
+              <View style={styles.editProfile}>
+                <FontAwesome name="close" size={20} color="#f36d72" />
+              </View>
+            </TouchableOpacity>
+
+            {/* icon edit password */}
+            <View>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('UserEditPassowrd', {
+                    userId: userProfile ? userProfile.id : '',
+                    token: token,
+                  })
+                }>
+                <View style={styles.editPassword}>
+                  <MaterialIcons name="key" size={18} color="#f36d72" />
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            <Text style={{fontSize: 25, color: 'black', marginVertical: 25}}>
+              {/* {'Name : '} */}
               {userProfile ? userProfile.fname + ' ' + userProfile.lname : ''}
             </Text>
             {/* email */}
@@ -477,7 +498,7 @@ const UserProfile = ({ props, navigation }) => {
       )}
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -501,7 +522,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: '#E0E0E0',
     position: 'relative',
-    top: 55,
+    top: 90,
   },
   image: {
     width: '100%',
@@ -511,7 +532,7 @@ const styles = StyleSheet.create({
   },
   backImageContainer: {
     width: width,
-    height: 150,
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 30,
@@ -559,8 +580,8 @@ const styles = StyleSheet.create({
   },
   editProfile: {
     position: 'absolute',
-    right: 10,
-    top: 5,
+    right: -185,
+    top: -165,
     backgroundColor: 'whitesmoke',
     padding: 10,
     borderRadius: 50,
@@ -568,8 +589,8 @@ const styles = StyleSheet.create({
   },
   editPassword: {
     position: 'absolute',
-    right: 10,
-    top: 50,
+    right: -140,
+    top: -165,
     backgroundColor: 'whitesmoke',
     padding: 10,
     borderRadius: 50,

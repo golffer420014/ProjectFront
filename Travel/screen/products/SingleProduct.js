@@ -98,13 +98,14 @@ const SingleProduct = props => {
               ]}>
               {item.name}
             </Text>
-            <Text style={[tailwind`pt-2`, {fontSize: wp(5)}]}>
+            <Text style={[tailwind`pt-2`, {fontSize: wp(5), color: 'gray'}]}>
               {item.rating}{' '}
               <AntDesign name="star" color={'#f36d72'} size={wp(5)} />
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={[tailwind`pt-1 mb-5`, {fontSize: wp(5)}]}>
+            <Text
+              style={[tailwind`pt-1 mb-5`, {fontSize: wp(5), color: 'gray'}]}>
               <FontAwesome name="map-marker" color={'#f36d72'} size={wp(5)} />{' '}
               {item.location}
             </Text>

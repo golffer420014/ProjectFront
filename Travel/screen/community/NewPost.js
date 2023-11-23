@@ -112,7 +112,6 @@ const NewPost = props => {
         });
       }
 
-      console.log(formData);
 
       const config = {
         headers: {
@@ -120,6 +119,8 @@ const NewPost = props => {
           Authorization: `Bearer ${token}`,
         },
       };
+
+      
 
        axios
         .post(`${baseURL}community`, formData, config)
@@ -129,8 +130,8 @@ const NewPost = props => {
             Toast.show({
               topOffset: 60,
               type: 'success',
-              text1: 'โพสสำเร็จ',
-              text2: '',
+              text1: 'Post Succeeded',
+              text2: 'check your feed',
             });
             setTimeout(() => {
               props.navigation.navigate('Feed');
@@ -153,7 +154,7 @@ const NewPost = props => {
         text1: 'Please fill in form',
         text2: 'Please try again',
       });
-    }
+     }
   };
 
   const EditBtn = () => {
@@ -229,6 +230,7 @@ const NewPost = props => {
           <TextInput
             style={styles.inputDesc}
             placeholder="คุณคิดอะไรอยู่"
+            placeholderTextColor={'black'}
             multiline={true}
             numberOfLines={4} // You can set the number of lines according to your need
             textAlignVertical="top"
@@ -428,7 +430,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     // borderColor: '#dfdfdf',
     borderColor: '#fcb69f',
-    fontSize: 20,
+    fontSize: 17,
+    color:'black'
   },
   // btn
   btnLogin: {

@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
   successToas: {
     borderWidth: 1,
     width: '80%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'center', // Center horizontally
+    justifyContent: 'center', // Center vertically
     backgroundColor: 'white',
     height: 55,
     borderRadius: 10,
