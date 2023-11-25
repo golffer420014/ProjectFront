@@ -63,7 +63,8 @@ const CategoryFilter = (props) => {
             >
               <Image
                 source={require('../../assests/all.png')}
-                style={[props.active == -1 ? styles.ALLactive : styles.ALLinactive,
+                style={[
+                  // props.active == -1 ? styles.ALLactive : styles.ALLinactive,
                 { width: 50, height: 50, borderRadius: 30, }
                 ]}
               />

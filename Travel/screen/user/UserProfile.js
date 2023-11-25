@@ -51,6 +51,8 @@ const UserProfile = ({props, navigation}) => {
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
 
+  const [drawer,setDrawer] = useState(false)
+
   useFocusEffect(
     useCallback(() => {
       setLoading(true);
@@ -179,21 +181,9 @@ const UserProfile = ({props, navigation}) => {
     );
   }
 
+
   return (
     <>
-      {/* {editProfile == true ? (
-        <TouchableOpacity onPress={() => setEditProfile(false)}>
-          <View style={styles.editProfile}>
-            <FontAwesome name="close" size={20} color="#f36d72" />
-          </View>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={() => setEditProfile(true)}>
-          <View style={styles.editProfile}>
-            <FontAwesome name="pencil" size={20} color="#f36d72" />
-          </View>
-        </TouchableOpacity>
-      )} */}
       {editProfile == true ? (
         <Container style={styles.container}>
           <ScrollView contentContainerStyle={styles.subContainer}>
@@ -224,7 +214,7 @@ const UserProfile = ({props, navigation}) => {
             {/* icon edit */}
             <TouchableOpacity onPress={() => setEditProfile(false)}>
               <View style={styles.editProfile}>
-                <FontAwesome name="pencil" size={20} color="#f36d72" />
+                <FontAwesome name="close" size={20} color="#f36d72" />
               </View>
             </TouchableOpacity>
 
@@ -242,6 +232,16 @@ const UserProfile = ({props, navigation}) => {
                 </View>
               </TouchableOpacity>
             </View>
+
+            {/* icon menu */}
+            <TouchableOpacity 
+            // onPress={() => setEditProfile(false)}
+            >
+              <View style={styles.menu}>
+                <Entypo name="menu" size={20} color="#f36d72" />
+              </View>
+            </TouchableOpacity>
+
 
             {/* fname */}
             <View style={[styles.input, {marginTop: 5}]}>
@@ -405,7 +405,7 @@ const UserProfile = ({props, navigation}) => {
             {/* icon edit  */}
             <TouchableOpacity onPress={() => setEditProfile(true)}>
               <View style={styles.editProfile}>
-                <FontAwesome name="close" size={20} color="#f36d72" />
+                <FontAwesome name="pencil" size={20} color="#f36d72" />
               </View>
             </TouchableOpacity>
 
@@ -423,6 +423,15 @@ const UserProfile = ({props, navigation}) => {
                 </View>
               </TouchableOpacity>
             </View>
+
+            {/* icon menu */}
+            <TouchableOpacity 
+            // onPress={() => setDrawer(true)}
+            >
+              <View style={styles.menu}>
+                <Entypo name="menu" size={20} color="#f36d72" />
+              </View>
+            </TouchableOpacity>
 
             <Text style={{fontSize: 25, color: 'black', marginVertical: 25}}>
               {/* {'Name : '} */}
@@ -590,6 +599,15 @@ const styles = StyleSheet.create({
   editPassword: {
     position: 'absolute',
     right: -140,
+    top: -165,
+    backgroundColor: 'whitesmoke',
+    padding: 10,
+    borderRadius: 50,
+    width: 37,
+  },
+  menu: {
+    position: 'absolute',
+    right: 140,
     top: -165,
     backgroundColor: 'whitesmoke',
     padding: 10,

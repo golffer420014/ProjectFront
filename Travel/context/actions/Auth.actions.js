@@ -30,7 +30,7 @@ export const loginUser = (user, dispatch) => {
                 topOffset: 60,
                 type: "error",
                 text1: "Please Provide correct",
-                text2: ""
+                text2: "Try again"
             });
             logoutUser(dispatch)
         })

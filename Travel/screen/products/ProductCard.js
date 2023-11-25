@@ -74,13 +74,20 @@ export default connect(null, mapDispatchToProps)(ProductCard)
 
 const styles = StyleSheet.create({
     container: {
-        width: 180,
-        height: 200,
-        borderRadius: 10,
-        backgroundColor: 'white',
-        marginLeft:10,
-        borderWidth:2,
-        borderColor:'#dfdfdf'
+    width: 180,
+    height: 200,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    marginLeft: 10,
+    marginBottom:10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5, // สำหรับ Android
     },
     imageContainer:{
         flex: 1,
