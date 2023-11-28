@@ -191,7 +191,7 @@ const ProductContainer = props => {
 
                 {productsCtg.length > 0 ? (
                   <LinearGradient
-                    colors={['#ffff', '#ffff']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
+                    colors={['#dfdfdf', '#dfdfdf']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
                     style={styles.listContainer}>
                     {productsCtg.slice(0, visibleItemCount).map(item => {
                       return (
@@ -296,6 +296,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    top:-5
   },
   center: {
     justifyContent: 'center',

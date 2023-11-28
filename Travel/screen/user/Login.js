@@ -57,7 +57,7 @@ const Login = (props) => {
             <View style={styles.container}>
                 <View>
                     <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>You muse sign in to join</Text>
-                    <Text style={{ textAlign: 'center', marginVertical: 10 }}>We’re a Team That Guides Each Other</Text>
+                    <Text style={{ textAlign: 'center', marginVertical: 10,color:'gray' }}>We’re a Team That Guides Each Other</Text>
                 </View>
                 {/* google */}
                 <TouchableOpacity

@@ -27,10 +27,11 @@ import baseURL from '../../assests/common/baseUrl';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import AuthGlobal from '../../context/store/AuthGlobal';
 import {logoutUser} from '../../context/actions/Auth.actions';
-import {useEffect} from 'react/cjs/react.development';
+import { useNavigation } from '@react-navigation/native';
 import Input from '../../Shared/Form/Input';
 
 var {height, width} = Dimensions.get('window');
@@ -51,7 +52,7 @@ const UserProfile = ({props, navigation}) => {
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
 
-  const [drawer,setDrawer] = useState(false)
+  const navigate = useNavigation()
 
   useFocusEffect(
     useCallback(() => {
@@ -234,14 +235,13 @@ const UserProfile = ({props, navigation}) => {
             </View>
 
             {/* icon menu */}
-            <TouchableOpacity 
-            // onPress={() => setEditProfile(false)}
-            >
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Setting')}
+              >
               <View style={styles.menu}>
-                <Entypo name="menu" size={20} color="#f36d72" />
+                <AntDesign name="setting" size={20} color="#f36d72" />
               </View>
             </TouchableOpacity>
-
 
             {/* fname */}
             <View style={[styles.input, {marginTop: 5}]}>
@@ -425,11 +425,9 @@ const UserProfile = ({props, navigation}) => {
             </View>
 
             {/* icon menu */}
-            <TouchableOpacity 
-            // onPress={() => setDrawer(true)}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
               <View style={styles.menu}>
-                <Entypo name="menu" size={20} color="#f36d72" />
+                <AntDesign name="setting" size={20} color="#f36d72" />
               </View>
             </TouchableOpacity>
 
@@ -607,12 +605,12 @@ const styles = StyleSheet.create({
   },
   menu: {
     position: 'absolute',
-    right: 140,
+    right: 150,
     top: -165,
     backgroundColor: 'whitesmoke',
-    padding: 10,
     borderRadius: 50,
     width: 37,
+    padding: 9,
   },
   input: {
     width: '100%',

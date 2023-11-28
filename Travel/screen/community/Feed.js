@@ -30,6 +30,8 @@ const Feed = (props) => {
 
   const [user, setUser] = useState();
 
+  console.log(user)
+
   // console.log(JSON.stringify(user.fname,null,2))
 
   const fetchPosts = () => {
@@ -199,60 +201,31 @@ const Feed = (props) => {
   return (
     <View style={styles.container}>
       <View
-        style={{alignItems: 'center', justifyContent: 'center', padding: 10}}>
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingTop: 18,
+          paddingBottom:5,
+          backgroundColor: '#dfdfdf',
+          width: '100%',
+        }}>
         {context.stateUser.isAuthenticated == true ? (
-          <View
-            style={{
-              flexDirection: 'row',
-              padding: 15,
-              alignItems: 'center',
-              width: 390,
-            }}>
-            <Image
-              source={{uri: user.image}}
-              style={{width: 45, height: 45, borderRadius: 50, top: -9}}
-            />
-            <View style={{top: -8, marginLeft: 5}}>
-              <Text style={{color: 'black', fontWeight: 'bold', fontSize: 17}}>
-                {user.fname} {user.lname}
-              </Text>
-              <Text style={{color: 'gray', fontWeight: 'bold', fontSize: 17}}>
-                @{user.email}
-              </Text>
-            </View>
-            <TouchableOpacity onPress={() => postCommu()}>
-              <View style={{
-                // backgroundColor:'#dfdfdf',
-                padding:10,
-                borderRadius:10,
-                top:-7,
-                marginLeft:10,
-                width:270,
-                borderWidth:3,
-                borderColor:'#dfdfdf'
-                }}>
-                <Text style={{color: 'black', fontSize: 15}}>
-                  คุณคิดอะไรอยู่
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ) : null}
-
-        {/* {context.stateUser.isAuthenticated == true ? (
           <TouchableOpacity onPress={() => postCommu()}>
             <View
               style={{
-                backgroundColor: '#f47a7e',
-                padding: 5,
-                borderRadius: 50,
-                width: 70,
+                backgroundColor: '#ffff',
+                padding: 10,
+                borderRadius: 30,
+                top: -7,
+                width: 370,
                 alignItems: 'center',
+                // borderWidth:3,
+                // borderColor:'#dfdfdf',
               }}>
-              <FontAwesome name="plus" size={25} color="white" />
+              <Text style={{color: 'black', fontSize: 15,fontWeight:'bold'}}>คุณคิดอะไรอยู่</Text>
             </View>
           </TouchableOpacity>
-        ) : null} */}
+        ) : null}
       </View>
 
       <ScrollView style={{height: null}}>
@@ -413,6 +386,11 @@ const Feed = (props) => {
             </View>
           );
         })}
+        {/* {dataFeed ? (
+          <View>
+            <Text style={{color:'black'}}>ff</Text>
+          </View>
+        ) : null} */}
       </ScrollView>
     </View>
   );
@@ -432,9 +410,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 370,
     marginVertical: 5,
-    borderWidth: 3,
-    borderColor: '#fcb69f',
-    // borderColor: '#dfdfdf'
+    borderWidth: 1.5,
+    borderColor: '#dfdfdf',
   },
   header: {
     flexDirection: 'row',
