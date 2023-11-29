@@ -1,4 +1,4 @@
-import React, { useContext  } from "react";
+import React, { useContext, useEffect  } from "react";
 
 import { createStackNavigator } from "@react-navigation/stack"
 
@@ -15,6 +15,7 @@ import AuthGlobal from "../context/store/AuthGlobal";
 import UserEditPassowrd from "../screen/user/UserEditPassowrd";
 import UserForgetPassword from "../screen/user/UserForgetPassword";
 import Setting from "../screen/user/setting/Setting";
+import {useNavigation} from '@react-navigation/native';
 
 // icon
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -29,6 +30,24 @@ const Stack = createStackNavigator()
 
 
 function MyStack() {
+const navigation = useNavigation();
+useEffect(() => {
+  const unsubscribe = navigation.addListener('tabPress', e => {
+    // Prevent default behavior
+    e.preventDefault();
+
+    // Navigate to the top of the stack
+    if (context.stateUser.isAuthenticated == true){
+      navigation.navigate('User Profile');
+    }else{
+      navigation.navigate('Login');
+    }
+  });
+
+  return unsubscribe;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
     const context = useContext(AuthGlobal)
     console.log(context.stateUser.isAuthenticated)
     return (

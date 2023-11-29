@@ -1,25 +1,34 @@
-import { StyleSheet, Text, View, TouchableHighlight, ActivityIndicator, Modal, ScrollView, TouchableOpacity,TextInput } from 'react-native'
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useState, useEffect, useContext, useCallback } from 'react'
-import axios from 'axios'
-import baseURL from '../../assests/common/baseUrl'
-import { Image } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableHighlight,
+  ActivityIndicator,
+  Modal,
+  ScrollView,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
+import axios from 'axios';
+import baseURL from '../../assests/common/baseUrl';
+import {Image} from 'react-native';
 
 //icon
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Entypo from 'react-native-vector-icons/Entypo'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 //auth
 import AuthGlobal from '../../context/store/AuthGlobal';
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //shared
 import EasyButton from '../../Shared/StyledComponents/EasyButton';
 import Toast from 'react-native-toast-message';
 
-
-const Feed = (props) => {
+const Feed = props => {
   const context = useContext(AuthGlobal);
 
   const [dataFeed, setDataFeed] = useState([]);
@@ -30,7 +39,7 @@ const Feed = (props) => {
 
   const [user, setUser] = useState();
 
-  console.log(user)
+  console.log(user);
 
   // console.log(JSON.stringify(user.fname,null,2))
 
@@ -205,7 +214,7 @@ const Feed = (props) => {
           alignItems: 'center',
           justifyContent: 'center',
           paddingTop: 18,
-          paddingBottom:5,
+          paddingBottom: 5,
           backgroundColor: '#dfdfdf',
           width: '100%',
         }}>
@@ -222,7 +231,9 @@ const Feed = (props) => {
                 // borderWidth:3,
                 // borderColor:'#dfdfdf',
               }}>
-              <Text style={{color: 'black', fontSize: 15,fontWeight:'bold'}}>คุณคิดอะไรอยู่</Text>
+              <Text style={{color: 'black', fontSize: 15, fontWeight: 'bold'}}>
+                คุณคิดอะไรอยู่
+              </Text>
             </View>
           </TouchableOpacity>
         ) : null}
@@ -290,8 +301,32 @@ const Feed = (props) => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
-                  <View style={styles.like}>
-                    <TouchableOpacity onPress={() => likePost(item.id)}>
+                  {/* !context.stateUser.isAuthenticated */}
+                  {context.stateUser.isAuthenticated ? (
+                    <View style={styles.like}>
+                      <TouchableOpacity onPress={() => likePost(item.id)}>
+                        <FontAwesome
+                          name={
+                            item.likes.includes(context.stateUser.user.userId)
+                              ? 'heart'
+                              : 'heart-o'
+                          }
+                          size={20}
+                          color={
+                            item.likes.includes(context.stateUser.user.userId)
+                              ? 'red'
+                              : 'black'
+                          }
+                        />
+                      </TouchableOpacity>
+                      {item.likes && item.likes.length > 0 && (
+                        <Text style={{color: 'black', fontSize: 17}}>
+                          {item.likes.length}
+                        </Text>
+                      )}
+                    </View>
+                  ) : (
+                    <View style={styles.like}>
                       <FontAwesome
                         name={
                           item.likes.includes(context.stateUser.user.userId)
@@ -305,13 +340,14 @@ const Feed = (props) => {
                             : 'black'
                         }
                       />
-                    </TouchableOpacity>
-                    {item.likes && item.likes.length > 0 && (
-                      <Text style={{color: 'black', fontSize: 17}}>
-                        {item.likes.length}
-                      </Text>
-                    )}
-                  </View>
+                      {item.likes && item.likes.length > 0 && (
+                        <Text style={{color: 'black', fontSize: 17}}>
+                          {item.likes.length}
+                        </Text>
+                      )}
+                    </View>
+                  )}
+
                   <View style={{flexDirection: 'row'}}>
                     <FontAwesome name="map-marker" size={20} color="black" />
                     <Text style={[styles.itemName]}>{'  '}</Text>
@@ -394,9 +430,9 @@ const Feed = (props) => {
       </ScrollView>
     </View>
   );
-}
+};
 
-export default Feed
+export default Feed;
 
 const styles = StyleSheet.create({
   container: {

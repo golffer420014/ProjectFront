@@ -12,15 +12,17 @@ const Setting = props => {
     <View style={styles.container}>
       <View style={{width: 360}}>
         <Text style={styles.textHead}>Activity</Text>
-        <TouchableOpacity onPress={() => props.navigation.navigate('Check in')}>
-          <View style={styles.box}>
+        <View style={styles.box}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('Check in')}>
             <View style={styles.itemList}>
               <AntDesign name="carryout" size={22} color="#f36d72" />
               <Text>{'  '}</Text>
               <Text style={styles.text}>Check in</Text>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+          
+        </View>
       </View>
     </View>
   );
@@ -64,5 +66,7 @@ const styles = StyleSheet.create({
   itemList: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderBottomWidth:2,
+    borderColor:'#dfdfdf'
   },
 });
