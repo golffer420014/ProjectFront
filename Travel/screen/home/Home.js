@@ -13,39 +13,67 @@ const Home = props => {
    const context = useContext(AuthGlobal);
   const [loading,setLoading] = useState(true)
   const [products, setProducts] = useState([]);
-  const [user,setUser] = useState()
+  const [userImage, setUserImage] = useState([]);
+  const idUser = context.stateUser.user.userId;
+  // console.log(userImage);
 
-  // console.log(user)
+  // console.log(context.stateUser.user.userId);
+  // console.log(`${baseURL}${context.stateUser.user.userId}`);
+ 
 
 
+  // const fetchData = useCallback(async () => {
+  //   try {
+  //     // เริ่มโหลดข้อมูล
+  //     const response = await axios.get(`${baseURL}products`);
 
-  const fetchData = useCallback(async () => {
-    try {
-      // เริ่มโหลดข้อมูล
-      const response = await axios.get(`${baseURL}products`);
+  //     // เก็บข้อมูลใน state
+  //     setProducts(response.data);
 
-      // เก็บข้อมูลใน state
-      setProducts(response.data);
-
-      // ปิดการโหลด
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      // ตรวจจับและจัดการข้อผิดพลาดได้ตามความเหมาะสม
-      setLoading(false);
-    }
-  }, []);
+  //     // ปิดการโหลด
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //     // ตรวจจับและจัดการข้อผิดพลาดได้ตามความเหมาะสม
+  //     setLoading(false);
+  //   }
+  // }, []);
 
     useFocusEffect(
       useCallback(() => {
-        fetchData();
+        // fetchData();
 
-        return(
-          setLoading(true),
-          setProducts([])
+if (context.stateUser.isAuthenticated) {
+  axios
+    .get(`${baseURL}users/${idUser}`)
+    .then(res => {
+      setUserImage(res.data);
+    })
+    .catch(error => {
+      console.error('Error fetching user image:', error);
+    });
+} 
+
+        axios.get(`${baseURL}products`)
+        .then(res =>{
+          setProducts(res.data)
+          setLoading(false)
+        })
+        .catch(err =>{
+          console.log('home call api proucts error')
+          setLoading(true)
+        }
         )
+        
+        return() =>{
+          setLoading(true);
+          setProducts([]);
+          setUserImage([]); // หรืออะไรที่เหมาะสมกับข้อมูล userImage ของคุณ
+        }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []),
     );
+
 
     // console.log(products)
 
@@ -66,14 +94,30 @@ const Home = props => {
   return (
     <FormContainer>
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => props.navigation.navigate('User', {screen: 'Login'})}>
-          <Image
-            source={require('../../assests/user.png')}
-            style={{width: 35, height: 35, borderRadius: 50}}
-            resizeMode="cover"
-          />
-        </TouchableOpacity>
+        {!context.stateUser.isAuthenticated ? (
+          <TouchableOpacity
+            onPress={() =>
+              props.navigation.navigate('User', {screen: 'User Profile'})
+            }>
+            <Image
+              source={require('../../assests/user.png')}
+              style={{width: 35, height: 35, borderRadius: 50}}
+              resizeMode="cover"
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={() =>
+              props.navigation.navigate('User', {screen: 'User Profile'})
+            }>
+            <Image
+              source={{uri: userImage ? userImage.image : ''}}
+              style={{width: 35, height: 35, borderRadius: 50}}
+              resizeMode="cover"
+            />
+          </TouchableOpacity>
+        )}
+
         <Text style={[styles.textDF, {fontSize: 25, fontWeight: 'bold'}]}>
           Home
         </Text>

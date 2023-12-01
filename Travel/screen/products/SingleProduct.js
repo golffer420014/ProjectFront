@@ -38,10 +38,10 @@ const SingleProduct = props => {
 
   const navigation = useNavigation();
 
-  console.log(
-    'this is',
-    JSON.stringify(context.stateUser.isAuthenticated, null, 2),
-  );
+  // console.log(
+  //   'this is',
+  //   JSON.stringify(context.stateUser.isAuthenticated, null, 2),
+  // );
 
   return (
     <View style={[tailwind`flex-1`]}>
@@ -98,12 +98,17 @@ const SingleProduct = props => {
               ]}>
               {item.name}
             </Text>
-            <Text style={[tailwind`pt-2`, {fontSize: wp(5), color: 'gray'}]}>
-              {item.rating}{' '}
-              <AntDesign name="star" color={'#f36d72'} size={wp(5)} />
-            </Text>
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text
+              style={[
+                tailwind`pt-1 mb-5 pr-2`,
+                {fontSize: wp(5), color: 'gray'},
+              ]}>
+              <AntDesign name="star" color={'#f36d72'} size={wp(5)} />{' '}
+              {item.rating}{' '}
+            </Text>
             <Text
               style={[tailwind`pt-1 mb-5`, {fontSize: wp(5), color: 'gray'}]}>
               <FontAwesome name="map-marker" color={'#f36d72'} size={wp(5)} />{' '}
@@ -189,7 +194,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     position: 'absolute',
     zIndex: 999,
-    top: -45,
+    top: -50,
     right: 10,
     padding: 5,
     paddingHorizontal: 10,

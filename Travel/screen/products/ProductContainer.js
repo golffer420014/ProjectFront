@@ -37,6 +37,8 @@ const ProductContainer = props => {
 
   //category
   const [productsCtg, setProductsCtg] = useState([]);
+
+  // console.log(productsCtg)
   // categort filter
   const [categories, setCategories] = useState([]);
   const [active, setActive] = useState();
@@ -176,9 +178,9 @@ const ProductContainer = props => {
           ) : (
             <ScrollView style={{backgroundColor: '#dfdfdf'}}>
               <View style={styles.container}>
-                <View style={{}}>
+                {/* <View style={{}}>
                   <Banner />
-                </View>
+                </View> */}
                 <View style={{backgroundColor: '#dfdfdf'}}>
                   <CategoryFilter
                     categories={categories}

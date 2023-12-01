@@ -11,6 +11,10 @@ const CategoryFilter = (props) => {
       props.categoryFilter('all', provine);
       props.setActive(-1);
     }
+    if (props.categories.length > 0) {
+      props.categoryFilter(props.categories[0].id, provine);
+      props.setActive(0);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [provine]);
 
@@ -18,16 +22,15 @@ const CategoryFilter = (props) => {
 
 
   return (
-    <View style={{ height: 180,top:10 }}>
+    <View style={{height: 180, top: 10}}>
       <View style={styles.pickerContainer}>
-        <Item picker >
+        <Item picker>
           <Picker
             mode="dropdown"
             selectedValue={provine}
             style={styles.picker}
-            onValueChange={(value) => setProvine(value)}
-          >
-            {data.RECORDS.map((c) => (
+            onValueChange={value => setProvine(value)}>
+            {data.RECORDS.map(c => (
               <Picker.Item
                 key={c.id}
                 label={c.name_th}
@@ -35,69 +38,53 @@ const CategoryFilter = (props) => {
                 style={{
                   color: 'black',
                   textAlign: 'center',
-                  backgroundColor:'#ffff'
+                  backgroundColor: '#ffff',
                 }}
               />
             ))}
           </Picker>
         </Item>
-    </View>
-      
+      </View>
+
       <ScrollView
         bounces={true}
         horizontal={true}
-        style={{ backgroundColor: '#ffffff', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
-      >
-        <ListItem style={{ marginBottom: 0, padding: 0, borderRadius: 0 }}>
-          <TouchableOpacity
-            key={1}
-            onPress={() => {
-              props.categoryFilter('all', provine);
-              props.setActive(-1);
-            }}
-          >
-            <View
-              style={[styles.all,
-              { marginHorizontal: 10 },
-              ]}
-            >
-              <Image
-                source={require('../../assests/all.png')}
-                style={[
-                  // props.active == -1 ? styles.ALLactive : styles.ALLinactive,
-                { width: 50, height: 50, borderRadius: 30, }
-                ]}
-              />
-              <Text style={[styles.all, { margin: 5, fontWeight: 'bold' },
-              props.active == -1 ? styles.active : styles.inactive
-              ]} >All</Text>
-            </View>
-            
-          </TouchableOpacity>
-          {props.categories.map((item) => (
+        style={{
+          backgroundColor: '#ffffff',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+        }}>
+        <ListItem style={{marginBottom: 0, padding: 0, borderRadius: 0,borderWidth:0}}>
+          {props.categories.map(item => (
             <TouchableOpacity
               key={item.id}
               onPress={() => {
                 props.categoryFilter(item.id, provine);
                 props.setActive(props.categories.indexOf(item));
-              }}
-            >
+              }}>
               <View
-                style={[styles.center,
-                { marginHorizontal: 10 },
-                props.active == props.categories.indexOf(item) ? styles.active : styles.inactive
-                ]}
-              >
+                style={[
+                  styles.center,
+                  {marginHorizontal: 10},
+                  props.active == props.categories.indexOf(item)
+                    ? styles.active
+                    : styles.inactive,
+                ]}>
                 <Image
-                  source={{ uri: item.icon }}
-                  style={{ width: 50, height: 50, borderRadius: 30 }}
+                  source={{uri: item.icon}}
+                  style={{width: 50, height: 50, borderRadius: 30}}
                 />
-                <Text style={[styles.center,
-                { margin: 5, fontWeight: 'bold' },
-                props.active == props.categories.indexOf(item) ? styles.active : styles.inactive
-                ]}>{item.name}</Text>
+                <Text
+                  style={[
+                    styles.center,
+                    {margin: 5, fontWeight: 'bold'},
+                    props.active == props.categories.indexOf(item)
+                      ? styles.active
+                      : styles.inactive,
+                  ]}>
+                  {item.name}
+                </Text>
               </View>
-
             </TouchableOpacity>
           ))}
         </ListItem>
