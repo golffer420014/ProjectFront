@@ -140,7 +140,7 @@ const ProductContainer = props => {
     <>
       {loading == false ? (
         <Container style={{backgroundColor: 'white'}}>
-          <Header searchBar rounded style={{backgroundColor: '#dcdcdc'}}>
+          <Header searchBar  style={{backgroundColor: '#dcdcdc',paddingBottom:8}}>
             <Item
               style={{
                 borderRadius: 20,
@@ -176,7 +176,7 @@ const ProductContainer = props => {
           ) : (
             <ScrollView style={{backgroundColor: '#dfdfdf'}}>
               <View style={styles.container}>
-                <View>
+                <View style={{}}>
                   <Banner />
                 </View>
                 <View style={{backgroundColor: '#dfdfdf'}}>

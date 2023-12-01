@@ -24,6 +24,7 @@ const CheckIn = () => {
   const [token, setToken] = useState();
 
   const context = useContext(AuthGlobal);
+  console.log(context)
 
   // console.log(JSON.stringify(context.stateUser.user.userId, null, 2));
   console.log(JSON.stringify(item, null, 2));

@@ -30,26 +30,23 @@ const Stack = createStackNavigator()
 
 
 function MyStack() {
-const navigation = useNavigation();
-useEffect(() => {
-  const unsubscribe = navigation.addListener('tabPress', e => {
-    // Prevent default behavior
-    e.preventDefault();
+// const navigation = useNavigation();
+// useEffect(() => {
+//   const unsubscribe = navigation.addListener('tabPress', e => {
+//     // Prevent default behavior
+//     e.preventDefault();
 
-    // Navigate to the top of the stack
-    if (context.stateUser.isAuthenticated == true){
-      navigation.navigate('User Profile');
-    }else{
-      navigation.navigate('Login');
-    }
-  });
+//     // Navigate to the top of the stack
+//       navigation.navigate('User Profile');
+    
+//   });
 
-  return unsubscribe;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+//   return unsubscribe;
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, []);
 
     const context = useContext(AuthGlobal)
-    console.log(context.stateUser.isAuthenticated)
+    // console.log(context.stateUser.isAuthenticated)
     return (
       <>
         {context.stateUser.isAuthenticated == true ? (

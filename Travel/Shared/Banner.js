@@ -23,26 +23,26 @@ const Banner = () => {
 
 
     return (
-        <View style={styles.container}>
-            <SliderBox
-                images={bannerData}
-                autoplay={true}
-                dotColor="#f36d72"
-                inactiveDotColor="#90A4AE"
-                dotStyle={{
-                    width: 10, // Your desired inactive dot width
-                    height: 10, // Your desired inactive dot height
-                }}
-                circleLoop
-            />
-        </View>
+      <View style={styles.container}>
+        <SliderBox
+          images={bannerData}
+          autoplay={true}
+          dotColor="#f36d72"
+          inactiveDotColor="#90A4AE"
+          dotStyle={{
+            width: 10, // Your desired inactive dot width
+            height: 10, // Your desired inactive dot height
+          }}
+          circleLoop
+          ImageComponentStyle={{width:'95%',borderRadius:15}}
+        />
+      </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop:7,
-        borderRadius:10
+        paddingTop:3,
     },
     
 });

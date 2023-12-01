@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // Stacks
-import HomeNavigator from "./SearchNavigator";
-import CartNavigator from "./CartNavigator";
+import HomeNavigator from './HomeNavigator';
 import UserNavigator from "./UserNavigator";
 import CommunityNavigator from "./CommunityNavigator";
 import AdminNavigator from "./AdminNavigator";
+import SearchNavigator from './SearchNavigator';
 
 
 //icon 
@@ -16,7 +16,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import AuthGlobal from "../context/store/AuthGlobal";
-import SearchNavigator from "./SearchNavigator";
 
 
 const Tab = createBottomTabNavigator();
@@ -29,7 +28,7 @@ const Main = () => {
   return (
 
     <Tab.Navigator
-      initialRouteName="Search"
+      initialRouteName="Home"
       tabBarOptions={{
         keyboardHidesTabBar: true,
         showLabel: false,
@@ -39,8 +38,8 @@ const Main = () => {
 
       {/* Home */}
       <Tab.Screen
-        name="Cart"
-        component={CartNavigator}
+        name="Home"
+        component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome name="home" color={color} size={37} style={{ alignItems: 'center', justifyContent: 'center' }} />

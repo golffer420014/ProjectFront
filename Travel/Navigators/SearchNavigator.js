@@ -21,7 +21,7 @@ function MyStack() {
       e.preventDefault();
 
       // Navigate to the top of the stack
-      navigation.navigate('Home');
+      navigation.navigate('HomeSearch');
     });
 
     return unsubscribe;
@@ -31,7 +31,7 @@ function MyStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="HomeSearch"
         component={ProductContainer}
         options={{
           headerShown: false,
