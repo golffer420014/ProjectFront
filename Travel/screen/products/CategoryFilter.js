@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     zIndex: 99,
     backgroundColor: '#ffff',
     bottom: 10,
-    right: 20,
+    left: 20,
     width: 200,
     // borderRadius: 30,
     // borderColor:'#f36d72'

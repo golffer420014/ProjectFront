@@ -116,13 +116,16 @@ const SingleProduct = props => {
             </Text>
           </View>
 
-          <TouchableOpacity
+                {context.stateUser.isAuthenticated ? (
+            <TouchableOpacity
             onPress={() => props.navigation.navigate('Check In', {item: item})}>
             <View style={styles.checkout}>
               {/* <FontAwesome name="flag-checkered" color={'white'} size={wp(5)} /> */}
               <Text style={{color: 'white', fontSize: wp(4)}}>Check In</Text>
             </View>
           </TouchableOpacity>
+          ) : null}
+          
         </View>
 
         <TopTapProduct {...item} />

@@ -39,7 +39,6 @@ const Feed = props => {
 
   const [user, setUser] = useState();
 
-  console.log(user);
 
   // console.log(JSON.stringify(user.fname,null,2))
 

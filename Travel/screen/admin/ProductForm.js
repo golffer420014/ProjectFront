@@ -295,7 +295,7 @@ const ProductForm = (props) => {
           <Item picker style={styles.pickerContainer}>
             <Picker
                 mode="dropdown"
-              style={{ width: undefined }}
+              style={{ width: undefined,color:'black' }}
               placeholder="Select your Category"
               selectedValue={pickerValue}
               placeholderStyle={{ color: "#007aff" }}
@@ -311,12 +311,12 @@ const ProductForm = (props) => {
 
         <View>
           <View style={[styles.label, { marginBottom: 10 }]}>
-            <Text style={{ fontWeight: 'bold', color: 'black' }}>provine</Text>
+            <Text style={{ fontWeight: 'bold', color: 'black' }}>Provine</Text>
           </View>
           <Item picker style={styles.pickerContainer}>
             <Picker
               mode='dropdown'
-              style={{ width: undefined }}
+              style={{ width: undefined ,color:'black'}}
               selectedValue={provine}
               placeholderStyle={{ color: "#007aff" }}
               placeholderIconColor="#007aff"

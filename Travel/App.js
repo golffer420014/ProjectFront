@@ -50,9 +50,9 @@ const App = () => {
       <Provider store={store}>
 
         <NavigationContainer >
-          <StatusBar
+          {/* <StatusBar
             hidden
-          />
+          /> */}
           {/* <Header /> */}
           <Main  />
           <Toast ref={(ref) => Toast.setRef(ref)} config={toastConfig} />

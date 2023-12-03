@@ -230,12 +230,13 @@ const ProductContainer = props => {
                     </View>
                   </LinearGradient>
                 ) : (
-                  <View style={[styles.listProduct]}>
+                  <View style={[styles.listProduct,{top:30}]}>
                     <View
                       style={{
                         justifyContent: 'space-between',
                         flexDirection: 'row',
                         height: height,
+                        
                       }}>
                       <View style={{width: '50%'}}>
                         <Text style={{color: '#dfdfdf'}}>555</Text>
@@ -284,7 +285,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray', // Border color
     borderRadius: 10, // Adjust the border radius as needed
     padding: 10, // Add padding to the input
-    margin: 20,
+    margin: 20, 
   },
   container: {
     flexWrap: 'wrap',

@@ -197,9 +197,10 @@ const Categories = (props) => {
           <TextInput
             placeholder="หมวดหมู่"
             value={categoryName}
-            style={[styles.input, { paddingLeft: 20 }]}
+            style={[styles.input, { paddingLeft: 20,color:'black' }]}
             onChangeText={(text) => setCategoryName(text)}
             fontSize={15}
+            placeholderTextColor={'black'}
           />
         </View>
         <View>
