@@ -20,6 +20,7 @@ const CategoryFilter = (props) => {
 
   // console.log(provine)
 
+  console.log(JSON.stringify(props.categories.name,null,2));
 
   return (
     <View style={{height: 180, top: 10}}>
@@ -54,39 +55,48 @@ const CategoryFilter = (props) => {
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
         }}>
-        <ListItem style={{marginBottom: 0, padding: 0, borderRadius: 0,borderWidth:0}}>
-          {props.categories.map(item => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() => {
-                props.categoryFilter(item.id, provine);
-                props.setActive(props.categories.indexOf(item));
-              }}>
-              <View
-                style={[
-                  styles.center,
-                  {marginHorizontal: 10},
-                  props.active == props.categories.indexOf(item)
-                    ? styles.active
-                    : styles.inactive,
-                ]}>
-                <Image
-                  source={{uri: item.icon}}
-                  style={{width: 50, height: 50, borderRadius: 30}}
-                />
-                <Text
-                  style={[
-                    styles.center,
-                    {margin: 5, fontWeight: 'bold'},
-                    props.active == props.categories.indexOf(item)
-                      ? styles.active
-                      : styles.inactive,
-                  ]}>
-                  {item.name}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+        <ListItem
+          style={{
+            marginBottom: 0,
+            padding: 0,
+            borderRadius: 0,
+            borderWidth: 0,
+          }}>
+          {props.categories.map(
+            item =>
+              !(item.name === 'ที่พัก' || item.name === 'อาหาร') && (
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() => {
+                    props.categoryFilter(item.id, provine);
+                    props.setActive(props.categories.indexOf(item));
+                  }}>
+                  <View
+                    style={[
+                      styles.center,
+                      {marginHorizontal: 10},
+                      props.active == props.categories.indexOf(item)
+                        ? styles.active
+                        : styles.inactive,
+                    ]}>
+                    <Image
+                      source={{uri: item.icon}}
+                      style={{width: 50, height: 50, borderRadius: 30}}
+                    />
+                    <Text
+                      style={[
+                        styles.center,
+                        {margin: 5, fontWeight: 'bold'},
+                        props.active == props.categories.indexOf(item)
+                          ? styles.active
+                          : styles.inactive,
+                      ]}>
+                      {item.name}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ),
+          )}
         </ListItem>
       </ScrollView>
     </View>

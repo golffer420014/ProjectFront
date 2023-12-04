@@ -24,10 +24,8 @@ const Home = props => {
   const [products, setProducts] = useState([]);
   const [userImage, setUserImage] = useState([]);
   const idUser = context.stateUser.user.userId;
-  const [ctg,setCtg] = useState([])
+  const [ctg, setCtg] = useState([]);
   const [changCtg, setChangCtg] = useState('ที่พัก');
-
-  const [productCtg, setProductCtg] = useState([]);
 
   // console.log(JSON.stringify(products, null, 2));
 
@@ -80,16 +78,16 @@ const Home = props => {
           setLoading(true);
         });
 
-        axios
-          .get(`${baseURL}category`)
-          .then(res => {
-            setCtg(res.data);
-            setLoading(false);
-          })
-          .catch(err => {
-            console.log('home call api proucts error');
-            setLoading(true);
-          });
+      axios
+        .get(`${baseURL}category`)
+        .then(res => {
+          setCtg(res.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.log('home call api proucts error');
+          setLoading(true);
+        });
 
       return () => {
         setLoading(true);
@@ -97,7 +95,7 @@ const Home = props => {
         setUserImage([]); // หรืออะไรที่เหมาะสมกับข้อมูล userImage ของคุณ
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
+    }, [context.stateUser.isAuthenticated]),
   );
 
   // console.log(products)
@@ -125,24 +123,38 @@ const Home = props => {
             onPress={() =>
               props.navigation.navigate('User', {screen: 'User Profile'})
             }>
-            <Image
-              source={require('../../assests/user.png')}
-              style={{width: 35, height: 35, borderRadius: 50}}
-              resizeMode="cover"
-            />
+            <View
+              style={{
+                borderWidth: 5,
+                borderRadius: 50,
+                borderColor: '#dfdfdf',
+              }}>
+              <Image
+                source={require('../../assests/user.png')}
+                style={{width: 35, height: 35, borderRadius: 50}}
+                resizeMode="cover"
+              />
+            </View>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
             onPress={() =>
               props.navigation.navigate('User', {screen: 'User Profile'})
             }>
-            <Image
-              source={{
-                uri: userImage ? userImage.image : '../../assests/user.png',
-              }}
-              style={{width: 35, height: 35, borderRadius: 50}}
-              resizeMode="cover"
-            />
+            <View
+              style={{
+                borderWidth: 5,
+                borderRadius: 50,
+                borderColor: '#dfdfdf',
+              }}>
+              <Image
+                source={{
+                  uri: userImage ? userImage.image : userImage.image,
+                }}
+                style={{width: 35, height: 35, borderRadius: 50}}
+                resizeMode="cover"
+              />
+            </View>
           </TouchableOpacity>
         )}
 
@@ -160,28 +172,31 @@ const Home = props => {
 
       {/* ctg */}
       <View style={{flexDirection: 'row', width: '95%'}}>
-        {ctg.slice(4).map(item => (
-          <TouchableOpacity
-            onPress={() => setChangCtg(item.name)}
-            key={item.id}>
-            <View
-              style={[
-                styles.ctgFiltered,
-                item.name === changCtg ? styles.activeCtg : null,
-              ]}>
-              {/* <Image
+        {ctg.map(
+          item =>
+            (item.name === 'ที่พัก' || item.name === 'อาหาร') && (
+              <TouchableOpacity
+                onPress={() => setChangCtg(item.name)}
+                key={item.id}>
+                <View
+                  style={[
+                    styles.ctgFiltered,
+                    item.name === changCtg ? styles.activeCtg : null,
+                  ]}>
+                  {/* <Image
                 source={{uri: item.icon}}
                 style={{width: 50, height: 50, borderRadius: 50}}
               /> */}
-              <Text
-                style={
-                  item.name === changCtg ? styles.textActive : styles.textDF
-                }>
-                {item.name}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+                  <Text
+                    style={
+                      item.name === changCtg ? styles.textActive : styles.textDF
+                    }>
+                    {item.name}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ),
+        )}
       </View>
 
       {/* product ctg */}
@@ -220,10 +235,13 @@ const Home = props => {
               borderRadius: 10,
               justifyContent: 'center',
             }}>
-            <Text
-              style={[styles.textDF, {color: '#f47a7e', fontWeight: 'bold'}]}>
-              View All
-            </Text>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('All Product')}>
+              <Text
+                style={[styles.textDF, {color: '#f47a7e', fontWeight: 'bold'}]}>
+                View All
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.listContainer}>
@@ -276,22 +294,21 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     top: -5,
-    backgroundColor:'#dfdfdf',
-    
+    backgroundColor: '#dfdfdf',
   },
   bestProduct: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 40,
-    marginBottom:20,
-    width:'100%',
-    alignItems:'center',
-    paddingHorizontal:20
+    marginBottom: 20,
+    width: '100%',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   ctgFiltered: {
     alignItems: 'center',
     marginVertical: 20,
     marginRight: 10,
-    padding:5
+    padding: 5,
   },
 });
