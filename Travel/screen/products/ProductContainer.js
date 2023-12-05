@@ -142,7 +142,9 @@ const ProductContainer = props => {
     <>
       {loading == false ? (
         <Container style={{backgroundColor: 'white'}}>
-          <Header searchBar  style={{backgroundColor: '#dcdcdc',paddingBottom:8}}>
+          <Header
+            searchBar
+            style={{backgroundColor: '#f5f5f5', paddingBottom: 8,borderBottomWidth:3,borderColor:'#dfdfdf'}}>
             <Item
               style={{
                 borderRadius: 20,
@@ -176,12 +178,12 @@ const ProductContainer = props => {
               productsFiltered={productsFiltered}
             />
           ) : (
-            <ScrollView style={{backgroundColor: '#dfdfdf'}}>
+            <ScrollView style={{backgroundColor: '#f5f5f5'}}>
               <View style={styles.container}>
                 {/* <View style={{}}>
                   <Banner />
                 </View> */}
-                <View style={{backgroundColor: '#dfdfdf'}}>
+                <View style={{backgroundColor: '#f5f5f5'}}>
                   <CategoryFilter
                     categories={categories}
                     categoryFilter={changeCtg}
@@ -193,7 +195,7 @@ const ProductContainer = props => {
 
                 {productsCtg.length > 0 ? (
                   <LinearGradient
-                    colors={['#dfdfdf', '#dfdfdf']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
+                    colors={['#f5f5f5', '#dfdfdf']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
                     style={styles.listContainer}>
                     {productsCtg.slice(0, visibleItemCount).map(item => {
                       return (
@@ -230,13 +232,12 @@ const ProductContainer = props => {
                     </View>
                   </LinearGradient>
                 ) : (
-                  <View style={[styles.listProduct,{top:30}]}>
+                  <View style={[styles.listProduct, {top: 30}]}>
                     <View
                       style={{
                         justifyContent: 'space-between',
                         flexDirection: 'row',
                         height: height,
-                        
                       }}>
                       <View style={{width: '50%'}}>
                         <Text style={{color: '#dfdfdf'}}>555</Text>

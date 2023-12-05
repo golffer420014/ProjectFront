@@ -79,7 +79,7 @@ const ListItem = (props) => {
                     props.navigation.navigate("Product Detail", { item: props })
                 }
                 onLongPress={() => setModalVisible(true)}
-                style={[styles.container, { backgroundColor: props.index % 2 == 0 ? "white" : '#dfdfdf' }]}
+                style={[styles.container, { backgroundColor: props.index % 2 == 0 ? "white" : '#f5f5f5' }]}
             >
                 <Image
                     source={{

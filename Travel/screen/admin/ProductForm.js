@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'whitesomke',
+    backgroundColor: '#f5f5f5',
     paddingTop:20,
   },
 

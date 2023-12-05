@@ -204,7 +204,7 @@ const Home = props => {
         horizontal={true}
         showsHorizontalScrollIndicator={false} // ซ่อน indicator ในแนวนอน
         indicatorStyle={{backgroundColor: 'red'}} // ตั้งค่าสี indicator
-        style={{backgroundColor: '#dfdfdf', paddingTop: 15, borderRadius: 10}}>
+        style={{backgroundColor: '#f5f5f5', paddingTop: 15, borderRadius: 10}}>
         {products.map(item => {
           // กรองรายการที่มี item.category.name เท่ากับ 'ทะเล' เท่านั้น
           if (item.category.name === changCtg) {
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     top: -5,
-    backgroundColor: '#dfdfdf',
+    backgroundColor: '#f5f5f5',
   },
   bestProduct: {
     flexDirection: 'row',

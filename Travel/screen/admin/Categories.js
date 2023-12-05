@@ -222,7 +222,7 @@ export default Categories
 const styles = StyleSheet.create({
 
   bottomBar: {
-    backgroundColor: "#DFDFDF",
+    backgroundColor: "#f5f5f5",
     width: width,
     height: 80,
     padding: 2,

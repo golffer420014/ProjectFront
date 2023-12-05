@@ -214,7 +214,7 @@ const Feed = props => {
           justifyContent: 'center',
           paddingTop: 18,
           paddingBottom: 5,
-          backgroundColor: '#dfdfdf',
+          backgroundColor: '#f5f5f5',
           width: '100%',
         }}>
         {context.stateUser.isAuthenticated == true ? (

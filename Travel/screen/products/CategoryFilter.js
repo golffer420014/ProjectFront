@@ -54,6 +54,8 @@ const CategoryFilter = (props) => {
           backgroundColor: '#ffffff',
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
+          borderWidth:3,
+          borderColor:'#dfdfdf'
         }}>
         <ListItem
           style={{

@@ -193,7 +193,7 @@ const Event = () => {
                     )}
                     keyExtractor={(item) => item.id}
                     numColumns={2}
-                    style={{backgroundColor:'#dfdfdf'}}
+                    style={{backgroundColor:'#f5f5f5'}}
                 />
             </View>
         </ScrollView>
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
         height:width/.5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#dfdfdf',
+        backgroundColor:'#f5f5f5',
         paddingBottom:20,
         marginTop:-20,
     },

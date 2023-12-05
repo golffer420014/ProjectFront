@@ -15,7 +15,7 @@ const initialLayout = { width: Dimensions.get('window').width };
 // คอมโพเนนต์สำหรับ Description
 const DescriptionRoute = (props) => (
   <ScrollView>
-    <View style={{ flex: 1, backgroundColor: '#ffff', padding: 20, color: 'gainsboro', textAlign: 'center' }}>
+    <View style={{ flex: 1, backgroundColor: '#ffff', padding: 10, color: 'gainsboro', textAlign: 'center' }}>
       <Text style={{ fontSize: 15, color: 'black' }}>{props.description}</Text>
     </View>
   </ScrollView>
