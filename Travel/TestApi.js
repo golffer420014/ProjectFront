@@ -9,7 +9,7 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-
+import auth from '@react-native-firebase/auth'
 // import auth from '@react-native-firebase/auth';
 
 GoogleSignin.configure({
@@ -71,20 +71,20 @@ function Auth({navigation}) {
 function HomeScreen({navigation}) {
   const [email, setEmail] = useState();
 
-  // useEffect(() =>{
-  //   const decode = auth().onAuthStateChanged(user =>{
-  //     if(user){
-  //       setEmail(user.email)
-  //       console.log('user')
-  //     }else{
-  //       console.log('never login')
-  //       navigation.navigate('Home')
-  //     }
-  //   })
+  useEffect(() =>{
+    const decode = auth().onAuthStateChanged(user =>{
+      if(user){
+        setEmail(user.email)
+        console.log('user')
+      }else{
+        console.log('never login')
+        navigation.navigate('Home')
+      }
+    })
 
-  //   return() => decode();
+    return() => decode();
 
-  // },[])
+  },[])
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
