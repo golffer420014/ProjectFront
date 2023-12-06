@@ -46,22 +46,22 @@ const App = () => {
 
   
   return (
-    // <Auth >
-    //   <Provider store={store}>
+    <Auth >
+      <Provider store={store}>
 
-    //     <NavigationContainer >
-    //       {/* <StatusBar
-    //         hidden
-    //       /> */}
-    //       {/* <Header /> */}
-    //       <Main  />
-    //       <Toast ref={(ref) => Toast.setRef(ref)} config={toastConfig} />
+        <NavigationContainer >
+          {/* <StatusBar
+            hidden
+          /> */}
+          {/* <Header /> */}
+          <Main  />
+          <Toast ref={(ref) => Toast.setRef(ref)} config={toastConfig} />
 
-    //     </NavigationContainer>
-    //   </Provider>
-    // </Auth>
+        </NavigationContainer>
+      </Provider>
+    </Auth>
 
-    <TestApi/>
+    // <TestApi/>
 
 
   )

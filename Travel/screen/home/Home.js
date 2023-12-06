@@ -18,6 +18,8 @@ import FormContainer from '../../Shared/Form/FormContainer';
 import Banner from '../../Shared/Banner';
 import ProductList from '../products/ProductList';
 import AuthGlobal from '../../context/store/AuthGlobal';
+import LinearGradient from 'react-native-linear-gradient';
+
 var {width} = Dimensions.get('window');
 
 
@@ -120,9 +122,10 @@ const Home = props => {
   return (
     <FormContainer>
       {/* header */}
-      <ImageBackground
-        source={require('../../assests/logoapp.png')}
-        resizeMode="stretch"
+      <LinearGradient
+        colors={['#ff9a9e', '#fcb69f']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
+        start={{x: 0, y: 0}} // จุดเริ่มต้น (บนซ้าย)
+        end={{x: 1, y: 0}}
         style={styles.header}>
         {!context.stateUser.isAuthenticated ? (
           <View
@@ -140,15 +143,17 @@ const Home = props => {
               }>
               <Image
                 source={require('../../assests/user.png')}
-                style={{width: 50, height: 50, borderRadius: 50}}
+                style={{width: 35, height: 35, borderRadius: 50}}
                 resizeMode="cover"
               />
             </TouchableOpacity>
-            {/* <Image
-              source={require('../../assests/1223348.jpg')}
-              style={{width: 50, height: 50, borderRadius: 20}}
+            <Image
+              source={{
+                uri: 'https://img.freepik.com/free-vector/detailed-travel-logo_23-2148616611.jpg?w=826&t=st=1701900865~exp=1701901465~hmac=3b8a68ca724e3f41bc6281bb47fdcc4bf7ac8c8e953371ff40943de928078287',
+              }}
+              style={{width: 40, height: 40, borderRadius: 20}}
               resizeMode="cover"
-            /> */}
+            />
           </View>
         ) : (
           <View
@@ -179,7 +184,7 @@ const Home = props => {
                     source={{
                       uri: user ? user.image : user.image,
                     }}
-                    style={{width: 50, height: 50, borderRadius: 50}}
+                    style={{width: 40, height: 40, borderRadius: 50}}
                     resizeMode="cover"
                   />
                 </View>
@@ -188,30 +193,34 @@ const Home = props => {
               <View style={{width: 10}}></View>
               <View
                 style={{
-                  backgroundColor: '#f5f5f5',
                   paddingHorizontal: 5,
                   borderRadius: 5,
                 }}>
-                <Text style={[styles.textDF, {fontWeight: 'bold'}]}>
+                <Text
+                  style={[{fontWeight: 'bold', color: 'white', fontSize: 17}]}>
                   Hi, {user.fname}
                 </Text>
-                <Text style={[styles.textDF]}>{user.address}</Text>
+                <Text style={[{fontWeight: 'bold', color: 'white'}]}>
+                  {user.address}
+                </Text>
               </View>
             </View>
-            {/* <Image
-              source={require('../../assests/1223348.jpg')}
-              style={{width: 50, height: 50, borderRadius: 20}}
+            <Image
+              source={{
+                uri: 'https://img.freepik.com/free-vector/detailed-travel-logo_23-2148616611.jpg?w=826&t=st=1701900865~exp=1701901465~hmac=3b8a68ca724e3f41bc6281bb47fdcc4bf7ac8c8e953371ff40943de928078287',
+              }}
+              style={{width: 45, height: 45, borderRadius: 20}}
               resizeMode="cover"
-            /> */}
+            />
           </View>
         )}
-      </ImageBackground>
+        <View
+          style={{height: 210, alignItems: 'center', justifyContent: 'center'}}>
+          <Banner />
+        </View>
+      </LinearGradient>
 
       {/* event */}
-      <View
-        style={{height: 210, alignItems: 'center', justifyContent: 'center'}}>
-        <Banner />
-      </View>
 
       {/* ctg */}
       <View style={{flexDirection: 'row', width: '95%'}}>
@@ -247,7 +256,7 @@ const Home = props => {
         horizontal={true}
         showsHorizontalScrollIndicator={false} // ซ่อน indicator ในแนวนอน
         indicatorStyle={{backgroundColor: 'red'}} // ตั้งค่าสี indicator
-        style={{backgroundColor: '#f5f5f5', paddingTop: 15, borderRadius: 10}}>
+        style={{backgroundColor: '#f5f5f5', paddingTop: 15}}>
         {products.map(item => {
           // กรองรายการที่มี item.category.name เท่ากับ 'ทะเล' เท่านั้น
           if (item.category.name === changCtg) {
@@ -266,27 +275,32 @@ const Home = props => {
 
       {/* best of */}
       <ScrollView style={{width: '100%'}}>
-        <View style={styles.bestProduct}>
-          <Text style={[styles.textDF, {fontSize: 20, fontWeight: 'bold'}]}>
+        <LinearGradient
+          colors={['#ff9a9e', '#fcb69f']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
+          start={{x: 0, y: 0}} // จุดเริ่มต้น (บนซ้าย)
+          end={{x: 1, y: 0}}
+          style={styles.bestProduct}>
+          <Text style={[{fontSize: 20, color: 'black', fontWeight: 'bold'}]}>
             Best of Thailand
           </Text>
-          <View
-            style={{
-              borderWidth: 3,
-              borderColor: '#dfdfdf',
-              paddingHorizontal: 10,
-              borderRadius: 10,
-              justifyContent: 'center',
-            }}>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate('All Product')}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('All Product')}>
+            <View
+              style={{
+                borderWidth: 2,
+                borderColor: '#f5f5f5',
+                padding: 10,
+                borderRadius: 10,
+                justifyContent: 'center',
+              }}>
               <Text
-                style={[styles.textDF, {color: '#f47a7e', fontWeight: 'bold'}]}>
+                style={[styles.textDF, {color: 'white', fontWeight: 'bold'}]}>
                 View All
               </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+            </View>
+          </TouchableOpacity>
+        </LinearGradient>
+
         <View style={styles.listContainer}>
           {products
             .sort((a, b) => b.rating - a.rating) // เรียงลำดับตาม rating มากไปน้อย
@@ -306,9 +320,11 @@ export default Home;
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
     alignItems: 'center',
-    height:100
+    // height:100
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    paddingBottom: 5,
   },
   textDF: {
     color: 'black',
@@ -336,11 +352,14 @@ const styles = StyleSheet.create({
   bestProduct: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 40,
-    marginBottom: 20,
-    width: '100%',
+    width: '95%',
     alignItems: 'center',
     paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginTop: 20,
+    marginBottom:25,
+    alignSelf:'center'
   },
   ctgFiltered: {
     alignItems: 'center',

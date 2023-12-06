@@ -34,7 +34,7 @@ const Banner = () => {
             height: 10, // Your desired inactive dot height
           }}
           circleLoop
-          ImageComponentStyle={{width:'95%',borderRadius:15}}
+          ImageComponentStyle={{width:'95%',borderRadius:20}}
         />
       </View>
     );
