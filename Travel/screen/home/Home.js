@@ -7,6 +7,8 @@ import {
   ActivityIndicator,
   ScrollView,
   Dimensions,
+  ImageBackground,
+  
 } from 'react-native';
 import React, {useState, useCallback, useContext} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
@@ -16,13 +18,14 @@ import FormContainer from '../../Shared/Form/FormContainer';
 import Banner from '../../Shared/Banner';
 import ProductList from '../products/ProductList';
 import AuthGlobal from '../../context/store/AuthGlobal';
-const windowWidth = Dimensions.get('window').width;
+var {width} = Dimensions.get('window');
+
 
 const Home = props => {
   const context = useContext(AuthGlobal);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [userImage, setUserImage] = useState([]);
+  const [user, setUser] = useState([]);
   const idUser = context.stateUser.user.userId;
   const [ctg, setCtg] = useState([]);
   const [changCtg, setChangCtg] = useState('ที่พัก');
@@ -57,7 +60,7 @@ const Home = props => {
         axios
           .get(`${baseURL}users/${idUser}`)
           .then(res => {
-            setUserImage(res.data);
+            setUser(res.data);
             // console.log(res.data);
             setLoading(false);
           })
@@ -92,7 +95,7 @@ const Home = props => {
       return () => {
         setLoading(true);
         setProducts([]);
-        setUserImage([]); // หรืออะไรที่เหมาะสมกับข้อมูล userImage ของคุณ
+        setUser([]); // หรืออะไรที่เหมาะสมกับข้อมูล userImage ของคุณ
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context.stateUser.isAuthenticated]),
@@ -117,52 +120,92 @@ const Home = props => {
   return (
     <FormContainer>
       {/* header */}
-      <View style={styles.header}>
+      <ImageBackground
+        source={require('../../assests/logoapp.png')}
+        resizeMode="stretch"
+        style={styles.header}>
         {!context.stateUser.isAuthenticated ? (
-          <TouchableOpacity
-            onPress={() =>
-              props.navigation.navigate('User', {screen: 'User Profile'})
-            }>
-            <View
-              style={{
-                borderWidth: 5,
-                borderRadius: 50,
-                borderColor: '#dfdfdf',
-              }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: 10,
+              width: width,
+              // width:370,
+            }}>
+            <TouchableOpacity
+              onPress={() =>
+                props.navigation.navigate('User', {screen: 'User Profile'})
+              }>
               <Image
                 source={require('../../assests/user.png')}
-                style={{width: 35, height: 35, borderRadius: 50}}
+                style={{width: 50, height: 50, borderRadius: 50}}
                 resizeMode="cover"
               />
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+            {/* <Image
+              source={require('../../assests/1223348.jpg')}
+              style={{width: 50, height: 50, borderRadius: 20}}
+              resizeMode="cover"
+            /> */}
+          </View>
         ) : (
-          <TouchableOpacity
-            onPress={() =>
-              props.navigation.navigate('User', {screen: 'User Profile'})
-            }>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: 10,
+              width: width,
+              // width:370,
+            }}>
             <View
               style={{
-                borderWidth: 5,
-                borderRadius: 50,
-                borderColor: '#dfdfdf',
+                flexDirection: 'row',
+                alignItems: 'center',
               }}>
-              <Image
-                source={{
-                  uri: userImage ? userImage.image : userImage.image,
-                }}
-                style={{width: 35, height: 35, borderRadius: 50}}
-                resizeMode="cover"
-              />
-            </View>
-          </TouchableOpacity>
-        )}
+              <TouchableOpacity
+                onPress={() =>
+                  props.navigation.navigate('User', {screen: 'User Profile'})
+                }>
+                <View
+                  style={{
+                    borderWidth: 5,
+                    borderRadius: 50,
+                    borderColor: '#dfdfdf',
+                  }}>
+                  <Image
+                    source={{
+                      uri: user ? user.image : user.image,
+                    }}
+                    style={{width: 50, height: 50, borderRadius: 50}}
+                    resizeMode="cover"
+                  />
+                </View>
+              </TouchableOpacity>
 
-        <Text style={[styles.textDF, {fontSize: 25, fontWeight: 'bold'}]}>
-          Home
-        </Text>
-        <Text>{'        '}</Text>
-      </View>
+              <View style={{width: 10}}></View>
+              <View
+                style={{
+                  backgroundColor: '#f5f5f5',
+                  paddingHorizontal: 5,
+                  borderRadius: 5,
+                }}>
+                <Text style={[styles.textDF, {fontWeight: 'bold'}]}>
+                  Hi, {user.fname}
+                </Text>
+                <Text style={[styles.textDF]}>{user.address}</Text>
+              </View>
+            </View>
+            {/* <Image
+              source={require('../../assests/1223348.jpg')}
+              style={{width: 50, height: 50, borderRadius: 20}}
+              resizeMode="cover"
+            /> */}
+          </View>
+        )}
+      </ImageBackground>
 
       {/* event */}
       <View
@@ -264,14 +307,8 @@ export default Home;
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
-    marginTop: -35,
-    marginBottom: 5,
-    padding: 10,
-    borderBottomWidth: 3,
-    borderColor: '#dfdfdf',
+    height:100
   },
   textDF: {
     color: 'black',
