@@ -16,6 +16,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import AuthGlobal from "../context/store/AuthGlobal";
+import MapNavigator from "./MapNavigator";
 
 
 const Tab = createBottomTabNavigator();
@@ -26,23 +27,25 @@ const Main = () => {
 
 
   return (
-
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
         keyboardHidesTabBar: true,
         showLabel: false,
-        activeTintColor: "#f47a7e",
-      }}
-    >
-
+        activeTintColor: '#f47a7e',
+      }}>
       {/* Home */}
       <Tab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="home" color={color} size={37} style={{ alignItems: 'center', justifyContent: 'center' }} />
+          tabBarIcon: ({color}) => (
+            <FontAwesome
+              name="home"
+              color={color}
+              size={37}
+              style={{alignItems: 'center', justifyContent: 'center'}}
+            />
           ),
           headerShown: false,
         }}
@@ -53,8 +56,30 @@ const Main = () => {
         name="Search"
         component={SearchNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="search-circle-sharp" color={color} size={40} style={{ alignItems: 'center', justifyContent: 'center' }} />
+          tabBarIcon: ({color}) => (
+            <Ionicons
+              name="search-circle-sharp"
+              color={color}
+              size={40}
+              style={{alignItems: 'center', justifyContent: 'center'}}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+
+      {/* Map */}
+      <Tab.Screen
+        name="Map"
+        component={MapNavigator}
+        options={{
+          tabBarIcon: ({color}) => (
+            <FontAwesome6
+              name="map-location-dot"
+              color={color}
+              size={30}
+              style={{alignItems: 'center', justifyContent: 'center'}}
+            />
           ),
           headerShown: false,
         }}
@@ -64,8 +89,13 @@ const Main = () => {
         name="Feed"
         component={CommunityNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <FontAwesome6 name="earth-asia" color={color} size={30} style={{ alignItems: 'center', justifyContent: 'center' }} />
+          tabBarIcon: ({color}) => (
+            <FontAwesome6
+              name="earth-asia"
+              color={color}
+              size={30}
+              style={{alignItems: 'center', justifyContent: 'center'}}
+            />
           ),
           headerShown: false,
         }}
@@ -77,7 +107,7 @@ const Main = () => {
           name="Admin"
           component={AdminNavigator}
           options={{
-            tabBarIcon: ({ color }) => (
+            tabBarIcon: ({color}) => (
               <Ionicons name="settings-sharp" color={color} size={30} />
             ),
             headerShown: false,
@@ -88,8 +118,13 @@ const Main = () => {
         name="User"
         component={UserNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="user" color={color} size={30} style={{ alignItems: 'center', justifyContent: 'center' }} />
+          tabBarIcon: ({color}) => (
+            <FontAwesome
+              name="user"
+              color={color}
+              size={30}
+              style={{alignItems: 'center', justifyContent: 'center'}}
+            />
           ),
           headerShown: false,
         }}
@@ -111,9 +146,6 @@ const Main = () => {
           */}
 
       {/* commu */}
-
-
-
     </Tab.Navigator>
   );
 };

@@ -21,6 +21,7 @@ import Main from './Navigators/Main';
 import { StatusBar } from '@gluestack-ui/themed'
 import UserEditPassowrd from './screen/user/UserEditPassowrd';
 import TestApi from './TestApi';
+import TestMap from './screen/map/TestMap';
 
 // ไม่สนการแจ้งเตือน
 LogBox.ignoreAllLogs(true)
@@ -61,7 +62,7 @@ const App = () => {
       </Provider>
     </Auth>
 
-    // <TestApi/>
+    // <TestMap/>
 
 
   )

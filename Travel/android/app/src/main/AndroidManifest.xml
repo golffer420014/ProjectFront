@@ -29,5 +29,8 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyA8J-UU_8xGDAugg8QUcU90ou6lWxCrvJ4"/>
     </application>
 </manifest>
