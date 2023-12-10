@@ -280,7 +280,7 @@ const Home = props => {
           start={{x: 0, y: 0}} // จุดเริ่มต้น (บนซ้าย)
           end={{x: 1, y: 0}}
           style={styles.bestProduct}>
-          <Text style={[{fontSize: 20, color: 'black', fontWeight: 'bold'}]}>
+          <Text style={[{fontSize: 20, color: 'white', fontWeight: 'bold'}]}>
             Best of Thailand
           </Text>
           <TouchableOpacity
