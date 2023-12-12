@@ -1,194 +1,274 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, Text, ScrollView, Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  Dimensions,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator
+} from 'react-native';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import AuthGlobal from '../context/store/AuthGlobal';
 import axios from 'axios';
 import baseURL from '../assests/common/baseUrl';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import MapView, {
+  Callout,
+  enableLatestRenderer,
+  Marker,
+} from 'react-native-maps';
 
-const initialLayout = { width: Dimensions.get('window').width };
+const initialLayout = {width: Dimensions.get('window').width};
 
 // คอมโพเนนต์สำหรับ Description
-const DescriptionRoute = (props) => (
+const DescriptionRoute = props => (
   <ScrollView>
-    <View style={{ flex: 1, backgroundColor: '#ffff', padding: 10, color: 'gainsboro', textAlign: 'center' }}>
-      <Text style={{ fontSize: 15, color: 'black' }}>{props.description}</Text>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: '#ffff',
+        padding: 10,
+        color: 'gainsboro',
+        textAlign: 'center',
+      }}>
+      <Text style={{fontSize: 15, color: 'black'}}>{props.description}</Text>
     </View>
   </ScrollView>
 );
 
 // คอมโพเนนต์สำหรับ Review
-const ReviewRoute = ({ reviews, authReview, navigation, props, context, deleteComment }) => (
-
-  <ScrollView style={{ backgroundColor: '#ffff' }}>
-
+const ReviewRoute = ({
+  reviews,
+  authReview,
+  navigation,
+  props,
+  context,
+  deleteComment,
+}) => (
+  <ScrollView style={{backgroundColor: '#ffff'}}>
     {authReview == true ? (
-      <View style={{ alignItems: 'center' }}>
+      <View style={{alignItems: 'center'}}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Product Review', { idProduct: props.id })}
-        >
-          <View style={{ padding: 5, backgroundColor: '#f47a7e', borderRadius: 50, marginTop: 8 }}>
-            <FontAwesome name="plus" size={20} color='white' />
+          onPress={() =>
+            navigation.navigate('Product Review', {idProduct: props.id})
+          }>
+          <View
+            style={{
+              padding: 5,
+              backgroundColor: '#f47a7e',
+              borderRadius: 50,
+              marginTop: 8,
+            }}>
+            <FontAwesome name="plus" size={20} color="white" />
           </View>
         </TouchableOpacity>
       </View>
-
-    ) :
-      null
-
-    }
-
+    ) : null}
 
     <View>
-      {reviews.map((item) => (
-        item.productId && item.productId.id === props.id &&
-        (
-          <View key={item.id} style={styles.reviewContainer}>
+      {reviews.map(
+        item =>
+          item.productId &&
+          item.productId.id === props.id && (
+            <View key={item.id} style={styles.reviewContainer}>
+              <Image
+                source={{uri: item.userId.image}}
+                style={styles.userImage}
+              />
 
-            <Image
-              source={{ uri: item.userId.image }}
-              style={styles.userImage}
-            />
+              <View style={styles.reviewTextContainer}>
+                <Text style={styles.userName}>
+                  {item.userId.fname} {item.userId.lname}
+                </Text>
 
-            <View style={styles.reviewTextContainer}>
-              <Text style={styles.userName}>{item.userId.fname} {item.userId.lname}</Text>
+                <View style={styles.starsContainer}>
+                  {Array.from({length: Math.floor(item.rating)}, (_, index) => (
+                    <FontAwesome key={index} name="star" style={styles.star} />
+                  ))}
+                  {/* Half star */}
+                  {item.rating % 1 !== 0 && (
+                    <FontAwesome name="star-half-empty" style={styles.star} />
+                  )}
+                </View>
 
-              <View style={styles.starsContainer}>
-                {Array.from({ length: Math.floor(item.rating) }, (_, index) => (
-                  <FontAwesome key={index} name="star" style={styles.star} />
-                ))}
-                {/* Half star */}
-                {item.rating % 1 !== 0 && (
-                  <FontAwesome name="star-half-empty" style={styles.star} />
-                )}
-              </View>
-
-              <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-                <Text style={styles.userReview}>{item.desc}</Text>
-                {context.stateUser.user.userId == item.userId.id ? (
-                  <TouchableOpacity
-                  onPress={() => deleteComment(item.id)}
-                  >
-                    <View style={{ paddingRight: 5 }}>
-                      <FontAwesome name="trash" size={15} color='black' />
-                    </View>
-                  </TouchableOpacity>
-
-                ) :
-                  null
-                }
-
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'flex-end',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={styles.userReview}>{item.desc}</Text>
+                  {context.stateUser.user.userId == item.userId.id ? (
+                    <TouchableOpacity onPress={() => deleteComment(item.id)}>
+                      <View style={{paddingRight: 5}}>
+                        <FontAwesome name="trash" size={15} color="black" />
+                      </View>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
               </View>
             </View>
-          </View>
-        )
-      ))}
+          ),
+      )}
     </View>
   </ScrollView>
 );
 
 // คอมโพเนนต์สำหรับ Location
-const LocationRoute = () => (
-  <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' }}>
-    <Text>สถานที่ของสินค้า...</Text>
+const LocationRoute = ({items}) => (
+  <View style={{flex: 1, alignItems: 'center', padding: 10}}>
+    <MapView
+      // style={styles.map}
+      style={{width: 350, height: 130}}
+      // ref={mapRef}
+      initialRegion={{
+        latitude: items[0].latitude,
+        longitude: items[0].longitude, // Use items[0].longitude here
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      }}></MapView>
+    <View style={styles.btnPressMap}>
+      <TouchableOpacity>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>Show More</Text>
+      </TouchableOpacity>
+    </View>
   </View>
 );
 
-
-
-
-const TopTapProduct = (props) => {
-
-
+const TopTapProduct = props => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: 'description', title: 'Description' },
-    { key: 'review', title: 'Review' },
-    { key: 'location', title: 'Location' },
+    {key: 'description', title: 'Description'},
+    {key: 'review', title: 'Review'},
+    {key: 'location', title: 'Location'},
   ]);
   const navigation = useNavigation();
-  const renderScene = ({ route }) => {
+  const renderScene = ({route}) => {
     switch (route.key) {
       case 'description':
         return <DescriptionRoute description={props.description} />;
       case 'review':
         // Pass the reviews state and navigation object as props
-        return <ReviewRoute deleteComment={deleteComment} context={context} props={props} reviews={reviews} authReview={authReview} navigation={navigation} />;
+        return (
+          <ReviewRoute
+            deleteComment={deleteComment}
+            context={context}
+            props={props}
+            reviews={reviews}
+            authReview={authReview}
+            navigation={navigation}
+          />
+        );
       case 'location':
-        return <LocationRoute location={props.location} />;
+        return <LocationRoute items={items} />;
       default:
         return null;
     }
   };
 
-
-  const context = useContext(AuthGlobal)
-  const [reviews, setReviews] = useState([])
-  const [authReview, setAuthReview] = useState()
-  const [token, setToken] = useState()
+  const context = useContext(AuthGlobal);
+  const [reviews, setReviews] = useState([]);
+  const [authReview, setAuthReview] = useState();
+  const [token, setToken] = useState();
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
       // Fetch the latest reviews when the screen comes into focus
       if (context.stateUser.isAuthenticated == true) {
-        setAuthReview(true)
+        setAuthReview(true);
       }
-      AsyncStorage.getItem('jwt')
-        .then(res => setToken(res))
+      AsyncStorage.getItem('jwt').then(res => setToken(res));
       axios
         .get(`${baseURL}review`)
-        .then((res) => {
+        .then(res => {
           const reversedReviews = res.data.reverse();
           setReviews(reversedReviews);
           // console.log(res.data);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log('review call error');
         });
-    }, []) 
+
+      axios.get(`${baseURL}products`).then(res => {
+        const itemsWithDouble = res.data.map(item => ({
+          ...item,
+          latitude: parseFloat(item.latitude),
+          longitude: parseFloat(item.longitude),
+        }));
+
+        // Check for valid coordinates and matching id before setting items
+        const validItems = itemsWithDouble.filter(
+          item =>
+            !isNaN(item.latitude) &&
+            !isNaN(item.longitude) &&
+            item.id === props.id,
+        );
+
+        if (props) {
+          setLoading(false);
+        }
+
+        setItems(validItems);
+      });
+    }, []),
   );
 
   // console.log(context.stateUser.user.userId)
   // console.log(reviews)
 
-  const deleteComment = (id) => {
+  const deleteComment = id => {
     console.log(id);
     axios
       .delete(`${baseURL}review/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: {Authorization: `Bearer ${token}`},
       })
-      .then((res) => {
-        const updatedReviews = reviews.filter((item) => item.id !== id); // Use `reviews` instead of `review`
+      .then(res => {
+        const updatedReviews = reviews.filter(item => item.id !== id); // Use `reviews` instead of `review`
         setReviews(updatedReviews);
         Toast.show({
           topOffset: 60,
-          type: "success",
+          type: 'success',
           text1: `Delete Succeeded`,
           // text2: "Please Login into your account",
         });
       })
-      .catch((err) => console.log(err));
-  }
+      .catch(err => console.log(err));
+  };
 
-
-
+    if (loading) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#ffff',
+          }}>
+          <ActivityIndicator size="large" color="#f36d72" />
+        </View>
+      );
+    }
 
   return (
     <TabView
-      navigationState={{ index, routes }}
+      navigationState={{index, routes}}
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={initialLayout}
       renderTabBar={props => (
         <TabBar
           {...props}
-          indicatorStyle={{ backgroundColor: '#f47a7e' }}
-          style={{ backgroundColor: 'white' }}
-          labelStyle={{ color: 'gray', fontWeight: '500' }}
+          indicatorStyle={{backgroundColor: '#f47a7e'}}
+          style={{backgroundColor: 'white'}}
+          labelStyle={{color: 'gray', fontWeight: '500'}}
           activeColor={'#f47a7e'}
         />
       )}
@@ -197,7 +277,6 @@ const TopTapProduct = (props) => {
 };
 
 const styles = StyleSheet.create({
-
   postReview: {
     width: '60%',
     marginTop: 20,
@@ -219,7 +298,7 @@ const styles = StyleSheet.create({
     margin: 5,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
@@ -235,7 +314,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 16,
-    color: 'black'
+    color: 'black',
   },
   starsContainer: {
     flexDirection: 'row',
@@ -256,20 +335,20 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 22,
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
-    shadowColor: "#f36d72",
+    alignItems: 'center',
+    shadowColor: '#f36d72',
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -277,10 +356,17 @@ const styles = StyleSheet.create({
     width: 350,
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold"
+    color: 'white',
+    fontWeight: 'bold',
   },
-
-})
+  btnPressMap: {
+    backgroundColor: '#f47a7e',
+    zIndex: 999,
+    position: 'absolute',
+    right: 10,
+    top: 10,
+    padding: 10,
+  },
+});
 
 export default TopTapProduct;
