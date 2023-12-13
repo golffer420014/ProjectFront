@@ -125,7 +125,7 @@ const LocationRoute = ({items}) => (
   <View style={{flex: 1, alignItems: 'center', padding: 10}}>
     <MapView
       // style={styles.map}
-      style={{width: 350, height: 130}}
+      style={{width: 350, height: 200}}
       // ref={mapRef}
       initialRegion={{
         latitude: items[0].latitude,
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f47a7e',
     zIndex: 999,
     position: 'absolute',
-    right: 10,
+    right: 0,
     top: 10,
     padding: 10,
   },
