@@ -8,7 +8,8 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  Linking
 } from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import AuthGlobal from '../context/store/AuthGlobal';
@@ -23,6 +24,7 @@ import MapView, {
   enableLatestRenderer,
   Marker,
 } from 'react-native-maps';
+import EasyButton from './StyledComponents/EasyButton';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
@@ -72,72 +74,99 @@ const ReviewRoute = ({
     ) : null}
 
     <View>
-      {reviews.map(
-        item =>
-          item.productId &&
-          item.productId.id === props.id && (
-            <View key={item.id} style={styles.reviewContainer}>
-              <Image
-                source={{uri: item.userId.image}}
-                style={styles.userImage}
-              />
+      {reviews.length > 0 ? (
+        <View>
+          {reviews.map(
+            item =>
+              item.productId &&
+              item.productId.id === props.id &&
+              authReview(
+                <View key={item.id} style={styles.reviewContainer}>
+                  <Image
+                    source={{uri: item.userId.image ? item.userId.image : ''}}
+                    style={styles.userImage}
+                  />
 
-              <View style={styles.reviewTextContainer}>
-                <Text style={styles.userName}>
-                  {item.userId.fname} {item.userId.lname}
-                </Text>
+                  <View style={styles.reviewTextContainer}>
+                    <Text style={styles.userName}>
+                      {item.userId.fname} {item.userId.lname}
+                    </Text>
 
-                <View style={styles.starsContainer}>
-                  {Array.from({length: Math.floor(item.rating)}, (_, index) => (
-                    <FontAwesome key={index} name="star" style={styles.star} />
-                  ))}
-                  {/* Half star */}
-                  {item.rating % 1 !== 0 && (
-                    <FontAwesome name="star-half-empty" style={styles.star} />
-                  )}
-                </View>
+                    <View style={styles.starsContainer}>
+                      {Array.from(
+                        {length: Math.floor(item.rating)},
+                        (_, index) => (
+                          <FontAwesome
+                            key={index}
+                            name="star"
+                            style={styles.star}
+                          />
+                        ),
+                      )}
+                      {/* Half star */}
+                      {item.rating % 1 !== 0 && (
+                        <FontAwesome
+                          name="star-half-empty"
+                          style={styles.star}
+                        />
+                      )}
+                    </View>
 
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'flex-end',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={styles.userReview}>{item.desc}</Text>
-                  {context.stateUser.user.userId == item.userId.id ? (
-                    <TouchableOpacity onPress={() => deleteComment(item.id)}>
-                      <View style={{paddingRight: 5}}>
-                        <FontAwesome name="trash" size={15} color="black" />
-                      </View>
-                    </TouchableOpacity>
-                  ) : null}
-                </View>
-              </View>
-            </View>
-          ),
-      )}
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'flex-end',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text style={styles.userReview}>{item.desc}</Text>
+                      {context.stateUser.user.userId == item.userId.id ? (
+                        <TouchableOpacity
+                          onPress={() => deleteComment(item.id)}>
+                          <View style={{paddingRight: 5}}>
+                            <FontAwesome name="trash" size={15} color="black" />
+                          </View>
+                        </TouchableOpacity>
+                      ) : null}
+                    </View>
+                  </View>
+                </View>,
+              ),
+          )}
+        </View>
+      ) : null}
     </View>
   </ScrollView>
 );
 
 // คอมโพเนนต์สำหรับ Location
-const LocationRoute = ({items}) => (
-  <View style={{flex: 1, alignItems: 'center', padding: 10}}>
+const LocationRoute = ({items, mapNavigate}) => (
+  <View style={{flex: 1, alignItems: 'center'}}>
     <MapView
-      // style={styles.map}
-      style={{width: 350, height: 200}}
-      // ref={mapRef}
+      style={{width: '100%', height: '100%'}}
       initialRegion={{
-        latitude: items[0].latitude,
-        longitude: items[0].longitude, // Use items[0].longitude here
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005,
-      }}></MapView>
-    <View style={styles.btnPressMap}>
-      <TouchableOpacity>
-        <Text style={{color: 'white', fontWeight: 'bold'}}>Show More</Text>
-      </TouchableOpacity>
-    </View>
+        latitude: items.length > 0 ? items[0].latitude : 0,
+        longitude: items.length > 0 ? items[0].longitude : 0,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      }}>
+      {items.map((marker, index) => (
+        <Marker
+          key={marker.id}
+          coordinate={{
+            latitude: marker.latitude,
+            longitude: marker.longitude,
+          }}>
+          <Callout
+            onPress={() => mapNavigate(marker.latitude, marker.longitude)}>
+            <View style={styles.modalPin}>
+              <EasyButton medium main onPress={() => console.log('e')}>
+                <Text style={{color: 'white'}}>Navigate</Text>
+              </EasyButton>
+            </View>
+          </Callout>
+        </Marker>
+      ))}
+    </MapView>
   </View>
 );
 
@@ -166,11 +195,23 @@ const TopTapProduct = props => {
           />
         );
       case 'location':
-        return <LocationRoute items={items} />;
+        return (
+          <LocationRoute
+            items={items}
+            navigation={navigation}
+            mapNavigate={mapNavigate}
+          />
+        );
       default:
         return null;
     }
   };
+
+    const mapNavigate = (latitude, longitude) => {
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+      Linking.openURL(url);
+    };
+
 
   const context = useContext(AuthGlobal);
   const [reviews, setReviews] = useState([]);
@@ -178,6 +219,7 @@ const TopTapProduct = props => {
   const [token, setToken] = useState();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+
 
   useFocusEffect(
     useCallback(() => {

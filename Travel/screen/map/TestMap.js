@@ -25,10 +25,11 @@ import EasyButton from '../../Shared/StyledComponents/EasyButton';
 
 enableLatestRenderer();
 
-const TestMap = () => {
+const TestMap = (props) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const mapRef = useRef(null);
+
 
 
   useFocusEffect(
