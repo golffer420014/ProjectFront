@@ -19,6 +19,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import baseURL from '../../assests/common/baseUrl';
 
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import EasyButton from '../../Shared/StyledComponents/EasyButton';
 
@@ -28,6 +29,7 @@ const TestMap = (props) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const mapRef = useRef(null);
+  const [guide,setGuide] = useState(true)
 
 
 
@@ -59,6 +61,7 @@ const TestMap = (props) => {
       return () => {
         setItems([]);
         setLoading(true);
+        setGuide(true)
       };
     }, []),
   );
@@ -94,25 +97,27 @@ const TestMap = (props) => {
   const renderItem = ({item}) => {
     if (item.category.name !== 'อาหาร' && item.category.name !== 'ที่พัก') {
       return (
-        <View style={styles.listItem}>
-          <View
-            style={{
-              backgroundColor: '#f36d72',
-              paddingVertical: 5,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-              alignItems: 'center',
-            }}>
-            <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>
-              {item.name}
-            </Text>
+        <View>
+          <View style={styles.listItem}>
+            <View
+              style={{
+                backgroundColor: '#f36d72',
+                paddingVertical: 5,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                alignItems: 'center',
+              }}>
+              <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>
+                {item.name}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={() => go(item.latitude, item.longitude)}>
+              <Image
+                source={{uri: item.image}}
+                style={{width: 300, height: 150}}
+              />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => go(item.latitude, item.longitude)}>
-            <Image
-              source={{uri: item.image}}
-              style={{width: 300, height: 150}}
-            />
-          </TouchableOpacity>
         </View>
       );
     } else {
@@ -172,12 +177,49 @@ const TestMap = (props) => {
         ))}
       </MapView>
       <View style={styles.listView}>
-        <FlatList
-          horizontal={true}
-          data={items}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
+        {guide == true ? (
+          <View style={styles.guideWrapper}>
+            <TouchableOpacity onPress={() => setGuide(false)}>
+              <View style={styles.guide}>
+                <AntDesign name="downcircleo" size={25} color="#f36d72" />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity 
+            // onPress={() => setGuide(false)}
+            >
+              <View style={styles.guide}>
+                <AntDesign name="book" size={25} color="#f36d72" />
+              </View>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.guideWrapper}>
+            <TouchableOpacity 
+            onPress={() => setGuide(true)
+            }>
+              <View style={styles.guide}>
+                <AntDesign name="upcircleo" size={25} color="#f36d72" />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity 
+            // onPress={() => setGuide(true)}
+            >
+              <View style={styles.guide}>
+                <AntDesign name="book" size={25} color="#f36d72" />
+              </View>
+            </TouchableOpacity>
+          </View>
+        )}
+        {guide == true ? (
+          <View>
+            <FlatList
+              horizontal={true}
+              data={items}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+            />
+          </View>
+        ) : null}
       </View>
     </View>
   );
@@ -200,4 +242,19 @@ const styles = StyleSheet.create({
     padding: 5,
     flexDirection: 'row',
   },
+  guide: {
+    padding: 5,
+    backgroundColor: '#ffff',
+    width: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    borderRadius: 50,
+  },
+  guideWrapper:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    paddingHorizontal:10,
+    width:390
+  }
 });
