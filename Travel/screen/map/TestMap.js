@@ -6,7 +6,6 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   Linking,
 } from 'react-native';
 import React, {useCallback, useState, useRef} from 'react';

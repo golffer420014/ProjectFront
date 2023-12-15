@@ -235,7 +235,23 @@ const Feed = props => {
               </Text>
             </View>
           </TouchableOpacity>
-        ) : null}
+        ) : (
+          <View
+            style={{
+              backgroundColor: '#ffff',
+              padding: 10,
+              borderRadius: 30,
+              top: -7,
+              width: 370,
+              alignItems: 'center',
+              // borderWidth:3,
+              // borderColor:'#dfdfdf',
+            }}>
+            <Text style={{color: 'black', fontSize: 15, fontWeight: 'bold'}}>
+              You must be Login first
+            </Text>
+          </View>
+        )}
       </View>
 
       <ScrollView style={{height: null}}>

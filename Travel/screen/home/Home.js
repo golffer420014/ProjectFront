@@ -328,10 +328,12 @@ const styles = StyleSheet.create({
   },
   textDF: {
     color: 'black',
+    fontSize: 17,
     // fontWeight:'bold'
   },
   textActive: {
     color: '#f47a7e',
+    fontSize: 17,
   },
   activeCtg: {
     borderBottomWidth: 3,
@@ -358,8 +360,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 20,
     marginTop: 20,
-    marginBottom:25,
-    alignSelf:'center'
+    marginBottom: 25,
+    alignSelf: 'center',
   },
   ctgFiltered: {
     alignItems: 'center',
