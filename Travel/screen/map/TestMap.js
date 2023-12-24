@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  Pressable,
 } from 'react-native';
 import React, {useCallback, useState, useRef} from 'react';
 import MapView, {
@@ -25,13 +26,12 @@ import EasyButton from '../../Shared/StyledComponents/EasyButton';
 
 enableLatestRenderer();
 
-const TestMap = (props) => {
+const TestMap = props => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const mapRef = useRef(null);
-  const [guide,setGuide] = useState(true)
-
-
+  const [guide, setGuide] = useState(true);
+  const [options, setOptions] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -61,7 +61,7 @@ const TestMap = (props) => {
       return () => {
         setItems([]);
         setLoading(true);
-        setGuide(true)
+        setGuide(true);
       };
     }, []),
   );
@@ -131,7 +131,6 @@ const TestMap = (props) => {
     Linking.openURL(url);
   };
 
-
   return (
     <View style={{flex: 1}}>
       <MapView
@@ -177,39 +176,40 @@ const TestMap = (props) => {
         ))}
       </MapView>
       <View style={styles.listView}>
-        {guide == true ? (
-          <View style={styles.guideWrapper}>
-            <TouchableOpacity onPress={() => setGuide(false)}>
+        <View style={styles.guideWrapper}>
+          <TouchableOpacity onPress={() => setGuide(!guide)}>
+            <View style={styles.guide}>
+              <AntDesign
+                name={guide ? 'downcircleo' : 'upcircleo'}
+                size={25}
+                color="#f36d72"
+              />
+            </View>
+          </TouchableOpacity>
+          <View>
+            <TouchableOpacity onPress={() => setOptions(!options)}>
               <View style={styles.guide}>
-                <AntDesign name="downcircleo" size={25} color="#f36d72" />
+                <AntDesign
+                  name={options ? 'closecircleo' : 'pluscircleo'}
+                  size={25}
+                  color="#f36d72"
+                />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity 
-            // onPress={() => setGuide(false)}
-            >
-              <View style={styles.guide}>
-                <AntDesign name="book" size={25} color="#f36d72" />
+            {options == true ? (
+              <View style={styles.guideOptionWrapper}>
+                <View style={styles.guideOption}>
+                  <TouchableOpacity onPress={() => console.log(1)}>
+                    <AntDesign name="calendar" size={25} color="#f36d72" />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => console.log(2)}>
+                    <AntDesign name="book" size={25} color="#f36d72" />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </TouchableOpacity>
+            ) : null}
           </View>
-        ) : (
-          <View style={styles.guideWrapper}>
-            <TouchableOpacity 
-            onPress={() => setGuide(true)
-            }>
-              <View style={styles.guide}>
-                <AntDesign name="upcircleo" size={25} color="#f36d72" />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity 
-            // onPress={() => setGuide(true)}
-            >
-              <View style={styles.guide}>
-                <AntDesign name="book" size={25} color="#f36d72" />
-              </View>
-            </TouchableOpacity>
-          </View>
-        )}
+        </View>
         {guide == true ? (
           <View>
             <FlatList
@@ -251,10 +251,30 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 50,
   },
-  guideWrapper:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    paddingHorizontal:10,
-    width:390
-  }
+  guideWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    width: 390,
+  },
+  guideOptionWrapper: {
+    position: 'absolute',
+    width: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    flexDirection: 'column',
+    top: -50,
+  },
+  guideOption: {
+    position: 'absolute',
+    padding: 5,
+    backgroundColor: '#ffff',
+    width: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    gap: 10,
+    paddingVertical:10
+  },
 });
