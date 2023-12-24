@@ -20,7 +20,7 @@ import Main from './Navigators/Main';
 //screen
 import { StatusBar } from '@gluestack-ui/themed'
 import UserEditPassowrd from './screen/user/UserEditPassowrd';
-import AgendaScreen from './AgendaScreen';
+import CalendarNote from './screen/map/calendar/calendarNote';
 
 // ไม่สนการแจ้งเตือน
 LogBox.ignoreAllLogs(true)
@@ -61,11 +61,8 @@ const App = () => {
     //   </Provider>
     // </Auth>
 
-    <AgendaScreen/>
-
-
-
-  )
+    <CalendarNote />
+  );
 }
 
 export default App

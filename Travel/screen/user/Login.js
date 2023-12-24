@@ -287,6 +287,6 @@ const styles = StyleSheet.create({
         alignItems: 'center', // center x
         justifyContent: 'center', //center y
         borderRadius: 10,
-        marginTop: 15
+        marginTop: 15,
     },
 });
