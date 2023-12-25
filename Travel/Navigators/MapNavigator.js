@@ -41,7 +41,7 @@ function MyStack() {
         }}
       />
       <Stack.Screen
-        name="Calendar"
+        name="Calendar note"
         component={CalendarNote}
         options={() => ({
           cardStyle: {backgroundColor: '#FFFFFF'},

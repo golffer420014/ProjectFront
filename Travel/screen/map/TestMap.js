@@ -34,7 +34,6 @@ const TestMap = props => {
   const [guide, setGuide] = useState(true);
   const [options, setOptions] = useState(false);
   const context = useContext(AuthGlobal)
-  console.log(context);
 
   useFocusEffect(
     useCallback(() => {
@@ -206,7 +205,7 @@ const TestMap = props => {
               <View style={styles.guideOptionWrapper}>
                 <View style={styles.guideOption}>
                   <TouchableOpacity
-                    onPress={() => props.navigation.navigate('Calendar')}>
+                    onPress={() => props.navigation.navigate('Calendar note')}>
                     <AntDesign name="calendar" size={25} color="#f36d72" />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => console.log(2)}>
