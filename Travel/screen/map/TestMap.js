@@ -9,7 +9,7 @@ import {
   Linking,
   Pressable,
 } from 'react-native';
-import React, {useCallback, useState, useRef} from 'react';
+import React, {useCallback, useState, useRef, useContext} from 'react';
 import MapView, {
   Callout,
   enableLatestRenderer,
@@ -23,6 +23,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import EasyButton from '../../Shared/StyledComponents/EasyButton';
+import AuthGlobal from '../../context/store/AuthGlobal';
 
 enableLatestRenderer();
 
@@ -32,6 +33,8 @@ const TestMap = props => {
   const mapRef = useRef(null);
   const [guide, setGuide] = useState(true);
   const [options, setOptions] = useState(false);
+  const context = useContext(AuthGlobal)
+  console.log(context);
 
   useFocusEffect(
     useCallback(() => {
@@ -187,19 +190,23 @@ const TestMap = props => {
             </View>
           </TouchableOpacity>
           <View>
-            <TouchableOpacity onPress={() => setOptions(!options)}>
-              <View style={styles.guide}>
-                <AntDesign
-                  name={options ? 'closecircleo' : 'pluscircleo'}
-                  size={25}
-                  color="#f36d72"
-                />
-              </View>
-            </TouchableOpacity>
+            {!context.stateUser.isAuthenticated ? null : (
+              <TouchableOpacity onPress={() => setOptions(!options)}>
+                <View style={styles.guide}>
+                  <AntDesign
+                    name={options ? 'closecircleo' : 'pluscircleo'}
+                    size={25}
+                    color="#f36d72"
+                  />
+                </View>
+              </TouchableOpacity>
+            )}
+
             {options == true ? (
               <View style={styles.guideOptionWrapper}>
                 <View style={styles.guideOption}>
-                  <TouchableOpacity onPress={() => console.log(1)}>
+                  <TouchableOpacity
+                    onPress={() => props.navigation.navigate('Calendar')}>
                     <AntDesign name="calendar" size={25} color="#f36d72" />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => console.log(2)}>

@@ -10,6 +10,8 @@ import CheckIn from '../screen/products/CheckIn';
 // icon
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import TestMap from '../screen/map/TestMap';
+import CalendarNote from '../screen/map/calendar/CalendarNote';
+import NewNote from '../screen/map/calendar/NewNote';
 
 const Stack = createStackNavigator();
 
@@ -38,7 +40,34 @@ function MyStack() {
           cardStyle: {backgroundColor: '#FFFFFF'},
         }}
       />
-      
+      <Stack.Screen
+        name="Calendar"
+        component={CalendarNote}
+        options={() => ({
+          cardStyle: {backgroundColor: '#FFFFFF'},
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerBackImage: () => (
+            <AntDesign name="arrowleft" size={24} color="#ff886a" />
+          ),
+          headerBackTitleVisible: false,
+          // เพิ่มสไตล์เพิ่มเติมตามที่ต้องการ
+        })}
+      />
+      <Stack.Screen
+        name="Note"
+        component={NewNote}
+        options={() => ({
+          cardStyle: {backgroundColor: '#FFFFFF'},
+          headerShown: true,
+          headerTitleAlign: 'center',
+          headerBackImage: () => (
+            <AntDesign name="arrowleft" size={24} color="#ff886a" />
+          ),
+          headerBackTitleVisible: false,
+          // เพิ่มสไตล์เพิ่มเติมตามที่ต้องการ
+        })}
+      />
     </Stack.Navigator>
   );
 }

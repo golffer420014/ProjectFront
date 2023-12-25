@@ -2,7 +2,11 @@ import React from 'react';
 import {StyleSheet, View, Dimensions, Text,TouchableOpacity} from 'react-native';
 import WeeklyCalendar from 'react-native-weekly-calendar';
 
-export default function CalendarNote() {
+export default function CalendarNote(props) {
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
+
+  
   const sampleEvents = [
     {
       userID: '123',
@@ -10,11 +14,11 @@ export default function CalendarNote() {
       duration: '02:00:00',
       note: 'Schedule 1',
     },
+    
     {
-      userID: '1234',
-      start: '2023-12-26 11:30:00',
-      duration: '10:00:00',
-      note: 'Schedule 2',
+      userID: '123',
+      start: '2023-12-27',
+      note: 'กไฟกทวสทา',
     },
   ];
 
@@ -22,21 +26,36 @@ export default function CalendarNote() {
 
   const resultEvent = sampleEvents.filter(event => event.userID === user);
 
-  console.log(resultEvent);
+
+
+  // console.log(resultEvent);
+
 
   return (
     <View style={styles.container}>
       <WeeklyCalendar
         events={resultEvent}
-        style={{height: '100%'}}
+        style={{height: '85%', backgroundColor: ''}}
         themeColor="#f36d72"
-        // titleStyle={{color: 'blue'}}
+        titleStyle={{color: '#f36d72'}}
         // dayLabelStyle={{color: 'green'}}
+        renderEvent={(event, j) => {
+          return(
+            <View key={j} style={{alignItems:'center',justifyContent:'center',height:65}}>
+            <Text>{event.note}</Text>
+            </View>
+          )
+        }}
       />
-      <View>
-        <TouchableOpacity
-        // onPress={() => handleSubmit()}
-        >
+      <View style={{flexDirection:'row', width:screenWidth,justifyContent:'space-around'}}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Note')}>
+          <View style={[styles.btnLogin,{width:101}]}>
+            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 15}}>
+              Delete Note
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Note')}>
           <View style={styles.btnLogin}>
             <Text style={{color: 'white', fontWeight: 'bold', fontSize: 15}}>
               Add Note
@@ -53,16 +72,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   btnLogin: {
     backgroundColor: '#f36d72',
-    width: 330,
+    width:100,
     height: 44,
     padding: 10,
     alignItems: 'center', // center x
     justifyContent: 'center', //center y
     borderRadius: 10,
     marginTop: 15,
+
   },
 });

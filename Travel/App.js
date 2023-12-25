@@ -20,7 +20,6 @@ import Main from './Navigators/Main';
 //screen
 import { StatusBar } from '@gluestack-ui/themed'
 import UserEditPassowrd from './screen/user/UserEditPassowrd';
-import CalendarNote from './screen/map/calendar/calendarNote';
 
 // ไม่สนการแจ้งเตือน
 LogBox.ignoreAllLogs(true)
@@ -46,22 +45,21 @@ const App = () => {
 
   
   return (
-    // <Auth >
-    //   <Provider store={store}>
+    <Auth >
+      <Provider store={store}>
 
-    //     <NavigationContainer >
-    //       {/* <StatusBar
-    //         hidden
-    //       /> */}
-    //       {/* <Header /> */}
-    //       <Main  />
-    //       <Toast ref={(ref) => Toast.setRef(ref)} config={toastConfig} />
+        <NavigationContainer >
+          {/* <StatusBar
+            hidden
+          /> */}
+          {/* <Header /> */}
+          <Main  />
+          <Toast ref={(ref) => Toast.setRef(ref)} config={toastConfig} />
 
-    //     </NavigationContainer>
-    //   </Provider>
-    // </Auth>
+        </NavigationContainer>
+      </Provider>
+    </Auth>
 
-    <CalendarNote />
   );
 }
 
