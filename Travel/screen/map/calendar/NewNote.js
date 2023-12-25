@@ -56,7 +56,7 @@ const NewNote = props => {
   const [selectedDate, setSelectedDate] = useState('');
   const [start, setStart] = useState('08:00:00');
   const resultStart = selectedDate + ' ' + start;
-  const [end, setEnd] = useState('03:00:00');
+  const [end, setEnd] = useState('01:00:00');
   const [note, setNote] = useState('');
   const [token, setToken] = useState();
   const userId = context.stateUser.user.userId;
