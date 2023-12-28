@@ -89,20 +89,20 @@ function Auth({navigation}) {
 function HomeScreen({navigation}) {
   const [email, setEmail] = useState();
 
-  useEffect(() =>{
-    const decode = auth().onAuthStateChanged(user =>{
-      if(user){
-        setEmail(user.email)
-        console.log('user')
-      }else{
-        console.log('never login')
-        navigation.navigate('Home')
-      }
-    })
+  // useEffect(() =>{
+  //   const decode = auth().onAuthStateChanged(user =>{
+  //     if(user){
+  //       setEmail(user.email)
+  //       console.log('user')
+  //     }else{
+  //       console.log('never login')
+  //       navigation.navigate('Home')
+  //     }
+  //   })
 
-    return() => decode();
+  //   return() => decode();
 
-  },[])
+  // },[])
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -113,7 +113,7 @@ function HomeScreen({navigation}) {
 
 const Stack = createNativeStackNavigator();
 
-function App() {
+function TestApi() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -124,4 +124,4 @@ function App() {
   );
 }
 
-export default App;
+export default TestApi;

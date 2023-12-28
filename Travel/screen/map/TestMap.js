@@ -64,6 +64,7 @@ const TestMap = props => {
         setItems([]);
         setLoading(true);
         setGuide(true);
+        setOptions(false)
       };
     }, []),
   );
