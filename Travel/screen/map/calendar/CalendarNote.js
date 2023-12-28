@@ -48,7 +48,6 @@ export default function CalendarNote(props) {
 
       setData(sortedData);
       setLoading(false);
-      console.log(JSON.stringify(sortedData, null, 2));
     });
   }, []);
 
