@@ -209,7 +209,12 @@ const TestMap = props => {
                     onPress={() => props.navigation.navigate('Calendar note')}>
                     <AntDesign name="calendar" size={25} color="#f36d72" />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => console.log(2)}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      props.navigation.navigate('User', {
+                        screen: 'Check in',
+                      })
+                    }>
                     <AntDesign name="book" size={25} color="#f36d72" />
                   </TouchableOpacity>
                 </View>

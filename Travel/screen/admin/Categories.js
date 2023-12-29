@@ -58,6 +58,7 @@ const Categories = (props) => {
 
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState();
+  const [categoryNameType, setCategoryNameType] = useState();
   const [token, setToken] = useState();
   const [selectedImage, setSelectedImage] = useState();
 
@@ -165,40 +166,58 @@ const Categories = (props) => {
 
 
   return (
-    <View style={{ position: "relative", height: "100%" }}>
-      <View style={{ marginBottom: 60 }}>
+    <View style={{position: 'relative', height: '100%'}}>
+      <View style={{marginBottom: 60}}>
         <FlatList
           data={categories}
-          renderItem={({ item, index }) => (
-            <Item item={item} index={index} delete={() => deleteCategory(item.id)} />
+          renderItem={({item, index}) => (
+            <Item
+              item={item}
+              index={index}
+              delete={() => deleteCategory(item.id)}
+            />
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
         />
       </View>
       <View style={styles.bottomBar}>
-        <TouchableOpacity
-          onPress={openImagePicker}
-        >
-          <View style={{ padding: 7, borderRadius: 60 }}>
+        <TouchableOpacity onPress={openImagePicker}>
+          <View style={{padding: 7, borderRadius: 60}}>
             {selectedImage ? (
               <Image
-                style={{ width: 50, height: 50, borderRadius: 10 }}
+                style={{width: 50, height: 50, borderRadius: 10}}
                 source={{
-                  uri: selectedImage
+                  uri: selectedImage,
                 }}
               />
-            ) : <View style={{ padding: 10, backgroundColor: '#f36d72', borderRadius: 60 }}>
-              <FontAwesome6 name='images' size={20} color='white' />
-            </View>}
-
+            ) : (
+              <View
+                style={{
+                  padding: 10,
+                  backgroundColor: '#f36d72',
+                  borderRadius: 60,
+                }}>
+                <FontAwesome6 name="images" size={20} color="white" />
+              </View>
+            )}
           </View>
         </TouchableOpacity>
-        <View style={{ width: width / 2 }}>
+        <View style={{width: width / 4}}>
           <TextInput
             placeholder="หมวดหมู่"
             value={categoryName}
-            style={[styles.input, { paddingLeft: 20,color:'black' }]}
-            onChangeText={(text) => setCategoryName(text)}
+            style={[styles.input, {paddingLeft: 20, color: 'black'}]}
+            onChangeText={text => setCategoryName(text)}
+            fontSize={15}
+            placeholderTextColor={'black'}
+          />
+        </View>
+        <View style={{width: width / 4}}>
+          <TextInput
+            placeholder="ประเภท"
+            value={categoryName}
+            style={[styles.input, {paddingLeft: 20, color: 'black'}]}
+            onChangeText={text => setCategoryNameType(text)}
             fontSize={15}
             placeholderTextColor={'black'}
           />
@@ -206,15 +225,14 @@ const Categories = (props) => {
         <View>
           <EasyButton
             medium
-            style={{ backgroundColor: '#f36d72', borderRadius: 10 }}
-            onPress={() => addCategory()}
-          >
-            <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>
+            style={{backgroundColor: '#f36d72', borderRadius: 10}}
+            onPress={() => addCategory()}>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>Submit</Text>
           </EasyButton>
         </View>
       </View>
     </View>
-  )
+  );
 }
 
 export default Categories
