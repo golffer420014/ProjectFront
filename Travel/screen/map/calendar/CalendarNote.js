@@ -146,7 +146,6 @@ export default function CalendarNote(props) {
   return (
     <View style={styles.container}>
       {/* modal content */}
-
       <Modal
         animationType="fade"
         transparent={true}

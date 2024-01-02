@@ -83,6 +83,7 @@ const Categories = (props) => {
   const addCategory = () => {
     const formData = new FormData();
     formData.append('name', categoryName);
+    formData.append('type', categoryNameType);
 
     if (selectedImage) {
       const newImageUri = "file:///" + selectedImage.split("file:/").join("");
@@ -202,7 +203,7 @@ const Categories = (props) => {
             )}
           </View>
         </TouchableOpacity>
-        <View style={{width: width / 4}}>
+        <View style={{width: width / 4, borderWidth: 1, borderRadius: 10}}>
           <TextInput
             placeholder="หมวดหมู่"
             value={categoryName}
@@ -212,12 +213,12 @@ const Categories = (props) => {
             placeholderTextColor={'black'}
           />
         </View>
-        <View style={{width: width / 4}}>
+        <View style={{width: width / 4, borderWidth: 1, borderRadius: 10}}>
           <TextInput
-            placeholder="ประเภท"
-            value={categoryName}
+            placeholder="type"
+            value={categoryNameType}
             style={[styles.input, {paddingLeft: 20, color: 'black'}]}
-            onChangeText={text => setCategoryNameType(text)}
+            onChangeText={text => setCategoryNameType(text.toLowerCase())}
             fontSize={15}
             placeholderTextColor={'black'}
           />
@@ -249,7 +250,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     position: "absolute",
     bottom: 0,
-    left: 0
+    left: 0,
+    marginBottom:10
   },
   input: {
     height: 40,

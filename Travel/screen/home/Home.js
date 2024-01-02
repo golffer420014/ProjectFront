@@ -32,27 +32,8 @@ const Home = props => {
   const [ctg, setCtg] = useState([]);
   const [changCtg, setChangCtg] = useState('ที่พัก');
 
-  // console.log(JSON.stringify(products, null, 2));
+          // console.log(JSON.stringify(res.data, null, 2));
 
-  // console.log(context.stateUser.user.userId);
-  // console.log(`${baseURL}${context.stateUser.user.userId}`);
-
-  // const fetchData = useCallback(async () => {
-  //   try {
-  //     // เริ่มโหลดข้อมูล
-  //     const response = await axios.get(`${baseURL}products`);
-
-  //     // เก็บข้อมูลใน state
-  //     setProducts(response.data);
-
-  //     // ปิดการโหลด
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //     // ตรวจจับและจัดการข้อผิดพลาดได้ตามความเหมาะสม
-  //     setLoading(false);
-  //   }
-  // }, []);
 
   useFocusEffect(
     useCallback(() => {
