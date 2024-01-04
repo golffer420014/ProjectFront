@@ -32,45 +32,72 @@ import {
   GoogleSignin,
   GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth'
 
 
 const Login = props => {
+
+
+  
   const context = useContext(AuthGlobal);
   const [email, setEmail] = useState('');
   const [password, setPassowrd] = useState('');
   const [error, setError] = useState('');
   const [passShow, setPassShow] = useState(false);
-  const [googleUser, setGoogleUser] = useState({
-    user: {},
-    loaded: false,
-  });
 
-  GoogleSignin.configure({
-    webClientId:
-      '870564610897-p1jkqu05ia3h389gpfrrbtqbppbbjf60.apps.googleusercontent.com',
-    offlineAccess: true,
-  });
+    useEffect(() => {
+      GoogleSignin.configure({
+        webClientId:
+          '225410178541-u7vuu5nr3k3ec2p681kddq2bbp2n20ch.apps.googleusercontent.com',
+      });
 
-    const signIn = async () => {
-      try {
-        await GoogleSignin.hasPlayServices();
-        const userInfo = await GoogleSignin.signIn();
-        setGoogleUser({
-          user: userInfo,
-          loaded: true,
-        });
-      } catch (err) {
-        console.log(err);
+      if (context.stateUser.isAuthenticated === true) {
+        props.navigation.navigate('User Profile');
       }
-    };
+    }, [context.stateUser.isAuthenticated, props.navigation]);
 
-  console.log(googleUser)
 
-  useEffect(() => {
-    if (context.stateUser.isAuthenticated === true) {
-      props.navigation.navigate('User Profile');
-    }
-  }, [context.stateUser.isAuthenticated, props.navigation]);
+async function signInGoogle() {
+  try {
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+
+    // Get the users ID token
+    const {idToken} = await GoogleSignin.signIn();
+
+    console.log(idToken);
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    await auth().signInWithCredential(googleCredential);
+
+    // If the sign-in is successful, you can perform additional actions here
+  } catch (error) {
+    console.error('Google Sign-In Error:', error.code, error.message);
+    // Handle the error appropriately, e.g., show an error message to the user
+    // You might want to return a specific value or throw an error depending on your use case
+  }
+}
+
+
+  //   const signInGoogle = async () => {
+  //     try {
+  //       await GoogleSignin.hasPlayServices();
+  //       const userInfo = await GoogleSignin.signIn();
+  //       setGoogleUser({
+  //         user: userInfo,
+  //         loaded: true,
+  //       });
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+
+  // console.log(googleUser)
+
+
 
 
 
@@ -110,7 +137,7 @@ const Login = props => {
           </Text>
         </View>
         {/* google */}
-        <TouchableOpacity onPress={() => signIn()}>
+        <TouchableOpacity onPress={signInGoogle}>
           <View style={styles.loginWithContainer}>
             <View style={styles.loginWith}>
               <Image
