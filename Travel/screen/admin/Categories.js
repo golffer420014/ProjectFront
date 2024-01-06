@@ -71,7 +71,10 @@ const Categories = (props) => {
 
     axios
       .get(`${baseURL}category`)
-      .then((res) => setCategories(res.data))
+      .then((res) => {
+        setCategories(res.data);
+        // console.log(JSON.stringify(res.data,null,2))
+      })
       .catch((error) => alert("Error to load categories"))
 
     return () => {
@@ -205,9 +208,9 @@ const Categories = (props) => {
         </TouchableOpacity>
         <View style={{width: width / 4, borderWidth: 1, borderRadius: 10}}>
           <TextInput
-            placeholder="หมวดหมู่"
+            placeholder="ชื่อหมวดหมู่"
             value={categoryName}
-            style={[styles.input, {paddingLeft: 20, color: 'black'}]}
+            style={[styles.input, {paddingHorizontal: 10, color: 'black'}]}
             onChangeText={text => setCategoryName(text)}
             fontSize={15}
             placeholderTextColor={'black'}
@@ -215,7 +218,7 @@ const Categories = (props) => {
         </View>
         <View style={{width: width / 4, borderWidth: 1, borderRadius: 10}}>
           <TextInput
-            placeholder="type"
+            placeholder="ประเภท"
             value={categoryNameType}
             style={[styles.input, {paddingLeft: 20, color: 'black'}]}
             onChangeText={text => setCategoryNameType(text.toLowerCase())}

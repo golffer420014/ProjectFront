@@ -51,14 +51,7 @@ export default function CalendarNote(props) {
     });
   }, []);
 
-  if (handleDelete) {
-    setLoading(true);
-    axios.get(`${baseURL}calendar-note`).then(res => {
-      setData(res.data);
-      setLoading(false);
-      // console.log(JSON.stringify(modifiedData, null, 2));
-    });
-  }
+
 
   const handleDelete = () => {
     let formdata = {
@@ -170,7 +163,7 @@ export default function CalendarNote(props) {
                 <FontAwesome name="close" color="#f47a7e" size={20} />
               </TouchableHighlight>
 
-              {data.map((item, index) => (
+              {test.map((item, index) => (
                 <TouchableOpacity
                   key={item.id}
                   onPress={() => {
@@ -199,7 +192,7 @@ export default function CalendarNote(props) {
       {/* calendar note */}
 
       <WeeklyCalendar
-        events={data}
+        events={test}
         style={{height: '90%', backgroundColor: ''}}
         themeColor="#f36d72"
         // titleStyle={{color: 'black'}}
@@ -228,7 +221,7 @@ export default function CalendarNote(props) {
           justifyContent: 'space-around',
           height: 60,
           alignItems: 'center',
-          gap:-15
+          gap: -15,
         }}>
         <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}}>
           {selectedDate == 'กดเลือกวันที่ต้องการลบ' ? (

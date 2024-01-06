@@ -100,6 +100,7 @@ const Home = props => {
     );
   }
 
+
   return (
     <FormContainer>
       {/* header */}
@@ -207,7 +208,7 @@ const Home = props => {
       <View style={{flexDirection: 'row', width: '95%'}}>
         {ctg.map(
           item =>
-            (item.name === 'ที่พัก' || item.name === 'อาหาร') && (
+            item.type === 'hm' && (
               <TouchableOpacity
                 onPress={() => setChangCtg(item.name)}
                 key={item.id}>
