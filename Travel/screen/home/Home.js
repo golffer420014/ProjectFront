@@ -39,10 +39,9 @@ const Home = props => {
   const [changCtg, setChangCtg] = useState('ที่พัก');
   const [productsFiltered, setProductsFiltered] = useState([]);
 
+  // console.log(JSON.stringify(ctg, null, 2));
 
-  
-  const [animateSearch,setAnimateSearch] = useState(false)
-
+  const [animateSearch, setAnimateSearch] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -86,7 +85,6 @@ const Home = props => {
           setLoading(true);
         });
 
-
       return () => {
         setLoading(true);
         setProducts([]);
@@ -96,11 +94,37 @@ const Home = props => {
     }, [context.stateUser.isAuthenticated]),
   );
 
-    const searchProduct = text => {
-      setProductsFiltered(
-        products.filter(i => i.name.toLowerCase().includes(text.toLowerCase())),
-      );
-    };
+  const searchProduct = text => {
+    setProductsFiltered(
+      products.filter(i => i.name.toLowerCase().includes(text.toLowerCase())),
+    );
+  };
+
+  // Assuming ctg is an array
+  const sortedCtg = [...ctg].sort((a, b) => {
+    if (a.name === 'ที่พัก' || a.name === 'อาหาร') return -1;
+    if (b.name === 'ที่พัก' || b.name === 'อาหาร') return 1;
+    return 0;
+  });
+
+  // ...
+
+  {
+    sortedCtg.map(item => (
+      <TouchableOpacity onPress={() => setChangCtg(item.name)} key={item.id}>
+        <View
+          style={[
+            styles.ctgFiltered,
+            item.name === changCtg ? styles.activeCtg : null,
+          ]}>
+          <Text
+            style={item.name === changCtg ? styles.textActive : styles.textDF}>
+            {item.name}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    ));
+  }
 
   // console.log(products)
 
@@ -117,7 +141,6 @@ const Home = props => {
       </View>
     );
   }
-
 
   return (
     <FormContainer>
@@ -300,7 +323,7 @@ const Home = props => {
       </LinearGradient>
 
       {animateSearch ? (
-        <Container style={{width:width,height:height}}>
+        <Container style={{width: width, height: '100%'}}>
           <SearchedProduct
             navigation={props.navigation}
             productsFiltered={productsFiltered}
@@ -309,7 +332,7 @@ const Home = props => {
       ) : (
         <FormContainer>
           <View style={{flexDirection: 'row', width: '95%'}}>
-            {ctg.map(item => (
+            {sortedCtg.map(item => (
               <TouchableOpacity
                 onPress={() => setChangCtg(item.name)}
                 key={item.id}>
