@@ -19,8 +19,14 @@ import Banner from '../../Shared/Banner';
 import ProductList from '../products/ProductList';
 import AuthGlobal from '../../context/store/AuthGlobal';
 import LinearGradient from 'react-native-linear-gradient';
+import { TextInput } from 'react-native-gesture-handler';
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import {Container, Item, Header, Icon, Input} from 'native-base';
+import SearchedProduct from '../products/SearchedProduct';
+
 
 var {width} = Dimensions.get('window');
+var {height} = Dimensions.get('window');
 
 
 const Home = props => {
@@ -31,8 +37,11 @@ const Home = props => {
   const idUser = context.stateUser.user.userId;
   const [ctg, setCtg] = useState([]);
   const [changCtg, setChangCtg] = useState('ที่พัก');
+  const [productsFiltered, setProductsFiltered] = useState([]);
 
-          // console.log(JSON.stringify(res.data, null, 2));
+
+  
+  const [animateSearch,setAnimateSearch] = useState(false)
 
 
   useFocusEffect(
@@ -57,6 +66,7 @@ const Home = props => {
         .get(`${baseURL}products`)
         .then(res => {
           setProducts(res.data);
+          setProductsFiltered(res.data);
           setLoading(false);
         })
         .catch(err => {
@@ -67,13 +77,15 @@ const Home = props => {
       axios
         .get(`${baseURL}category`)
         .then(res => {
-          setCtg(res.data);
+          // Reverse the order of the array and set it to state
+          setCtg(res.data.reverse());
           setLoading(false);
         })
         .catch(err => {
-          console.log('home call api proucts error');
+          console.log('home call api products error');
           setLoading(true);
         });
+
 
       return () => {
         setLoading(true);
@@ -83,6 +95,12 @@ const Home = props => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context.stateUser.isAuthenticated]),
   );
+
+    const searchProduct = text => {
+      setProductsFiltered(
+        products.filter(i => i.name.toLowerCase().includes(text.toLowerCase())),
+      );
+    };
 
   // console.log(products)
 
@@ -129,13 +147,60 @@ const Home = props => {
                 resizeMode="cover"
               />
             </TouchableOpacity>
-            <Image
-              source={{
-                uri: 'https://img.freepik.com/free-vector/detailed-travel-logo_23-2148616611.jpg?w=826&t=st=1701900865~exp=1701901465~hmac=3b8a68ca724e3f41bc6281bb47fdcc4bf7ac8c8e953371ff40943de928078287',
-              }}
-              style={{width: 40, height: 40, borderRadius: 20}}
-              resizeMode="cover"
-            />
+            {animateSearch == true ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: 'gray',
+                  width: 270,
+                  height: 40,
+                  borderRadius: 10,
+                  backgroundColor: '#f5f5f5',
+                }}>
+                <TextInput
+                  style={{
+                    flex: 1,
+                    height: 40,
+                    marginLeft: 10,
+                    color: 'black',
+                  }}
+                  placeholder="ค้นหาที่ท่องเที่ยวของคุณ"
+                  onChangeText={text => searchProduct(text)}
+                />
+                <TouchableOpacity
+                  onPress={() => setAnimateSearch(!animateSearch)}>
+                  <AntDesign
+                    name="close"
+                    size={20}
+                    color="#f47a7e"
+                    style={{marginRight: 10}}
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : null}
+            <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+              {animateSearch == false ? (
+                <TouchableOpacity
+                  onPress={() => setAnimateSearch(!animateSearch)}>
+                  <View>
+                    <AntDesign
+                      name="search1"
+                      size={30}
+                      color="#ffff"
+                      style={{marginRight: 10}}
+                    />
+                  </View>
+                </TouchableOpacity>
+              ) : null}
+              <Image
+                source={{
+                  uri: 'https://img.freepik.com/free-vector/detailed-travel-logo_23-2148616611.jpg?w=826&t=st=1701900865~exp=1701901465~hmac=3b8a68ca724e3f41bc6281bb47fdcc4bf7ac8c8e953371ff40943de928078287',
+                }}
+                style={{width: 40, height: 40, borderRadius: 20}}
+                resizeMode="cover"
+              />
+            </View>
           </View>
         ) : (
           <View
@@ -171,29 +236,61 @@ const Home = props => {
                   />
                 </View>
               </TouchableOpacity>
-
-              <View style={{width: 10}}></View>
+            </View>
+            {animateSearch == true ? (
               <View
                 style={{
-                  paddingHorizontal: 5,
-                  borderRadius: 5,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: 'gray',
+                  width: 270,
+                  height: 40,
+                  borderRadius: 10,
+                  backgroundColor: '#f5f5f5',
                 }}>
-                <Text
-                  style={[{fontWeight: 'bold', color: 'white', fontSize: 17}]}>
-                  Hi, {user.fname}
-                </Text>
-                <Text style={[{fontWeight: 'bold', color: 'white'}]}>
-                  {user.address}
-                </Text>
+                <TextInput
+                  style={{
+                    flex: 1,
+                    height: 40,
+                    marginLeft: 10,
+                    color: 'black',
+                  }}
+                  placeholder="ค้นหาที่ท่องเที่ยวของคุณ"
+                  onChangeText={text => searchProduct(text)}
+                />
+                <TouchableOpacity
+                  onPress={() => setAnimateSearch(!animateSearch)}>
+                  <AntDesign
+                    name="close"
+                    size={20}
+                    color="#f47a7e"
+                    style={{marginRight: 10}}
+                  />
+                </TouchableOpacity>
               </View>
+            ) : null}
+            <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+              {animateSearch == false ? (
+                <TouchableOpacity
+                  onPress={() => setAnimateSearch(!animateSearch)}>
+                  <View>
+                    <AntDesign
+                      name="search1"
+                      size={30}
+                      color="#ffff"
+                      style={{marginRight: 10}}
+                    />
+                  </View>
+                </TouchableOpacity>
+              ) : null}
+              <Image
+                source={{
+                  uri: 'https://img.freepik.com/free-vector/detailed-travel-logo_23-2148616611.jpg?w=826&t=st=1701900865~exp=1701901465~hmac=3b8a68ca724e3f41bc6281bb47fdcc4bf7ac8c8e953371ff40943de928078287',
+                }}
+                style={{width: 40, height: 40, borderRadius: 20}}
+                resizeMode="cover"
+              />
             </View>
-            <Image
-              source={{
-                uri: 'https://img.freepik.com/free-vector/detailed-travel-logo_23-2148616611.jpg?w=826&t=st=1701900865~exp=1701901465~hmac=3b8a68ca724e3f41bc6281bb47fdcc4bf7ac8c8e953371ff40943de928078287',
-              }}
-              style={{width: 45, height: 45, borderRadius: 20}}
-              resizeMode="cover"
-            />
           </View>
         )}
         <View
@@ -202,13 +299,17 @@ const Home = props => {
         </View>
       </LinearGradient>
 
-      {/* event */}
-
-      {/* ctg */}
-      <View style={{flexDirection: 'row', width: '95%'}}>
-        {ctg.map(
-          item =>
-            item.type === 'hm' && (
+      {animateSearch ? (
+        <Container style={{width:width,height:height}}>
+          <SearchedProduct
+            navigation={props.navigation}
+            productsFiltered={productsFiltered}
+          />
+        </Container>
+      ) : (
+        <FormContainer>
+          <View style={{flexDirection: 'row', width: '95%'}}>
+            {ctg.map(item => (
               <TouchableOpacity
                 onPress={() => setChangCtg(item.name)}
                 key={item.id}>
@@ -217,10 +318,6 @@ const Home = props => {
                     styles.ctgFiltered,
                     item.name === changCtg ? styles.activeCtg : null,
                   ]}>
-                  {/* <Image
-                source={{uri: item.icon}}
-                style={{width: 50, height: 50, borderRadius: 50}}
-              /> */}
                   <Text
                     style={
                       item.name === changCtg ? styles.textActive : styles.textDF
@@ -229,71 +326,75 @@ const Home = props => {
                   </Text>
                 </View>
               </TouchableOpacity>
-            ),
-        )}
-      </View>
-
-      {/* product ctg */}
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false} // ซ่อน indicator ในแนวนอน
-        indicatorStyle={{backgroundColor: 'red'}} // ตั้งค่าสี indicator
-        style={{backgroundColor: '#f5f5f5', paddingTop: 15}}>
-        {products.map(item => {
-          // กรองรายการที่มี item.category.name เท่ากับ 'ทะเล' เท่านั้น
-          if (item.category.name === changCtg) {
-            return (
-              <View style={{paddingEnd: 10}} key={item.id}>
-                {/* แสดง ProductList สำหรับรายการที่ผ่านการกรอง */}
-                <ProductList navigation={props.navigation} item={item} />
-              </View>
-            );
-          } else {
-            // ถ้าไม่ตรงเงื่อนไข ไม่ต้องแสดงอะไรเลย
-            return null;
-          }
-        })}
-      </ScrollView>
-
-      {/* best of */}
-      <ScrollView style={{width: '100%'}}>
-        <LinearGradient
-          colors={['#ff9a9e', '#fcb69f']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
-          start={{x: 0, y: 0}} // จุดเริ่มต้น (บนซ้าย)
-          end={{x: 1, y: 0}}
-          style={styles.bestProduct}>
-          <Text style={[{fontSize: 20, color: 'white', fontWeight: 'bold'}]}>
-            Best of Thailand
-          </Text>
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate('All Product')}>
-            <View
-              style={{
-                borderWidth: 2,
-                borderColor: '#f5f5f5',
-                padding: 10,
-                borderRadius: 10,
-                justifyContent: 'center',
-              }}>
-              <Text
-                style={[styles.textDF, {color: 'white', fontWeight: 'bold'}]}>
-                View All
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </LinearGradient>
-
-        <View style={styles.listContainer}>
-          {products
-            .sort((a, b) => b.rating - a.rating) // เรียงลำดับตาม rating มากไปน้อย
-            .slice(0, 6) // เลือกเพียง 6 รายการ
-            .map(item => (
-              <View style={{width: '50%'}} key={item.id}>
-                <ProductList navigation={props.navigation} item={item} />
-              </View>
             ))}
-        </View>
-      </ScrollView>
+          </View>
+
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false} // ซ่อน indicator ในแนวนอน
+            indicatorStyle={{backgroundColor: 'red'}} // ตั้งค่าสี indicator
+            style={{backgroundColor: '#f5f5f5', paddingTop: 15}}>
+            {products.map(item => {
+              // กรองรายการที่มี item.category.name เท่ากับ 'ทะเล' เท่านั้น
+              if (item.category.name === changCtg) {
+                return (
+                  <View style={{paddingEnd: 10}} key={item.id}>
+                    {/* แสดง ProductList สำหรับรายการที่ผ่านการกรอง */}
+                    <ProductList navigation={props.navigation} item={item} />
+                  </View>
+                );
+              } else {
+                // ถ้าไม่ตรงเงื่อนไข ไม่ต้องแสดงอะไรเลย
+                return null;
+              }
+            })}
+          </ScrollView>
+
+          {/* best of */}
+          <ScrollView style={{width: '100%'}}>
+            <LinearGradient
+              colors={['#ff9a9e', '#fcb69f']} // ระบุสีที่คุณต้องการให้เป็นสีไล่สี
+              start={{x: 0, y: 0}} // จุดเริ่มต้น (บนซ้าย)
+              end={{x: 1, y: 0}}
+              style={styles.bestProduct}>
+              <Text
+                style={[{fontSize: 20, color: 'white', fontWeight: 'bold'}]}>
+                Best of Thailand
+              </Text>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate('All Product')}>
+                <View
+                  style={{
+                    borderWidth: 2,
+                    borderColor: '#f5f5f5',
+                    padding: 10,
+                    borderRadius: 10,
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={[
+                      styles.textDF,
+                      {color: 'white', fontWeight: 'bold'},
+                    ]}>
+                    View All
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </LinearGradient>
+
+            <View style={styles.listContainer}>
+              {products
+                .sort((a, b) => b.rating - a.rating) // เรียงลำดับตาม rating มากไปน้อย
+                .slice(0, 6) // เลือกเพียง 6 รายการ
+                .map(item => (
+                  <View style={{width: '50%'}} key={item.id}>
+                    <ProductList navigation={props.navigation} item={item} />
+                  </View>
+                ))}
+            </View>
+          </ScrollView>
+        </FormContainer>
+      )}
     </FormContainer>
   );
 };
@@ -350,5 +451,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     marginRight: 10,
     padding: 5,
+  },
+  searchAnimate: {
+    backgroundColor: '#ffff',
+    width: 200,
+    borderRadius: 20,
   },
 });

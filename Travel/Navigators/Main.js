@@ -11,7 +11,8 @@ import SearchNavigator from './SearchNavigator';
 
 //icon 
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -57,10 +58,10 @@ const Main = () => {
         component={SearchNavigator}
         options={{
           tabBarIcon: ({color}) => (
-            <Ionicons
-              name="search-circle-sharp"
+            <FontAwesome5
+              name="umbrella-beach"
               color={color}
-              size={40}
+              size={27}
               style={{alignItems: 'center', justifyContent: 'center'}}
             />
           ),

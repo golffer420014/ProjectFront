@@ -80,7 +80,6 @@ const ReviewRoute = ({
             item =>
               item.productId &&
               item.productId.id === props.id &&
-              authReview(
                 <View key={item.id} style={styles.reviewContainer}>
                   <Image
                     source={{uri: item.userId.image ? item.userId.image : ''}}
@@ -130,7 +129,6 @@ const ReviewRoute = ({
                     </View>
                   </View>
                 </View>,
-              ),
           )}
         </View>
       ) : null}
