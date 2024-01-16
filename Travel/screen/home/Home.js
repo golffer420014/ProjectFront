@@ -330,7 +330,13 @@ const Home = props => {
           />
         </Container>
       ) : (
-        <FormContainer>
+        <View
+          style={{
+            width: width,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'white',
+          }}>
           <View style={{flexDirection: 'row', width: '95%'}}>
             {sortedCtg.map(item => (
               <TouchableOpacity
@@ -416,7 +422,7 @@ const Home = props => {
                 ))}
             </View>
           </ScrollView>
-        </FormContainer>
+        </View>
       )}
     </FormContainer>
   );

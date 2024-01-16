@@ -65,7 +65,8 @@ const CategoryFilter = (props) => {
           }}>
           {props.categories.map(
             item =>
-              !(item.name === 'ที่พัก' || item.name === 'อาหาร') && (
+              (item.type === 'Search') &&
+               (
                 <TouchableOpacity
                   key={item.id}
                   onPress={() => {

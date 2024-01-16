@@ -26,7 +26,7 @@ const ProductReview = (props) => {
     const navigation = useNavigation()
     const context = useContext(AuthGlobal);
     const [token ,setToken] = useState()
-    console.log(JSON.stringify(props.route.params.idProduct,null,2))
+    // console.log(JSON.stringify(props.route.params.idProduct,null,2))
 
 
 
@@ -76,7 +76,7 @@ const ProductReview = (props) => {
                             Toast.show({
                                 topOffset: 60,
                                 type: "success",
-                                text1: "updated successfuly ",
+                                text1: "Review successfuly ",
                                 text2: ""
                             });
                             setTimeout(() => {

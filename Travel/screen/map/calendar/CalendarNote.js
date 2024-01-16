@@ -13,7 +13,6 @@ import WeeklyCalendar from 'react-native-weekly-calendar';
 import AuthGlobal from '../../../context/store/AuthGlobal';
 import axios from 'axios';
 import baseURL from '../../../assests/common/baseUrl';
-import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react"
 import {
-  View,
-  Text,
-  FlatList,
-  Dimensions,
-  TextInput,
   StyleSheet,
+  View,
+  Dimensions,
+  Text,
+  TouchableOpacity,
   Image,
-  TouchableOpacity
-} from "react-native"
+  ScrollView,
+  TouchableHighlight,
+  FlatList,
+  TextInput,
+} from 'react-native';
+import Modal from 'react-native-modal';
 import EasyButton from "../../Shared/StyledComponents/EasyButton"
 import axios from "axios"
 import baseURL from "../../assests/common/baseUrl"
@@ -23,6 +26,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 var { width } = Dimensions.get("window")
 
 const Item = (props) => {
+
   return (
     <View style={styles.item}>
       <View
@@ -58,9 +62,13 @@ const Categories = (props) => {
 
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState();
-  const [categoryNameType, setCategoryNameType] = useState();
+  const [categoryNameType, setCategoryNameType] = useState("ประเภท");
   const [token, setToken] = useState();
   const [selectedImage, setSelectedImage] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const nameType = [{name: 'Search'}];
+
 
   useEffect(() => {
     AsyncStorage.getItem("jwt")
@@ -171,6 +179,50 @@ const Categories = (props) => {
 
   return (
     <View style={{position: 'relative', height: '100%'}}>
+      {/* modal content */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}>
+        <View style={styles.centeredView}>
+          <ScrollView>
+            <View style={styles.modalView}>
+              <TouchableHighlight
+                underlayColor="#E8E8E8"
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+                style={{
+                  alignSelf: 'flex-end',
+                  position: 'absolute',
+                  top: 10,
+                  right: 15,
+                }}>
+                <FontAwesome name="close" color="#f47a7e" size={20} />
+              </TouchableHighlight>
+
+              {nameType.map((item, index) => (
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() => {
+                    setCategoryNameType(item.name);
+                    setModalVisible(false);
+                  }}>
+                  <View style={styles.boxProvince}>
+                    <Text style={{color: 'black', fontSize: 18}}>
+                      {item.name}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      </Modal>
+
       <View style={{marginBottom: 60}}>
         <FlatList
           data={categories}
@@ -210,22 +262,25 @@ const Categories = (props) => {
           <TextInput
             placeholder="ชื่อหมวดหมู่"
             value={categoryName}
-            style={[styles.input, {paddingHorizontal: 10, color: 'black'}]}
+            style={[
+              styles.input,
+              {paddingHorizontal: 10, color: 'black', fontSize: 20},
+            ]}
             onChangeText={text => setCategoryName(text)}
             fontSize={15}
             placeholderTextColor={'black'}
           />
         </View>
-        <View style={{width: width / 4, borderWidth: 1, borderRadius: 10}}>
-          <TextInput
-            placeholder="ประเภท"
-            value={categoryNameType}
-            style={[styles.input, {paddingLeft: 20, color: 'black'}]}
-            onChangeText={text => setCategoryNameType(text.toLowerCase())}
-            fontSize={15}
-            placeholderTextColor={'black'}
-          />
-        </View>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <View style={{width: width / 4, borderWidth: 1, borderRadius: 10}}>
+            <View
+              style={[styles.input, {paddingHorizontal: 5, color: 'black'}]}>
+              <Text style={{color: 'black', fontSize: 15}}>
+                {categoryNameType}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
         <View>
           <EasyButton
             medium
@@ -242,29 +297,30 @@ const Categories = (props) => {
 export default Categories
 
 const styles = StyleSheet.create({
-
   bottomBar: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: '#f5f5f5',
     width: width,
     height: 80,
     padding: 2,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    position: "absolute",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    position: 'absolute',
     bottom: 0,
     left: 0,
-    marginBottom:10
+    marginBottom: 10,
   },
   input: {
     height: 40,
     // borderColor: "red",
     // borderWidth: 1,
     borderRadius: 20,
-    backgroundColor: '#ffff'
+    backgroundColor: '#ffff',
+    alignItems:'center',
+    justifyContent:'center'
   },
   item: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -274,11 +330,51 @@ const styles = StyleSheet.create({
     elevation: 1,
     padding: 5,
     margin: 5,
-    backgroundColor: "white",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderRadius: 5
-  }
-
-})
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 5,
+  },
+  //   modal
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#f36d72',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  boxProvince: {
+    width: 260,
+    justifyContent: 'center',
+    borderWidth: 3,
+    marginVertical: 3,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    borderColor: '#dfdfdf',
+    padding: 5,
+  },
+  boxDate: {
+    borderWidth: 2,
+    width: 160,
+    height: 45,
+    borderColor: 'gray',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

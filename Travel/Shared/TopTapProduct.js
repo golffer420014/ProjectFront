@@ -53,9 +53,9 @@ const ReviewRoute = ({
   context,
   deleteComment,
 }) => (
-  <ScrollView style={{backgroundColor: '#ffff'}}>
+  <ScrollView style={{backgroundColor: '#f5f5f5'}}>
     {authReview == true ? (
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: 'center',marginVertical:20}}>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Product Review', {idProduct: props.id})
@@ -64,8 +64,9 @@ const ReviewRoute = ({
             style={{
               padding: 5,
               backgroundColor: '#f47a7e',
-              borderRadius: 50,
-              marginTop: 8,
+              borderRadius: 10,
+              width:200,
+              alignItems:"center"
             }}>
             <FontAwesome name="plus" size={20} color="white" />
           </View>
@@ -337,11 +338,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     margin: 5,
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#f47a7e',
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
+    marginBottom:30
   },
   userImage: {
     width: 50,
