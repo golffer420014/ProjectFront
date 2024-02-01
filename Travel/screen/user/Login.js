@@ -119,7 +119,9 @@ const Login = props => {
 
                 {/* facebook */}
                 <TouchableOpacity
-                // onPress={}
+                onPress={
+                    () => props.navigation.navigate('FacebookProfile')
+                }
                 >
                     <View style={[styles.loginWithContainer]}>
                         <View style={[styles.loginWith, { marginLeft: 15 }]}>

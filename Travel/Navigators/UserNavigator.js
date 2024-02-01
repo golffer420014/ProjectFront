@@ -23,6 +23,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CheckIn from '../screen/user/setting/CheckIn';
+import FacebookProfile from '../screen/user/profileGlobal/FacebookProfile';
 
 const Stack = createStackNavigator();
 
@@ -97,6 +98,15 @@ function MyStack() {
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>
+          <Stack.Screen
+            name="FacebookProfile"
+            component={FacebookProfile}
+            options={{
+              headerShown: false,
+              cardStyle: {backgroundColor: '#FFFFFF'},
+            }}
+          />
+
           <Stack.Screen
             name="Login"
             component={Login}
