@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "AuthExpo",
+    "slug": "AuthExpo",
+    "plugins": [
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "345038285112623",
+          "clientToken": "4a8ce78d8df4201bf23245bee70df3bd",
+          "displayName": "ExpoFirbase"
+        }
+      ]
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.pookpik4200.AuthExpo"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "92988ada-290a-499c-8772-a7f050046710"
+      }
+    }
+  }
+}
