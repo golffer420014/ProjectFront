@@ -1,11 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import {
-  StyleSheet,
-  Text,
   View,
+  Text,
+  ScrollView,
   Button,
+  StyleSheet,
   Image,
+  Dimensions,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import {
   getAuth,
@@ -17,11 +20,14 @@ import react, { useState, useEffect } from "react";
 import { firebase } from "./config";
 import { LoginManager, AccessToken } from "react-native-fbsdk-next";
 
+var { height, width } = Dimensions.get("window");
+
 import Input from "./Input";
 
 export default function App() {
   const [inticial, setInticial] = useState(true);
   const [user, setUser] = useState();
+  const [imgUser, setImgUser] = useState();
 
   const onAuthStateChanged = (user) => {
     if (inticial) setInticial(false);
@@ -45,6 +51,12 @@ export default function App() {
       const auth = getAuth();
       const res = await signInWithCredential(auth, facebookcredentail);
       console.log(JSON.stringify(res, null, 2));
+      const jsonString = res._tokenResponse.rawUserInfo;
+      const userData = JSON.parse(jsonString);
+      const profilePicUrl = userData.picture.data.url;
+      // console.log(profilePicUrl);
+      setImgUser(profilePicUrl);
+      setUser(res);
       await signInWithCredential(firebase.auth(), facebookcredentail);
     } catch (e) {
       console.log(e);
@@ -233,14 +245,132 @@ export default function App() {
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <Text>{user.displayName}</Text>
-    </View>
-  );
-}
+  if (user.user) {
+    return (
+      <View style={styles.containerFacebook}>
+        <View style={styles.backImageContainer}>
+          <View style={styles.imageContainer}>
+            <Image style={styles.image} source={{ uri: imgUser }} />
+          </View>
+        </View>
+        <Text style={{ fontSize: 25, color: "black", marginVertical: 25 }}>
+          {/* {'Name : '} */}
+          {user.user.displayName}
+        </Text>
+        {/* uid */}
+        <View style={styles.formDetail}>
+          <Text style={{ color: "black", fontSize: 15 }}>UID</Text>
+          <View style={styles.detailValue}>
+            <View
+              style={{ position: "relative", top: 2, marginRight: 10 }}
+            ></View>
+            <Text style={styles.textValue}>{user.user.providerData[0].uid}</Text>
+          </View>
+        </View>
+        {/* email */}
+        <View style={styles.formDetail}>
+          <Text style={{ color: "black", fontSize: 15 }}>Email</Text>
+          <View style={styles.detailValue}>
+            <View
+              style={{ position: "relative", top: 2, marginRight: 10 }}
+            ></View>
+            <Text style={styles.textValue}>{user.user.email}</Text>
+          </View>
+        </View>
+        {/* Address */}
+        <View style={styles.formDetail}>
+          <Text style={{ color: "black", fontSize: 15 }}>Address</Text>
+          <View style={styles.detailValue}>
+            <View
+              style={{ position: "relative", top: 2, marginRight: 10 }}
+            ></View>
+            <Text style={styles.textValue}></Text>
+          </View>
+        </View>
+        {/* Birth */}
+        <View style={styles.formDetail}>
+          <Text style={{ color: "black", fontSize: 15 }}>Address</Text>
+          <View style={styles.detailValue}>
+            <View
+              style={{ position: "relative", top: 2, marginRight: 10 }}
+            ></View>
+            <Text style={styles.textValue}> - </Text>
+          </View>
+        </View>
 
+        <TouchableOpacity
+        onPress={signOut}
+        >
+          <View style={styles.btnLogin}>
+            <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
+              Logout
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+// providerData.user.uid
+// fcb69f
 const styles = StyleSheet.create({
+  // facebook style
+  containerFacebook: {
+    width: "100%",
+    height: "100%",
+    // justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    paddingBottom: 55,
+  },
+  backImageContainer: {
+    width: width,
+    height: 200,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 30,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    zIndex: -1,
+    backgroundColor: "#fcb69f",
+  },
+  imageContainer: {
+    width: 100,
+    height: 100,
+    borderStyle: "solid",
+    borderWidth: 5,
+    padding: 0,
+    justifyContent: "center",
+    borderRadius: 100,
+    borderColor: "#E0E0E0",
+    position: "relative",
+    top: 90,
+    elevation: 10,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 100,
+    backgroundColor: "whitesmoke",
+  },
+  formDetail: {
+    width: 330,
+    marginBottom: 10,
+  },
+  detailValue: {
+    flexDirection: "row",
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: "whitesmoke",
+    marginTop: 10,
+    alignItems: "center",
+  },
+  textValue: {
+    color: "black",
+    fontSize: 17,
+  },
+  // facebook style
+
   container: {
     width: "100%",
     height: "100%",

@@ -295,19 +295,6 @@ const UserProfile = ({props, navigation}) => {
               </View>
             </View>
 
-            {/* Email */}
-            {/* <View style={[styles.input, { marginTop: 5 }]}>
-              <Text style={{ color: 'black', position: 'relative', left: -133 }}>Email</Text>
-              <Input
-                placeholder={"Email"}
-                name={"email"}
-                id={"email"}
-                onChangeText={(text) => setEmail(text)}
-              />
-              <View style={styles.iconUserEdit}>
-                <FontAwesome name='address-card' size={20} color='#f36d72' />
-              </View>
-            </View> */}
 
             {/* Birth */}
             <View style={styles.input}>

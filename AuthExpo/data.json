@@ -1,0 +1,49 @@
+{
+    "user": {
+            "uid": "jDZRKPJWyQRRXVbpthnI111wzbG3",
+            "email": "golfy__1800@hotmail.com",
+            "emailVerified": false,
+            "displayName": "Golf'f Suriya",
+            "isAnonymous": false,
+            "photoURL": "https://graph.facebook.com/1768060426954504/picture",
+            "providerData": [
+                    {
+                            "providerId": "facebook.com",
+                            "uid": "1768060426954504",
+                            "displayName": "Golf'f Suriya",
+                            "email": "golfy__1800@hotmail.com",
+                            "phoneNumber": null,
+                            "photoURL": "https://graph.facebook.com/1768060426954504/picture"
+                    }
+            ],
+            "stsTokenManager": {
+                    "refreshToken": "AMf-vBw0y7IUldG7WmrhOonb_ulv5a5L9pWgLUJRod5NXkPi-I2WX-9-cx5xvGPBQtVrTqryuMqDWIFPiuNEk9R9VtoMEIEmtW4Hxh6k5M6BhFIostHdxAVF3SotupLmcXdKPYAIwO4Etxre8iJSW0drWwArr2yRQHZ6LmTxZTCqp0eYQ37unRMEntozXAnxozUX5Gcf3HrjCLngH9b9Ux-7kQMu7p4uvbirzzHVu1Hf-l69YIG4816PlLHDbf8nhDEAXi-Zc2B2k1qWwNFpEnw-W_FcGa94z00nPFV-_LLZXV5i_Yx-ro5lIKgDKGT1EwCnEWVB55Bxky3wRCjn7Ni0xVVdcVyNI6zjn3Zk4MmcQG-i8r98XgU",
+                    "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY5NjI5NzU5NmJiNWQ4N2NjOTc2Y2E2YmY0Mzc3NGE3YWE5OTMxMjkiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiR29sZidmIFN1cml5YSIsInBpY3R1cmUiOiJodHRwczovL2dyYXBoLmZhY2Vib29rLmNvbS8xNzY4MDYwNDI2OTU0NTA0L3BpY3R1cmUiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZmFjZWJvb2t0ZXN0LTU4OGEwIiwiYXVkIjoiZmFjZWJvb2t0ZXN0LTU4OGEwIiwiYXV0aF90aW1lIjoxNzA3MjEzMzM2LCJ1c2VyX2lkIjoiakRaUktQSld5UVJSWFZicHRobkkxMTF3emJHMyIsInN1YiI6ImpEWlJLUEpXeVFSUlhWYnB0aG5JMTExd3piRzMiLCJpYXQiOjE3MDcyMTMzMzYsImV4cCI6MTcwNzIxNjkzNiwiZW1haWwiOiJnb2xmeV9fMTgwMEBob3RtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJmYWNlYm9vay5jb20iOlsiMTc2ODA2MDQyNjk1NDUwNCJdLCJlbWFpbCI6WyJnb2xmeV9fMTgwMEBob3RtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6ImZhY2Vib29rLmNvbSJ9fQ.i1yueXoS7WM_6CSwpaxCptuKxLVUePjOci3XbJfRFT-T6rZRuwfE5OS5VVogU7zlbpSXUoBfTx0N-NEgdQCLzj9YC1zMhTM5nzUGl8dEn71HcVH1kDBNaC8qWi7iQsyFM8GaDNUCLE2q1OnklspDDgSqfYi_Uev_NTPOrvM4ePMNTj3BALu2O6C7R5By5-HoOZ_U7zo6FHrV6kZw8TfdLr5aeKkfHtcToIe_HVTaE3yVLGQoYkiMfjmkCJ9hPJqWU3EM-vdGaU-5uwxSBR1itjVoe89TSm2Z_I5hDT5aF7fnDP3XjHA1ugbm_ss4A51wWWMe5p8sRjG8Q_Yik9Mehg",
+                    "expirationTime": 1707216935478
+            },
+            "createdAt": "1707039589410",
+            "lastLoginAt": "1707213211786",
+            "apiKey": "AIzaSyBmY2FUlkMNCP4f8vesG-VMlyB-SHnWeVA",
+            "appName": "[DEFAULT]"
+    },
+    "providerId": "facebook.com",
+    "_tokenResponse": {
+            "federatedId": "http://facebook.com/1768060426954504",
+            "providerId": "facebook.com",
+            "email": "golfy__1800@hotmail.com",
+            "emailVerified": false,
+            "firstName": "Golf'f",
+            "fullName": "Golf'f Suriya",
+            "lastName": "Suriya",
+            "photoUrl": "https://graph.facebook.com/1768060426954504/picture",
+            "localId": "jDZRKPJWyQRRXVbpthnI111wzbG3",
+            "displayName": "Golf'f Suriya",
+            "idToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY5NjI5NzU5NmJiNWQ4N2NjOTc2Y2E2YmY0Mzc3NGE3YWE5OTMxMjkiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiR29sZidmIFN1cml5YSIsInBpY3R1cmUiOiJodHRwczovL2dyYXBoLmZhY2Vib29rLmNvbS8xNzY4MDYwNDI2OTU0NTA0L3BpY3R1cmUiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZmFjZWJvb2t0ZXN0LTU4OGEwIiwiYXVkIjoiZmFjZWJvb2t0ZXN0LTU4OGEwIiwiYXV0aF90aW1lIjoxNzA3MjEzMzM2LCJ1c2VyX2lkIjoiakRaUktQSld5UVJSWFZicHRobkkxMTF3emJHMyIsInN1YiI6ImpEWlJLUEpXeVFSUlhWYnB0aG5JMTExd3piRzMiLCJpYXQiOjE3MDcyMTMzMzYsImV4cCI6MTcwNzIxNjkzNiwiZW1haWwiOiJnb2xmeV9fMTgwMEBob3RtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJmYWNlYm9vay5jb20iOlsiMTc2ODA2MDQyNjk1NDUwNCJdLCJlbWFpbCI6WyJnb2xmeV9fMTgwMEBob3RtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6ImZhY2Vib29rLmNvbSJ9fQ.i1yueXoS7WM_6CSwpaxCptuKxLVUePjOci3XbJfRFT-T6rZRuwfE5OS5VVogU7zlbpSXUoBfTx0N-NEgdQCLzj9YC1zMhTM5nzUGl8dEn71HcVH1kDBNaC8qWi7iQsyFM8GaDNUCLE2q1OnklspDDgSqfYi_Uev_NTPOrvM4ePMNTj3BALu2O6C7R5By5-HoOZ_U7zo6FHrV6kZw8TfdLr5aeKkfHtcToIe_HVTaE3yVLGQoYkiMfjmkCJ9hPJqWU3EM-vdGaU-5uwxSBR1itjVoe89TSm2Z_I5hDT5aF7fnDP3XjHA1ugbm_ss4A51wWWMe5p8sRjG8Q_Yik9Mehg",
+            "oauthAccessToken": "EAAE5z3xrBS8BOxqQZAzGZBWaTf9FDlYKxaJA5F5r3Tc4vIa9oJjtCQLo3nuIEtZBCEQc2e39rkBiuR1RZCVMrZBvGMXNQvJcwTrY8yWb1D6tif9nXDZAcGmHZAz9WEDNQkGPbt22K9AzBPVy7pMBm2pzwS5uZBPotqZAQZA5gfJmOQTbrkkuk5GlIrE2WVi12ZCjz0Kl3BV3DCwtPWs22Q2ZCryOBmbvEMcQGbKscnaI3DrhhO4UZAOTGvwZDZD",
+            "refreshToken": "AMf-vBw0y7IUldG7WmrhOonb_ulv5a5L9pWgLUJRod5NXkPi-I2WX-9-cx5xvGPBQtVrTqryuMqDWIFPiuNEk9R9VtoMEIEmtW4Hxh6k5M6BhFIostHdxAVF3SotupLmcXdKPYAIwO4Etxre8iJSW0drWwArr2yRQHZ6LmTxZTCqp0eYQ37unRMEntozXAnxozUX5Gcf3HrjCLngH9b9Ux-7kQMu7p4uvbirzzHVu1Hf-l69YIG4816PlLHDbf8nhDEAXi-Zc2B2k1qWwNFpEnw-W_FcGa94z00nPFV-_LLZXV5i_Yx-ro5lIKgDKGT1EwCnEWVB55Bxky3wRCjn7Ni0xVVdcVyNI6zjn3Zk4MmcQG-i8r98XgU",
+            "expiresIn": "3600",
+            "rawUserInfo": "{\"name\":\"Golf'f Suriya\",\"last_name\":\"Suriya\",\"id\":\"1768060426954504\",\"first_name\":\"Golf'f\",\"email\":\"golfy__1800@hotmail.com\",\"picture\":{\"data\":{\"is_silhouette\":false,\"width\":100,\"url\":\"https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1768060426954504&height=100&width=100&ext=1709805335&hash=AfprRkLMB3KbE42bz-TikwDZnFKbkujxPIFN-Kou0Gajjg\",\"height\":101}}}",
+            "kind": "identitytoolkit#VerifyAssertionResponse"
+    },
+    "operationType": "signIn"
+}
