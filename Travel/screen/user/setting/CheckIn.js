@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useState, useCallback, useContext} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
+import React, { useState, useCallback, useContext } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
 import baseURL from '../../../assests/common/baseUrl';
 import Toast from 'react-native-toast-message';
@@ -24,7 +24,7 @@ const CheckIn = () => {
   const [token, setToken] = useState();
 
   const context = useContext(AuthGlobal);
-  // console.log(context)
+  console.log(JSON.stringify(context.stateUser.user.userId, null, 2))
 
   // console.log(JSON.stringify(context.stateUser.user.userId, null, 2));
   // console.log(JSON.stringify(item, null, 2));
@@ -36,15 +36,23 @@ const CheckIn = () => {
         setToken(res);
       });
       axios
-        .get(`${baseURL}check-in`)
-        .then(res => {
-          //  console.log(res.data);
-          const reversedData = res.data.reverse();
-          setItem(reversedData);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      .get(`${baseURL}check-in`)
+      .then(res => {
+        const reversedData = res.data.reverse();
+    
+        // Filter the data based on the condition
+        const filteredData = reversedData.filter(item => item.userId === context.stateUser.user.userId);
+    
+        // Store the filtered data using setItem (assuming setItem is a function that stores data)
+        setItem(filteredData);
+    
+        // Additional log to check the filtered data
+        console.log(JSON.stringify(filteredData.userId, null, 2));
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+    
       return () => {
         setItem([]);
       };
@@ -54,7 +62,7 @@ const CheckIn = () => {
   const deleteItem = id => {
     axios
       .delete(`${baseURL}check-in/${id}`, {
-        headers: {Authorization: `Bearer ${token}`},
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(res => {
         const updatedReviews = item.filter(item => item.id !== id); // Use `reviews` instead of `review`
@@ -72,17 +80,17 @@ const CheckIn = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={{width: 360}}>
+        <View style={{ width: 360 }}>
           {item
             .filter(item => item.userId === context.stateUser.user.userId)
             .map(filteredItem => (
               <View style={styles.itemWrapper} key={filteredItem.id}>
                 <Image
-                  source={{uri: filteredItem.image}}
-                  style={{width: '100%', height: 150, borderRadius: 10}}
+                  source={{ uri: filteredItem.image }}
+                  style={{ width: '100%', height: 150, borderRadius: 10 }}
                   resizeMode="cover"
                 />
-                <View style={{width: '100%', paddingVertical: 10}}>
+                <View style={{ width: '100%', paddingVertical: 10 }}>
                   <Text style={styles.textDF}>
                     Name: {filteredItem.productName}
                   </Text>
