@@ -1,5 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 // web 635201532372-u1obb2hmvg8gm63g8k0cd4fiono3roa0.apps.googleusercontent.com
+// android 635201532372-ataujbni1mdvkuh1qlvd2ui57eocp04u.apps.googleusercontent.com
+// credentials FGEghWsnCI , rzg-YI1BXv
+
 import {
   View,
   Text,
@@ -25,10 +28,16 @@ var { height, width } = Dimensions.get("window");
 
 import Input from "./Input";
 
+// google
+
 export default function App() {
+  // facebook
   const [inticial, setInticial] = useState(true);
   const [user, setUser] = useState();
   const [imgUser, setImgUser] = useState();
+
+  // google
+  const [userInfo , setUserInfo] = useState()
 
   const onAuthStateChanged = (user) => {
     if (inticial) setInticial(false);
