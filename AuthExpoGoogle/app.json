@@ -21,10 +21,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.pookpik4200.AuthExpoGoogle"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme" : "AuthExpoGoogle"
   }
 }
