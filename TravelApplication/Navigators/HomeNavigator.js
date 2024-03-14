@@ -10,6 +10,7 @@ import AllProduct from '../screen/home/AllProduct';
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native';
+import CheckIn from '../screen/products/CheckIn';
 
 const Stack = createStackNavigator();
 
@@ -69,6 +70,19 @@ function MyStack() {
           // เพิ่มสไตล์เพิ่มเติมตามที่ต้องการ
         })}
       />
+      <Stack.Screen
+            name="Check in"
+            component={CheckIn}
+            options={() => ({
+              cardStyle: {backgroundColor: '#FFFFFF'},
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerBackImage: () => (
+                <AntDesign name="arrowleft" size={24} color="#ff886a" />
+              ),
+              headerBackTitleVisible: false,
+            })}
+          />
       {/* <Stack.Screen
                 name="Checkout"
                 component={CheckoutNavigator}
