@@ -16,7 +16,7 @@
     "expo": "~50.0.5",
     "expo-auth-session": "~5.4.0",
     "expo-crypto": "~12.8.0",
-    "expo-dev-client": "~3.3.8",
+    "expo-dev-client": "~3.3.11",
     "expo-status-bar": "~1.11.1",
     "expo-web-browser": "~12.8.2",
     "firebase": "^9.6.11",

@@ -4,8 +4,12 @@ let baseURL = '';
 
 {
   Platform.OS == 'android'
+<<<<<<< Updated upstream
     ? (baseURL = 'http://192.168.207.76:3000/api/v1/')
     // ? (baseURL = 'http://192.168.34.76:3000/api/v1/')
+=======
+    ? (baseURL = 'http://192.168.224.98:3000/api/v1/')
+>>>>>>> Stashed changes
     : (baseURL = 'http://localhost:3000/api/v1/');
 
   // baseURL = 'http://192.168.189.76:3000/api/v1/';
@@ -16,6 +20,7 @@ let baseURL = '';
  
 export default baseURL;
 
+<<<<<<< Updated upstream
 // import { Platform } from "react-native";
 
 // let baseURL = '';
@@ -45,3 +50,5 @@ export default baseURL;
 //   }
 
 // export default baseURL;
+=======
+>>>>>>> Stashed changes

@@ -90,7 +90,8 @@ export default function App() {
       //   <Button title='Sign In With Facebook' onPress={signWithFB}/>
       //   <StatusBar style="auto" />
       // </View>
-      <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.container}>
         <View>
           <Text
             style={{
@@ -251,13 +252,15 @@ export default function App() {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+        </View>
+      </ScrollView>
     );
   }
 
   if (user.user) {
     return (
-      <View style={styles.containerFacebook}>
+      <ScrollView>
+        <View style={styles.containerFacebook}>
         <View style={styles.backImageContainer}>
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: imgUser }} />
@@ -309,7 +312,7 @@ export default function App() {
         </View>
 
         <TouchableOpacity
-        onPress={signOut}
+        onPress={() => setUser(null)}
         >
           <View style={styles.btnLogin}>
             <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
@@ -318,6 +321,7 @@ export default function App() {
           </View>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     );
   }
 }
@@ -335,7 +339,7 @@ const styles = StyleSheet.create({
   },
   backImageContainer: {
     width: width,
-    height: 200,
+    height: 120,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 30,
@@ -345,8 +349,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fcb69f",
   },
   imageContainer: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
     borderStyle: "solid",
     borderWidth: 5,
     padding: 0,
@@ -354,7 +358,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: "#E0E0E0",
     position: "relative",
-    top: 90,
+    top:60,
     elevation: 10,
   },
   image: {
@@ -388,7 +392,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     paddingBottom: 55,
-    paddingTop: 100,
+    paddingTop: 50,
   },
   buttonGroup: {
     width: "80%",
